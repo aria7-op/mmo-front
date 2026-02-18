@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { showErrorToast, showSuccessToast } from '../../utils/errorHandler';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { sanitizeTextInput } from '../../utils/inputSanitizer';
-import CloudflareTurnstile from "../../components/security/CloudflareTurnstile";
+// import CloudflareTurnstile from "../../components/security/CloudflareTurnstile";
 import TwoFactorAuth from "../../components/security/TwoFactorAuth";
 import { 
   validatePasswordStrength, 
@@ -27,7 +27,7 @@ const AdminLogin = () => {
     const [loading, setLoading] = useState(false);
     const [authLoading, setAuthLoading] = useState(true);
     const [show2FA, setShow2FA] = useState(false);
-    const [turnstileToken, setTurnstileToken] = useState('');
+    // const [turnstileToken, setTurnstileToken] = useState('');
     const [deviceFingerprint, setDeviceFingerprint] = useState('');
     const [loginAttempts, setLoginAttempts] = useState([]);
     const [passwordStrength, setPasswordStrength] = useState(null);
@@ -38,7 +38,7 @@ const AdminLogin = () => {
         location: 'Unknown'
     });
     
-    const turnstileRef = useRef(null);
+    // const turnstileRef = useRef(null);
     const rateLimiter = useRef(new RateLimiter(5, 15 * 60 * 1000)); // 5 attempts per 15 minutes
     const { login, isAuthenticated, loading: authHookLoading } = useAuth();
     const navigate = useNavigate();
@@ -47,7 +47,7 @@ const AdminLogin = () => {
     const from = location.state?.from?.pathname || '/admin';
 
     // Cloudflare Turnstile site key
-    const TURNSTILE_SITE_KEY = '0x4AAAAAACPm_44mTMtQD8O5';
+    // const TURNSTILE_SITE_KEY = '0x4AAAAAACPm_44mTMtQD8O5';
 
     useEffect(() => {
         // Initialize security monitoring
@@ -109,10 +109,10 @@ const AdminLogin = () => {
         }
         
         // Check Turnstile verification
-        if (!turnstileToken) {
-            showErrorToast('Please complete the security verification first.');
-            return;
-        }
+        // if (!turnstileToken) {
+        //     showErrorToast('Please complete the security verification first.');
+        //     return;
+        // }
 
         setLoading(true);
         const attemptData = {
@@ -131,7 +131,7 @@ const AdminLogin = () => {
             }
             
             const response = await login(username, password, {
-                turnstileToken,
+                // turnstileToken,
                 deviceFingerprint,
                 securityInfo
             });
@@ -152,10 +152,10 @@ const AdminLogin = () => {
             rateLimiter.current.recordAttempt(securityInfo.ipAddress);
             
             // Reset Turnstile on failed login
-            if (turnstileRef.current) {
-                turnstileRef.current.reset();
-                setTurnstileToken('');
-            }
+            // if (turnstileRef.current) {
+            //     turnstileRef.current.reset();
+            //     setTurnstileToken('');
+            // }
             
             showErrorToast(error.message || 'Login failed. Please check your credentials.');
         } finally {
@@ -587,7 +587,7 @@ const AdminLogin = () => {
                     </div>
 
                     {/* Cloudflare Turnstile */}
-                    <div className="form-group" style={{ marginBottom: '30px' }}>
+                    {/* <div className="form-group" style={{ marginBottom: '30px' }}>
                         <CloudflareTurnstile
                             ref={turnstileRef}
                             siteKey={TURNSTILE_SITE_KEY}
@@ -600,7 +600,7 @@ const AdminLogin = () => {
                             theme="auto"
                             size="normal"
                         />
-                    </div>
+                    </div> */}
 
                     {/* Submit Button */}
                     <button
