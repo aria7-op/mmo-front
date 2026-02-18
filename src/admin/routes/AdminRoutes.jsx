@@ -142,6 +142,22 @@ const AdminRoutes = () => {
                     </ProtectedRoute>
                 }
             />
+            <Route
+                path="programs/create"
+                element={
+                    <ProtectedRoute>
+                        <ProgramsForm />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="programs/edit/:id"
+                element={
+                    <ProtectedRoute>
+                        <ProgramsForm />
+                    </ProtectedRoute>
+                }
+            />
 
             {/* Team Routes */}
             <Route
