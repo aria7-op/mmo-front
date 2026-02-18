@@ -59,7 +59,7 @@ const DonationLanding = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .donation-landing {
           padding: 80px 0;
           min-height: 100vh;

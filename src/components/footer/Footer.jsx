@@ -15,31 +15,7 @@ const Footer = () => {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "dr" || i18n.language === "ps";
   const [submitting, setSubmitting] = useState(false);
-  const [logoUrl, setLogoUrl] = useState(
-    `/img/logo/footer_logo.png`,
-  );
-  const [loading, setLoading] = useState(true);
   const [showCertificateSearch, setShowCertificateSearch] = useState(false);
-
-  useEffect(() => {
-    const fetchLogo = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.ABOUT}`);
-        const data = await response.json();
-
-        if (data.success && data.data?.logoUrl) {
-          setLogoUrl(data.data.logoUrl);
-        }
-      } catch (error) {
-        console.error("Error fetching footer logo:", error);
-        // Keep default logo on error
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLogo();
-  }, []);
 
   const handleNewsletterSubmit = async (event) => {
     event.preventDefault();
@@ -86,22 +62,35 @@ const Footer = () => {
               {/* Column 1: Logo and Tagline */}
               <div className="col-12 col-sm-6 col-md-4 col-lg-2-5">
                 <div className="footer-wedget-one">
-                  <Link to="/">
-                    <img
-                      src={logoUrl}
-                      alt={t("footer.logoAlt")}
-                      style={{
-                        maxHeight: "60px",
-                        width: "auto",
-                        objectFit: "contain",
-                        transition: "opacity 0.3s ease",
-                        marginBottom: "15px",
-                      }}
-                      onError={(e) => {
-                        // Fallback to default footer logo if API logo fails
-                        e.target.src = `/img/logo/footer_logo.png`;
-                      }}
-                    />
+                  <Link to="/" style={{
+                    textDecoration: 'none',
+                    display: 'block',
+                    marginBottom: '15px'
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      fontSize: '22px',
+                      fontWeight: '700',
+                      color: '#0f68bb'
+                    }}>
+                      <div style={{
+                        width: '45px',
+                        height: '45px',
+                        borderRadius: '8px',
+                        background: 'linear-gradient(135deg, #0f68bb 0%, #4a90e2 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#fff',
+                        fontSize: '16px',
+                        fontWeight: '600'
+                      }}>
+                        MMO
+                      </div>
+                      <span style={{ color: '#2c3e50' }}>Mission Mind Organization</span>
+                    </div>
                   </Link>
                   <h3
                     style={{

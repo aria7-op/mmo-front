@@ -262,8 +262,6 @@ const OffCanvasMenu = () => {
     const { t, i18n } = useTranslation();
     const isRTL = i18n.language === "dr" || i18n.language === "ps";
     const location = useLocation();
-    const [logoUrl, setLogoUrl] = useState(`${IMAGE_BASE_URL}/logo/logo.png`);
-    const [loading, setLoading] = useState(true);
     const offcanvasRef = useRef(null);
 
     // Build the same menu used on desktop
@@ -286,26 +284,6 @@ const OffCanvasMenu = () => {
             }
         }
     }, [location]);
-
-    useEffect(() => {
-        const fetchLogo = async () => {
-            try {
-                const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.ABOUT}`);
-                const data = await response.json();
-
-                if (data.success && data.data?.logoUrl) {
-                    setLogoUrl(data.data.logoUrl);
-                }
-            } catch (error) {
-                console.error("Error fetching logo:", error);
-                // Keep default logo on error
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchLogo();
-    }, []);
 
     return (
         <>
@@ -373,23 +351,40 @@ const OffCanvasMenu = () => {
                             flex: 1,
                         }}
                     >
-                        <img
-                            src={logoUrl}
-                            alt={t("header.logoAlt", "MMO Logo")}
-                            style={{
-                                maxHeight: "40px",
-                                width: "auto",
-                                objectFit: "contain",
-                                transition: "opacity 0.3s ease",
-                                opacity: loading ? 0.7 : 1,
-                            }}
-                            onError={(e) => {
-                                // Fallback to default logo if API logo fails
-                                e.target.src = `${IMAGE_BASE_URL}/logo/logo.png`;
-                            }}
-                            onLoad={() => setLoading(false)}
-                        />
-                        <div
+                        <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                            flex: 1,
+                        }}
+                    >
+                        <div style={{
+                            textDecoration: 'none',
+                            fontSize: '20px',
+                            fontWeight: '700',
+                            color: '#0f68bb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                        }}>
+                            <div style={{
+                                width: '36px',
+                                height: '36px',
+                                borderRadius: '6px',
+                                background: 'linear-gradient(135deg, #0f68bb 0%, #4a90e2 100%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: '#fff',
+                                fontSize: '14px',
+                                fontWeight: '600'
+                            }}>
+                                MMO
+                            </div>
+                            <span style={{ color: '#2c3e50' }}>Mission Mind Organization</span>
+                        </div>
+                    </div>
+                    <div
                             style={{
                                 fontSize: "14px",
                                 color: "#0A4F9D",

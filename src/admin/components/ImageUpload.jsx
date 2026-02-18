@@ -169,7 +169,7 @@ const ImageUpload = ({
                 style={{ display: 'none' }}
             />
 
-            <style jsx>{`
+            <style>{`
                 .upload-zone:hover {
                     border-color: #007bff;
                     background-color: #f8f9ff;

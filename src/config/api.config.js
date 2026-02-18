@@ -9,12 +9,12 @@ const isDevelopment = import.meta.env.DEV || import.meta.env.MODE === 'developme
 // Base URLs
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ||
   (isDevelopment
-    ? 'https://khwanzay.school/bak'  // Use production URL even in development
+    ? 'https://khwanzay.school/bak'  // Use full backend URL in development
     : 'https://khwanzay.school/bak');  // Use direct backend URL in production
 
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL ||
   (isDevelopment
-    ? '/includes/images'  // Use local proxy in development
+    ? 'https://khwanzay.school/bak/includes/images'  // Use full backend URL in development
     : 'https://khwanzay.school/bak/includes/images');  // Use /bak path in production for consistency
 
 // API Prefix (already included in base URL, but kept for reference)
@@ -26,25 +26,25 @@ export const API_PREFIX = '/bak';
  */
 export const API_ENDPOINTS = {
   // Authentication
-  AUTH_LOGIN: 'admin/auth/login',
-  AUTH_ME: 'admin/auth/me',
-  AUTH_LOGOUT: 'admin/auth/logout',
-  DASHBOARD_STATS: 'dashboard/stats',
-  SESSION_ACTIVITY: 'session/activity',
+  AUTH_LOGIN: '/admin/auth/login',
+  AUTH_ME: '/admin/auth/me',
+  AUTH_LOGOUT: '/admin/auth/logout',
+  DASHBOARD_STATS: '/dashboard/stats',
+  SESSION_ACTIVITY: '/session/activity',
 
   // News
-  NEWS: 'news',
-  NEWS_BY_ID: (id) => `news/${id}`,
-  NEWS_VIEW: (id) => `news/${id}/view`,
-  NEWS_LIKE: (id) => `news/${id}/like`,
-  NEWS_SHARE: (id) => `news/${id}/share`,
+  NEWS: '/news',
+  NEWS_BY_ID: (id) => `/news/${id}`,
+  NEWS_VIEW: (id) => `/news/${id}/view`,
+  NEWS_LIKE: (id) => `/news/${id}/like`,
+  NEWS_SHARE: (id) => `/news/${id}/share`,
 
   // Events
-  EVENTS: 'events',
-  EVENTS_BY_ID: (id) => `events/${id}`,
-  EVENTS_VIEW: (id) => `events/${id}/view`,
-  EVENTS_LIKE: (id) => `events/${id}/like`,
-  EVENTS_SHARE: (id) => `events/${id}/share`,
+  EVENTS: '/events',
+  EVENTS_BY_ID: (id) => `/events/${id}`,
+  EVENTS_VIEW: (id) => `/events/${id}/view`,
+  EVENTS_LIKE: (id) => `/events/${id}/like`,
+  EVENTS_SHARE: (id) => `/events/${id}/share`,
 
   // Articles
   ARTICLES: 'articles',
@@ -121,9 +121,9 @@ export const API_ENDPOINTS = {
   STATISTICS: 'statistics',
 
   // Organization
-  ORGANIZATION_PROFILE: 'organization-profile',
-  ORGANIZATION: 'organization',
-  ABOUT: 'about',
+  ORGANIZATION_PROFILE: '/organization-profile',
+  ORGANIZATION: '/organization',
+  ABOUT: '/about',
 
   // Newsletter
   NEWSLETTER_SUBSCRIBE: 'newsletter/subscribe',
@@ -154,11 +154,11 @@ export const API_ENDPOINTS = {
   HEALTH: 'health',
 
   // Welcome Section
-  WELCOME_SECTION: 'welcome-section',
+  WELCOME_SECTION: '/welcome-section',
 
   // Form Links
-  FORM_LINKS: 'form-links',
-  FORM_LINKS_BY_ID: (id) => `form-links/${id}`,
+  FORM_LINKS: '/form-links',
+  FORM_LINKS_BY_ID: (id) => `/form-links/${id}`,
 
   // Registration
   REGISTRATION: 'registration',

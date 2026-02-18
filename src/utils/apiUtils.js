@@ -43,19 +43,10 @@ export const getImageUrl = (imagePath) => {
     return imagePath;
   }
 
-  // If path already starts with /includes/images/, construct URL directly
+  // If path already starts with /includes/images/, construct URL directly with API_BASE_URL
   if (imagePath.startsWith('/includes/images/')) {
-    // The backend might serve images from /bak/includes/images/ or /includes/images/
-    // Use API_BASE_URL which includes /bak for consistency
-    const apiPathUrl = `${API_BASE_URL}${imagePath}`;
-    
-    // Also try direct domain approach (without /bak)
-    const backendDomain = IMAGE_BASE_URL.replace('/includes/images', '');
-    const directUrl = `${backendDomain}${imagePath}`;
-    
-    // Prefer the API_BASE_URL path since images are served under /bak
-    const finalUrl = apiPathUrl || directUrl;
-    
+    // Use API_BASE_URL instead of IMAGE_BASE_URL for consistency
+    const finalUrl = `${API_BASE_URL}${imagePath}`;
     return finalUrl;
   }
 
@@ -86,15 +77,19 @@ export const getImageUrlFromObject = (imageObject) => {
 
   // If it's already a string, treat it as a direct URL
   if (typeof imageObject === 'string') {
-    // Use getImageUrl which handles both full URLs (with domain replacement) and relative paths
-    const result = getImageUrl(imageObject);
-    return result;
+    return getImageUrl(imageObject);
   }
 
   // If it's an object, check for url property first
   if (typeof imageObject === 'object') {
     // Try url property first
     if (imageObject.url) {
+      // If URL starts with /includes/images/, construct full URL directly with API base URL
+      if (imageObject.url.startsWith('/includes/images/')) {
+        const directUrl = `${API_BASE_URL}${imageObject.url}`;
+        return directUrl;
+      }
+      
       // If the URL is already a full URL with wrong domain, replace the domain
       if (imageObject.url.includes('museum.khwanzay.school')) {
         const correctedUrl = imageObject.url.replace('museum.khwanzay.school', 'khwanzay.school');
@@ -105,14 +100,6 @@ export const getImageUrlFromObject = (imageObject) => {
       if (imageObject.url.includes('localhost:3000')) {
         const correctedUrl = imageObject.url.replace('localhost:3000', 'khwanzay.school/bak');
         return correctedUrl;
-      }
-      
-      // If URL starts with /includes/images/, construct full URL directly with backend domain
-      if (imageObject.url.startsWith('/includes/images/')) {
-        const backendDomain = 'https://khwanzay.school/bak';
-        // The URL from backend is already properly encoded, so don't double-encode
-        const directUrl = `${backendDomain}${imageObject.url}`;
-        return directUrl;
       }
       
       const result = getImageUrl(imageObject.url);

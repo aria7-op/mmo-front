@@ -107,7 +107,7 @@ const MinimalStripeDonation = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .minimal-donation-page {
           padding: 80px 0;
           min-height: 100vh;

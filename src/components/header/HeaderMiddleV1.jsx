@@ -30,7 +30,7 @@ const HeaderMiddleV1 = () => {
             const logoMap = {
                 'sitc': '/img/sitc.jpeg',
                 'tabaan': '/img/taaban.jpeg',
-                'stay': '/img/logo/logo.png'
+                'stay': null // Removed logo.png reference
             };
             const logo = logoMap[programSlug];
             return logo;
@@ -39,35 +39,6 @@ const HeaderMiddleV1 = () => {
     };
 
     const programLogo = getProgramLogo();
-    const [logoUrl, setLogoUrl] = useState(programLogo || `/img/logo/logo.png`);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        // If we have a program logo, use it immediately, otherwise fetch from API
-        if (programLogo) {
-            setLogoUrl(programLogo);
-            setLoading(false);
-            return;
-        }
-
-        const fetchLogo = async () => {
-            try {
-                const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.ABOUT}`);
-                const data = await response.json();
-
-                if (data.success && data.data?.logoUrl) {
-                    setLogoUrl(data.data.logoUrl);
-                }
-            } catch (error) {
-                console.error('Error fetching logo:', error);
-                // Keep default logo on error
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchLogo();
-    }, [location.pathname]); // Re-run when route changes
 
     return (
         <>
@@ -77,20 +48,30 @@ const HeaderMiddleV1 = () => {
                     <div className="d-none d-lg-flex align-items-center justify-content-between" style={{ gap: '15px' }}>
                         <div className={`${isRTL ? 'text-end' : 'text-start'}`}>
                             <div className="logo">
-                                <Link to="/">
-                                    <img
-                                        src={logoUrl}
-                                        alt={t('header.logoAlt')}
-                                        style={{
-                                            maxHeight: '50px',
-                                            width: 'auto',
-                                            objectFit: 'contain',
-                                            transition: 'opacity 0.3s ease'
-                                        }}
-                                        onError={(e) => {
-                                            e.target.src = `/img/logo/logo.png`;
-                                        }}
-                                    />
+                                <Link to="/" style={{
+                                    textDecoration: 'none',
+                                    fontSize: '24px',
+                                    fontWeight: '700',
+                                    color: '#0f68bb',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}>
+                                    <div style={{
+                                        width: '40px',
+                                        height: '40px',
+                                        borderRadius: '8px',
+                                        background: 'linear-gradient(135deg, #0f68bb 0%, #4a90e2 100%)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: '#fff',
+                                        fontSize: '16px',
+                                        fontWeight: '600'
+                                    }}>
+                                        MMO
+                                    </div>
+                                    <span style={{ color: '#2c3e50' }}>Mission Mind Organization</span>
                                 </Link>
                             </div>
                         </div>
@@ -103,24 +84,30 @@ const HeaderMiddleV1 = () => {
                     <div className="d-lg-none" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', padding: '8px 0' }}>
                         {/* Logo - Vertically Centered */}
                         <div className="logo" style={{ display: 'flex', alignItems: 'center' }}>
-                            <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-                                <img
-                                    src={logoUrl}
-                                    alt={t('header.logoAlt')}
-                                    style={{
-                                        maxHeight: '40px',
-                                        width: 'auto',
-                                        objectFit: 'contain',
-                                        transition: 'transform 0.3s ease',
-                                        cursor: 'pointer',
-                                        marginTop : '-5px',
-                                    }}
-                                    onError={(e) => {
-                                        e.target.src = `/img/logo/logo.png`;
-                                    }}
-                                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-                                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                                />
+                            <Link to="/" style={{
+                                textDecoration: 'none',
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: '#0f68bb',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px'
+                            }}>
+                                <div style={{
+                                    width: '32px',
+                                    height: '32px',
+                                    borderRadius: '6px',
+                                    background: 'linear-gradient(135deg, #0f68bb 0%, #4a90e2 100%)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: '#fff',
+                                    fontSize: '12px',
+                                    fontWeight: '600'
+                                }}>
+                                    MMO
+                                </div>
+                                <span style={{ color: '#2c3e50' }}>MMO</span>
                             </Link>
                         </div>
 

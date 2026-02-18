@@ -131,7 +131,12 @@ const WelcomeSectionAdmin = () => {
             const formData = new FormData();
             formData.append('image', file);
 
-            const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.WELCOME_SECTION}/upload-image`, {
+            const uploadUrl = `${API_BASE_URL}${API_ENDPOINTS.WELCOME_SECTION}/upload-image`;
+            console.log('API_BASE_URL:', API_BASE_URL);
+            console.log('WELCOME_SECTION endpoint:', API_ENDPOINTS.WELCOME_SECTION);
+            console.log('Final upload URL:', uploadUrl);
+            
+            const response = await fetch(uploadUrl, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -139,7 +144,21 @@ const WelcomeSectionAdmin = () => {
                 body: formData
             });
 
-            const result = await response.json();
+            // Debug: Check response status and content
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            
+            const responseText = await response.text();
+            console.log('Response text:', responseText);
+            
+            let result;
+            try {
+                result = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Failed to parse JSON response:', parseError);
+                console.error('Raw response:', responseText);
+                throw new Error(`Invalid JSON response: ${responseText.substring(0, 200)}...`);
+            }
             
             if (result.success) {
                 setImage(result.data);

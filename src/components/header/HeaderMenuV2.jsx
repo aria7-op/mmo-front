@@ -13,7 +13,31 @@ const HeaderMenuV2 = () => {
                     <div className="row align-items-center">
                         <div className="col-2">
                             <div className="home2-logo logo d-none d-lg-block">
-                                <Link to="/"><img src={`${IMAGE_BASE_URL}/logo/logo.png`} alt="logo" /></Link>
+                                <Link to="/" style={{
+                                    textDecoration: 'none',
+                                    fontSize: '20px',
+                                    fontWeight: '700',
+                                    color: '#0f68bb',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}>
+                                    <div style={{
+                                        width: '36px',
+                                        height: '36px',
+                                        borderRadius: '6px',
+                                        background: 'linear-gradient(135deg, #0f68bb 0%, #4a90e2 100%)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: '#fff',
+                                        fontSize: '14px',
+                                        fontWeight: '600'
+                                    }}>
+                                        MMO
+                                    </div>
+                                    <span style={{ color: '#2c3e50' }}>MMO</span>
+                                </Link>
                             </div>
                         </div>
                         <div className="col-10">

@@ -25,7 +25,9 @@ const HomeOne = () => {
     const homeSettings = pageSettings?.home;
 
     const bodyImageUrl = useMemo(() => {
-        return homeSettings?.bodyImage ? getImageUrlFromObject(homeSettings.bodyImage) : null;
+        if (!homeSettings?.bodyImage) return null;
+        const url = getImageUrlFromObject(homeSettings.bodyImage);
+        return url && url !== 'null' && url !== 'undefined' ? url : null;
     }, [homeSettings]);
 
     // Use lazy loading for body background image
@@ -34,7 +36,7 @@ const HomeOne = () => {
         rootMargin: '100px',
         placeholder: null,
         onLoad: (src) => console.log('Home body image loaded:', src),
-        onError: (src) => console.error('Home body image failed to load:', src)
+        onError: (src) => bodyImageUrl && console.error('Home body image failed to load:', src)
     });
 
     return (
@@ -46,7 +48,6 @@ const HomeOne = () => {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                backgroundAttachment: 'fixed',
                 transition: 'background-image 0.3s ease-in-out'
             }}>
                 <HeroSlider />

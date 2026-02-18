@@ -15,7 +15,9 @@ export const useWelcomeSection = () => {
             setLoading(true);
             setError(null);
             
-            const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.WELCOME_SECTION}`);
+            const url = `${API_BASE_URL}${API_ENDPOINTS.WELCOME_SECTION}`;
+            
+            const response = await fetch(url);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

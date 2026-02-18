@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { usePageSettings } from '../../context/PageSettingsContext';
-import { formatMultilingualContent, getImageUrlFromObject, stripHtmlTags } from '../../utils/apiUtils';
+import { formatMultilingualContent, getImageUrlFromObject, stripHtmlTags, getPlaceholderImage } from '../../utils/apiUtils';
 import { useAbout } from '../../hooks/useAbout';
 import { useStatistics } from '../../hooks/useStatistics';
 import { useWelcomeSection } from '../../hooks/useWelcomeSection';
 import LoadingSpinner from '../common/LoadingSpinner';
+
+// Lazy load the image component
+const LazyImage = lazy(() => import('../common/LazyImage'));
 
 const WelcomeSection = () => {
     const { t, i18n } = useTranslation();
@@ -16,6 +19,10 @@ const WelcomeSection = () => {
     const { welcomeData, loading: welcomeLoading, error: welcomeError } = useWelcomeSection();
 
     const isRTL = i18n.language === 'dr' || i18n.language === 'ps';
+    const [imageLoaded, setImageLoaded] = useState(false);
+    
+    // Temporarily disable lazy loading for testing
+    const [isImageVisible, setIsImageVisible] = useState(true);
 
     const homeSettings = pageSettings?.home || pageSettings?.['/'] || {};
     const welcomeSettings = homeSettings.about || {};
@@ -44,9 +51,15 @@ const WelcomeSection = () => {
     ];
 
     // Priority: Welcome Section API image > About API image > Page Settings image > Default
-    const welcomeImage = getImageUrlFromObject(welcomeData?.image) ||
-        getImageUrlFromObject(about?.image || about?.imageUrl) ||
-        getImageUrlFromObject(welcomeSettings.image);
+    const welcomeImageUrl = getImageUrlFromObject(welcomeData?.image);
+    const aboutImageUrl = getImageUrlFromObject(about?.image || about?.imageUrl);
+    const pageSettingsImageUrl = getImageUrlFromObject(welcomeSettings.image);
+    const placeholderUrl = getPlaceholderImage(800, 600);
+    
+    const welcomeImage = welcomeImageUrl || aboutImageUrl || pageSettingsImageUrl || placeholderUrl;
+    
+    // Ensure welcomeImage is never null/undefined for the img element
+    const safeWelcomeImage = welcomeImage || placeholderUrl;
 
     const handleImageError = (e) => {
         console.error('WelcomeSection - Image failed to load:', {
@@ -59,14 +72,36 @@ const WelcomeSection = () => {
         e.target.style.display = 'none';
     };
 
-    // Show loading state while welcome section data is loading
-    if (welcomeLoading) {
+    const handleImageLoad = (e) => {
+        console.log('WelcomeSection - Image loaded successfully:', {
+            src: e.target.src,
+            naturalWidth: e.target.naturalWidth,
+            naturalHeight: e.target.naturalHeight
+        });
+        setImageLoaded(true);
+    };
+
+    // Show loading state while data is loading
+    if (welcomeLoading || aboutLoading || statsLoading) {
         return (
             <div className="welcome-section-sec d-flex justify-content-center align-items-center" style={{
                 background: 'linear-gradient(135deg, #f8fbfc 0%, #ffffff 100%)',
                 minHeight: '400px'
             }}>
-                <LoadingSpinner />
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{
+                        width: '50px',
+                        height: '50px',
+                        border: '4px solid #e3f2fd',
+                        borderTop: '4px solid #0f68bb',
+                        borderRadius: '50%',
+                        animation: 'spin 1s linear infinite',
+                        margin: '0 auto 20px'
+                    }}></div>
+                    <div style={{ color: '#0f68bb', fontSize: '16px', fontWeight: '600' }}>
+                        Loading welcome content...
+                    </div>
+                </div>
             </div>
         );
     }
@@ -141,6 +176,10 @@ const WelcomeSection = () => {
             }}></div>
             
             <style>{`
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
                 /* Stack columns naturally on mobile, 50/50 on desktop */
                 @media (min-width: 992px) {
                     .welcome-section-sec .row { flex-wrap: nowrap !important; align-items: center !important; }
@@ -399,31 +438,84 @@ const WelcomeSection = () => {
                                 transform: 'rotate(-30deg)'
                             }}></div>
                             
-                            {/* Main image */}
-                            <img 
-                                src={welcomeImage} 
-                                alt="Mission Mind Organization" 
-                                className="img-fluid" 
-                                onError={handleImageError}
-                                onLoad={() => {}}
-                                style={{
-                                    borderRadius: '30px',
-                                    boxShadow: '0 30px 60px rgba(15, 104, 187, 0.2)',
-                                    position: 'relative',
-                                    zIndex: 2,
-                                    width: '100%',
-                                    height: 'auto',
-                                    minHeight: '400px',
-                                    objectFit: 'cover',
-                                    transition: 'transform 0.4s ease',
-                                    border: '4px solid #fff'
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.transform = 'scale(1.03)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.transform = 'scale(1)';
-                                }} />
+                            {/* Main image with lazy loading */}
+                            <div style={{ position: 'relative', minHeight: '360px' }}>
+                                {console.log('WelcomeSection - Rendering image container:', {
+                                    isImageVisible,
+                                    safeWelcomeImage,
+                                    imageLoaded
+                                })}
+                                {isImageVisible ? (
+                                    <Suspense fallback={
+                                        <div style={{
+                                            width: '100%',
+                                            height: '360px',
+                                            borderRadius: '30px',
+                                            background: 'linear-gradient(135deg, #f8fbfc 0%, #e3f2fd 100%)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            border: '4px solid #fff'
+                                        }}>
+                                            <div style={{
+                                                width: '40px',
+                                                height: '40px',
+                                                border: '3px solid #0f68bb',
+                                                borderTop: '3px solid transparent',
+                                                borderRadius: '50%',
+                                                animation: 'spin 1s linear infinite'
+                                            }}></div>
+                                        </div>
+                                    }>
+                                        <img 
+                                            src={safeWelcomeImage} 
+                                            alt="Mission Mind Organization" 
+                                            className="img-fluid" 
+                                            loading="lazy"
+                                            onLoad={handleImageLoad}
+                                            onError={handleImageError}
+                                            style={{
+                                                borderRadius: '30px',
+                                                boxShadow: '0 30px 60px rgba(15, 104, 187, 0.2)',
+                                                position: 'relative',
+                                                zIndex: 2,
+                                                width: '100%',
+                                                height: 'auto',
+                                                minHeight: '360px',
+                                                objectFit: 'cover',
+                                                transition: 'transform 0.4s ease, opacity 0.3s ease',
+                                                border: '4px solid #fff',
+                                                opacity: imageLoaded ? 1 : 0.7
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                if (imageLoaded) e.currentTarget.style.transform = 'scale(1.03)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                if (imageLoaded) e.currentTarget.style.transform = 'scale(1)';
+                                            }}
+                                        />
+                                    </Suspense>
+                                ) : (
+                                    <div style={{
+                                        width: '100%',
+                                        height: '360px',
+                                        borderRadius: '30px',
+                                        background: 'linear-gradient(135deg, #f8fbfc 0%, #e3f2fd 100%)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        border: '4px solid #fff'
+                                    }}>
+                                        <div style={{
+                                            color: '#0f68bb',
+                                            fontSize: '14px',
+                                            fontWeight: '600'
+                                        }}>
+                                            Loading image...
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
 
                             {/* Quote badge */}
                             <div style={{
@@ -476,7 +568,7 @@ const WelcomeSection = () => {
     );
 };
 
-export default WelcomeSection;
+export default React.memo(WelcomeSection);
 
 
 
