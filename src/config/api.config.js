@@ -14,8 +14,8 @@ export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ||
 
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL ||
   (isDevelopment
-    ? 'https://khwanzay.school/bak/includes/images'  // Use full backend URL in development
-    : 'https://khwanzay.school/bak/includes/images');  // Use /bak path in production for consistency
+    ? 'https://khwanzay.school/bak/'  // Use full backend URL in development
+    : 'https://khwanzay.school/bak/');  // Use /bak path in production for consistency
 
 // API Prefix (already included in base URL, but kept for reference)
 export const API_PREFIX = '/bak';

@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getNewsById, createNews, updateNews } from '../../services/news.service';
 import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
 import { sanitizeInput, sanitizeTextInput, validateFormData } from '../../utils/inputSanitizer';
+import { IMAGE_BASE_URL } from '../../config/api.config';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
@@ -17,6 +18,32 @@ const NewsForm = () => {
     const isEdit = !!id;
     const [loading, setLoading] = useState(isEdit);
     const [saving, setSaving] = useState(false);
+    
+    // Helper function to get full image URL
+    const getImageUrl = (imageData) => {
+        if (!imageData) return '';
+        if (typeof imageData === 'string') {
+            // If the URL already starts with http, return as is
+            if (imageData.startsWith('http')) return imageData;
+            // If the URL starts with /includes/images, prepend just the base URL
+            if (imageData.startsWith('/includes/images')) {
+                return `https://khwanzay.school/bak${imageData}`;
+            }
+            // Otherwise, prepend the IMAGE_BASE_URL
+            return `${IMAGE_BASE_URL}${imageData}`;
+        }
+        if (imageData.url) {
+            // If the URL already starts with http, return as is
+            if (imageData.url.startsWith('http')) return imageData.url;
+            // If the URL starts with /includes/images, prepend just the base URL
+            if (imageData.url.startsWith('/includes/images')) {
+                return `https://khwanzay.school/bak${imageData.url}`;
+            }
+            // Otherwise, prepend the IMAGE_BASE_URL
+            return `${IMAGE_BASE_URL}${imageData.url}`;
+        }
+        return '';
+    };
     
     const [formData, setFormData] = useState({
         title: { en: '', per: '', ps: '' },
@@ -51,8 +78,8 @@ const NewsForm = () => {
         try {
             setLoading(true);
             const news = await getNewsById(id);
-            if (news && news.data) {
-                const data = news.data;
+            if (news) {
+                const data = news;
                 setFormData({
                     title: {
                         en: sanitizeTextInput(data.title?.en || ''),
@@ -70,7 +97,7 @@ const NewsForm = () => {
                         ps: sanitizeInput(data.content?.ps || '')
                     },
                     status: sanitizeTextInput(data.status || 'Draft'),
-                    category: sanitizeTextInput(data.category || 'General'),
+                    category: typeof data.category === 'object' ? data.category.en || 'General' : sanitizeTextInput(data.category || 'General'),
                     tags: Array.isArray(data.tags) ? data.tags.join(', ') : sanitizeTextInput(data.tags || ''),
                     image: null,
                     existingImage: data.image || null,
@@ -232,9 +259,13 @@ const NewsForm = () => {
                                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                                 }}>
                                     <img
-                                        src={typeof formData.existingImage === 'string' ? formData.existingImage : formData.existingImage.url}
+                                        src={getImageUrl(formData.existingImage)}
                                         alt="Current featured image"
                                         style={{ maxWidth: '300px', height: '200px', objectFit: 'cover', display: 'block' }}
+                                        onError={(e) => {
+                                            console.error('Image failed to load:', e.target.src);
+                                            e.target.style.display = 'none';
+                                        }}
                                     />
                                     <div style={{
                                         position: 'absolute',
