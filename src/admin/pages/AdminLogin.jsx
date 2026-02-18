@@ -9,6 +9,8 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { showErrorToast, showSuccessToast } from '../../utils/errorHandler';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { sanitizeTextInput } from '../../utils/inputSanitizer';
+import { getAbout } from '../../services/about.service';
+import { IMAGE_BASE_URL } from '../../config/api.config';
 // import CloudflareTurnstile from "../../components/security/CloudflareTurnstile";
 import TwoFactorAuth from "../../components/security/TwoFactorAuth";
 import { 
@@ -37,6 +39,7 @@ const AdminLogin = () => {
         userAgent: '',
         location: 'Unknown'
     });
+    const [organizationData, setOrganizationData] = useState(null);
     
     // const turnstileRef = useRef(null);
     const rateLimiter = useRef(new RateLimiter(5, 15 * 60 * 1000)); // 5 attempts per 15 minutes
@@ -45,6 +48,23 @@ const AdminLogin = () => {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || '/admin';
+
+    // Fetch organization data
+    const fetchOrganizationData = async () => {
+        try {
+            const data = await getAbout();
+            setOrganizationData(data);
+        } catch (error) {
+            console.warn('Failed to fetch organization data:', error);
+        }
+    };
+
+    // Helper function to construct proper logo URL
+    const getLogoUrl = (logoPath) => {
+        if (!logoPath) return null;
+        if (logoPath.startsWith('http')) return logoPath;
+        return `${IMAGE_BASE_URL}${logoPath.startsWith('/') ? logoPath.substring(1) : logoPath}`;
+    };
 
     // Cloudflare Turnstile site key
     // const TURNSTILE_SITE_KEY = '0x4AAAAAACPm_44mTMtQD8O5';
@@ -71,6 +91,7 @@ const AdminLogin = () => {
         };
         
         initializeSecurity();
+        fetchOrganizationData();
         
         // Set security headers
         Object.entries(securityHeaders).forEach(([header, value]) => {
@@ -211,6 +232,14 @@ const AdminLogin = () => {
         }
     };
     
+    // Extract data from API response structure
+    const apiData = organizationData?.data || organizationData;
+    // Always use the 'logo' field (path) and construct URL, ignore 'logoUrl' if it's incorrect
+    const logoUrl = getLogoUrl(apiData?.logo);
+    const orgName = apiData?.name;
+    const orgStatus = apiData?.status;
+    const totalEmployees = apiData?.totalEmp;
+
     // Show 2FA screen if needed
     if (show2FA) {
         return (
@@ -308,8 +337,30 @@ const AdminLogin = () => {
                         justifyContent: 'center',
                         boxShadow: '0 10px 30px rgba(15, 104, 187, 0.4)',
                         position: 'relative',
+                        overflow: 'hidden'
                     }}>
-                        <i className="fas fa-shield-alt" style={{ fontSize: '36px', color: '#fff', zIndex: 1 }}></i>
+                        {logoUrl ? (
+                            <img 
+                                src={logoUrl} 
+                                alt="Organization Logo" 
+                                style={{ 
+                                    width: '100%', 
+                                    height: '100%', 
+                                    objectFit: 'cover',
+                                    borderRadius: '16px'
+                                }}
+                                onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    e.target.nextSibling.style.display = 'flex';
+                                }}
+                            />
+                        ) : null}
+                        <i className="fas fa-shield-alt" style={{ 
+                            fontSize: '36px', 
+                            color: '#fff', 
+                            zIndex: 1,
+                            display: logoUrl ? 'none' : 'flex'
+                        }}></i>
                         <div style={{
                             position: 'absolute',
                             top: '-5px',
@@ -333,7 +384,7 @@ const AdminLogin = () => {
                         fontWeight: '700',
                         letterSpacing: '-0.5px',
                     }}>
-                        MMO Admin Panel
+                        {orgName || 'MMO Admin Panel'}
                     </h1>
                     <p style={{ 
                         color: '#7f8c8d', 
@@ -342,6 +393,26 @@ const AdminLogin = () => {
                     }}>
                         Sign in to continue to your dashboard
                     </p>
+                    {apiData && (
+                        <div style={{ 
+                            marginTop: '12px',
+                            fontSize: '12px',
+                            color: '#9ca3af',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '4px'
+                        }}>
+                            <i className="fas fa-building" style={{ color: '#0f68bb' }}></i>
+                            <span>Status: {orgStatus || 'Active'}</span>
+                            {totalEmployees > 0 && (
+                                <>
+                                    <span>•</span>
+                                    <span>{totalEmployees} Employees</span>
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 <form onSubmit={handleSubmit}>

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SocialShare from '../others/SocialShare';
+import { getAbout } from '../../services/about.service';
 
 const HeaderTopV2 = () => {
     return (

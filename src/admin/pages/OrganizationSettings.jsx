@@ -9,6 +9,7 @@ import AdminLayout from '../layouts/AdminLayout';
 import OrganizationProfileFormModal from '../components/OrganizationProfileFormModal';
 import { getOrganization } from '../../services/organization.service';
 import { useQueryClient } from '@tanstack/react-query';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 const OrganizationSettings = () => {
   const { t } = useTranslation();

@@ -13,10 +13,19 @@ import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
 import { getAbout, updateAbout } from '../../services/about.service';
 import { useQueryClient } from '@tanstack/react-query';
 import { uploadAboutLogo } from '../../services/aboutLogo.service';
+import { toast } from 'react-toastify';
+import { IMAGE_BASE_URL } from '../../config/api.config';
 
 const numberOrZero = (v) => {
   const n = Number(v);
   return Number.isFinite(n) && n >= 0 ? n : 0;
+};
+
+// Helper function to construct proper logo URL
+const getLogoUrl = (logoPath) => {
+  if (!logoPath) return '';
+  if (logoPath.startsWith('http')) return logoPath;
+  return `${IMAGE_BASE_URL}${logoPath.startsWith('/') ? logoPath.substring(1) : logoPath}`;
 };
 
 const AboutContent = () => {
@@ -53,13 +62,16 @@ const AboutContent = () => {
     setError(null);
     try {
       const data = await getAbout({ force: true });
-      setServerData(data);
+      // Extract data from API response structure
+      const apiData = data?.data || data;
+      setServerData(apiData);
+      const logoPath = apiData?.logo || '';
       setForm({
-        maleEmp: numberOrZero(data?.maleEmp),
-        femaleEmp: numberOrZero(data?.femaleEmp),
-        totalEmp: numberOrZero(data?.totalEmp),
-        status: data?.status || 'active',
-        logoUrl: data?.logoUrl || data?.logo || '',
+        maleEmp: numberOrZero(apiData?.maleEmp),
+        femaleEmp: numberOrZero(apiData?.femaleEmp),
+        totalEmp: numberOrZero(apiData?.totalEmp),
+        status: apiData?.status || 'active',
+        logoUrl: getLogoUrl(logoPath),
       });
     } catch (e) {
       setError(e?.message || 'Failed to load');
@@ -281,10 +293,12 @@ const AboutContent = () => {
                     try {
                       setSaving(true);
                       const res = await uploadAboutLogo(file);
-                      const rawUrl = res?.logoUrl || res?.url || res?.data?.logoUrl || res?.data?.url || '';
-                      const cacheBusted = rawUrl ? `${rawUrl}${rawUrl.includes('?') ? '&' : '?'}t=${Date.now()}` : '';
+                      // Extract logoUrl from API response structure, only use 'logo' field
+                      const apiRes = res?.data || res;
+                      const rawUrl = apiRes?.logo || apiRes?.url || '';
+                      const cacheBusted = rawUrl ? `${getLogoUrl(rawUrl)}${rawUrl.includes('?') ? '&' : '?'}t=${Date.now()}` : '';
                       if (!rawUrl) {
-                        toast.warn('Uploaded, but did not receive a logoUrl.');
+                        toast.warn('Uploaded, but did not receive a logo path.');
                       }
                       setForm((prev) => ({ ...prev, logoUrl: cacheBusted || prev.logoUrl }));
                       await loadData();

@@ -2,6 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { getAbout } from '../../services/about.service';
+import { IMAGE_BASE_URL } from '../../config/api.config';
+
+// Helper function to construct proper logo URL
+const getLogoUrl = (logoPath) => {
+  if (!logoPath) return null;
+  if (logoPath.startsWith('http')) return logoPath;
+  return `${IMAGE_BASE_URL}${logoPath.startsWith('/') ? logoPath.substring(1) : logoPath}`;
+};
 
 const AboutStats = () => {
   const { t } = useTranslation();
@@ -12,17 +20,48 @@ const AboutStats = () => {
     gcTime: 30 * 60 * 1000,
   });
 
-  const male = data?.maleEmp ?? 0;
-  const female = data?.femaleEmp ?? 0;
-  const total = data?.totalEmp ?? male + female;
-  const status = data?.status ?? '—';
+  // Extract data from API response structure
+  const apiData = data?.data || data;
+  const male = apiData?.maleEmp ?? 0;
+  const female = apiData?.femaleEmp ?? 0;
+  const total = apiData?.totalEmp ?? male + female;
+  const status = apiData?.status ?? '—';
+  
+  // Construct proper logo URL using IMAGE_BASE_URL, only use 'logo' field
+  const logoUrl = getLogoUrl(apiData?.logo);
 
   return (
     <section className="about-stats-sec pt-60 pb-60">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <h2 className="mb-4">{t('about.aboutStatsTitle','Our Organization Stats')}</h2>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
+              {logoUrl && (
+                <img 
+                  src={logoUrl} 
+                  alt="Organization Logo" 
+                  style={{ 
+                    height: '60px', 
+                    marginRight: '16px',
+                    objectFit: 'contain'
+                  }}
+                  onError={(e) => e.currentTarget.style.display = 'none'}
+                />
+              )}
+              <div>
+                <h2 className="mb-0">{t('about.aboutStatsTitle','Our Organization Stats')}</h2>
+                {status && (
+                  <p style={{ 
+                    margin: '4px 0 0 0', 
+                    fontSize: '14px', 
+                    color: '#6b7280',
+                    textTransform: 'capitalize'
+                  }}>
+                    Status: {status}
+                  </p>
+                )}
+              </div>
+            </div>
             {isLoading ? (
               <div>Loading...</div>
             ) : error ? (

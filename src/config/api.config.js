@@ -150,6 +150,10 @@ export const API_ENDPOINTS = {
   PROJECTS: 'projects',
   PROJECTS_BY_ID: (id) => `projects/${id}`,
 
+  // Website Configuration
+  WEBSITE_CONFIG: '/website-config',
+  WEBSITE_CONFIG_BY_ID: (id) => `/website-config/${id}`,
+
   // Health Check
   HEALTH: 'health',
 
