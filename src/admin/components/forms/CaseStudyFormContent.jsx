@@ -145,9 +145,12 @@ const CaseStudyFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
         // Validate required fields
         const titleEn = typeof formData.title.en === 'string' ? formData.title.en.trim() : '';
         const descriptionEn = typeof formData.description.en === 'string' ? formData.description.en.trim() : '';
+        const challengeEn = typeof formData.challenge.en === 'string' ? formData.challenge.en.trim() : '';
+        const solutionEn = typeof formData.solution.en === 'string' ? formData.solution.en.trim() : '';
+        const resultsEn = typeof formData.results.en === 'string' ? formData.results.en.trim() : '';
         
-        if (!titleEn || !descriptionEn) {
-            showErrorToast(t('admin.fillRequiredFields', 'Please fill in all required fields'));
+        if (!titleEn || !descriptionEn || !challengeEn || !solutionEn || !resultsEn) {
+            showErrorToast(t('admin.fillRequiredFields', 'Please fill in all required fields: title, description, challenge, solution, and results (English)'));
             return;
         }
 
@@ -309,7 +312,7 @@ const CaseStudyFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
             <div style={{ marginBottom: '24px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
                     <i className="fas fa-exclamation-triangle" style={{ color: '#0f68bb' }}></i>
-                    <span>{t('admin.challenge', 'Challenge')}</span>
+                    <span>{t('admin.challenge', 'Challenge')} *</span>
                 </label>
                 <div style={{ marginBottom: '10px' }}>
                     <select
@@ -359,7 +362,7 @@ const CaseStudyFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
             <div style={{ marginBottom: '24px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
                     <i className="fas fa-lightbulb" style={{ color: '#0f68bb' }}></i>
-                    <span>{t('admin.solution', 'Solution')}</span>
+                    <span>{t('admin.solution', 'Solution')} *</span>
                 </label>
                 <div style={{ marginBottom: '10px' }}>
                     <select
@@ -409,7 +412,7 @@ const CaseStudyFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
             <div style={{ marginBottom: '24px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
                     <i className="fas fa-chart-line" style={{ color: '#0f68bb' }}></i>
-                    <span>{t('admin.results', 'Results')}</span>
+                    <span>{t('admin.results', 'Results')} *</span>
                 </label>
                 <div style={{ marginBottom: '10px' }}>
                     <select

@@ -82,21 +82,12 @@ const ArticleFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
             return;
         }
 
-        // Validate and sanitize form data before submission
-        const schema = {
-            title: 'text',
-            content: 'textarea',
-            reportType: 'text',
-            status: 'text'
-        };
-        
-        const sanitizedData = validateFormData(formData, schema);
-
+        // Form data is already sanitized in handleChange function
         const data = {
-            title: sanitizedData.title,
-            content: sanitizedData.content,
-            reportType: sanitizedData.reportType,
-            status: sanitizedData.status,
+            title: formData.title,
+            content: formData.content, // Backend expects 'content' field
+            reportType: formData.reportType,
+            status: formData.status,
         };
 
         try {

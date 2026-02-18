@@ -169,7 +169,33 @@ const AdminRoutes = () => {
                 }
             />
 
-            {/* Resources Routes (Success Stories, Case Studies, etc.) */}
+            {/* Resources Routes */}
+            <Route
+                path="resources"
+                element={
+                    <ProtectedRoute>
+                        <ResourcesList />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="resources/create"
+                element={
+                    <ProtectedRoute>
+                        <ResourcesForm />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="resources/edit/:id"
+                element={
+                    <ProtectedRoute>
+                        <ResourcesForm />
+                    </ProtectedRoute>
+                }
+            />
+            
+            {/* Success Stories */}
             <Route
                 path="success-stories"
                 element={

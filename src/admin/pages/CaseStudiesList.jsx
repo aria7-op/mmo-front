@@ -823,6 +823,75 @@ const CaseStudiesList = () => {
                                     />
                                 </div>
 
+                                <div style={{ marginBottom: '16px' }}>
+                                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', color: '#495057' }}>
+                                        Challenge (English) *
+                                    </label>
+                                    <textarea
+                                        value={formData.challenge.en || ''}
+                                        onChange={(e) => setFormData(prev => ({ 
+                                            ...prev, 
+                                            challenge: { ...prev.challenge, en: e.target.value } 
+                                        }))}
+                                        required
+                                        rows="3"
+                                        style={{
+                                            width: '100%',
+                                            padding: '8px 12px',
+                                            borderRadius: '4px',
+                                            border: '1px solid #ced4da',
+                                            fontSize: '14px',
+                                            resize: 'vertical'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '16px' }}>
+                                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', color: '#495057' }}>
+                                        Solution (English) *
+                                    </label>
+                                    <textarea
+                                        value={formData.solution.en || ''}
+                                        onChange={(e) => setFormData(prev => ({ 
+                                            ...prev, 
+                                            solution: { ...prev.solution, en: e.target.value } 
+                                        }))}
+                                        required
+                                        rows="3"
+                                        style={{
+                                            width: '100%',
+                                            padding: '8px 12px',
+                                            borderRadius: '4px',
+                                            border: '1px solid #ced4da',
+                                            fontSize: '14px',
+                                            resize: 'vertical'
+                                        }}
+                                    />
+                                </div>
+
+                                <div style={{ marginBottom: '16px' }}>
+                                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', color: '#495057' }}>
+                                        Results (English) *
+                                    </label>
+                                    <textarea
+                                        value={formData.results.en || ''}
+                                        onChange={(e) => setFormData(prev => ({ 
+                                            ...prev, 
+                                            results: { ...prev.results, en: e.target.value } 
+                                        }))}
+                                        required
+                                        rows="3"
+                                        style={{
+                                            width: '100%',
+                                            padding: '8px 12px',
+                                            borderRadius: '4px',
+                                            border: '1px solid #ced4da',
+                                            fontSize: '14px',
+                                            resize: 'vertical'
+                                        }}
+                                    />
+                                </div>
+
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                                     <div>
                                         <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', color: '#495057' }}>

@@ -40,7 +40,19 @@ export const getImageUrl = (imagePath) => {
       const correctedUrl = imagePath.replace('localhost:3000', 'khwanzay.school/bak');
       return correctedUrl;
     }
+    // Fix URLs that are missing /bak prefix - if URL contains khwanzay.school/includes/images/
+    if (imagePath.includes('khwanzay.school/includes/images/')) {
+      const correctedUrl = imagePath.replace('khwanzay.school/includes/images/', 'khwanzay.school/bak/includes/images/');
+      return correctedUrl;
+    }
     return imagePath;
+  }
+
+  // If path already starts with /bak/includes/images/, construct URL directly with API_BASE_URL
+  if (imagePath.startsWith('/bak/includes/images/')) {
+    // Use API_BASE_URL instead of IMAGE_BASE_URL for consistency
+    const finalUrl = `${API_BASE_URL}${imagePath}`;
+    return finalUrl;
   }
 
   // If path already starts with /includes/images/, construct URL directly with API_BASE_URL
@@ -52,6 +64,12 @@ export const getImageUrl = (imagePath) => {
 
   // Remove leading slash if present
   let cleanPath = imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
+
+  // Remove 'bak/includes/images/' prefix if it exists (API sometimes returns paths with this already)
+  // Handle both 'bak/includes/images/' and '/bak/includes/images/' patterns
+  if (cleanPath.startsWith('bak/includes/images/')) {
+    cleanPath = cleanPath.substring('bak/includes/images/'.length);
+  }
 
   // Remove 'includes/images/' prefix if it exists (API sometimes returns paths with this already)
   // Handle both 'includes/images/' and '/includes/images/' patterns
@@ -84,6 +102,12 @@ export const getImageUrlFromObject = (imageObject) => {
   if (typeof imageObject === 'object') {
     // Try url property first
     if (imageObject.url) {
+      // If URL starts with /bak/includes/images/, construct full URL directly with API base URL
+      if (imageObject.url.startsWith('/bak/includes/images/')) {
+        const directUrl = `${API_BASE_URL}${imageObject.url}`;
+        return directUrl;
+      }
+      
       // If URL starts with /includes/images/, construct full URL directly with API base URL
       if (imageObject.url.startsWith('/includes/images/')) {
         const directUrl = `${API_BASE_URL}${imageObject.url}`;
@@ -99,6 +123,12 @@ export const getImageUrlFromObject = (imageObject) => {
       // Replace localhost:3000 with khwanzay.school/bak
       if (imageObject.url.includes('localhost:3000')) {
         const correctedUrl = imageObject.url.replace('localhost:3000', 'khwanzay.school/bak');
+        return correctedUrl;
+      }
+      
+      // Fix URLs that are missing /bak prefix - if URL contains khwanzay.school/includes/images/
+      if (imageObject.url.includes('khwanzay.school/includes/images/')) {
+        const correctedUrl = imageObject.url.replace('khwanzay.school/includes/images/', 'khwanzay.school/bak/includes/images/');
         return correctedUrl;
       }
       
@@ -322,12 +352,18 @@ export const createFormData = (data, files = null, fileFieldName = 'image') => {
       console.debug('[createFormData] Creating FormData with data:', {
         hasTitle: !!dataToSend.title,
         hasDescription: !!dataToSend.description,
+        hasContent: !!dataToSend.content,
         hasCategory: !!dataToSend.category,
         categoryValue: dataToSend.category,
         categoryString: JSON.stringify(dataToSend.category),
         fullDataString: JSON.stringify(dataToSend),
         hasFiles: !!files
       });
+      
+      // Additional validation for articles
+      if (dataToSend.content && !dataToSend.description) {
+        console.debug('[createFormData] Article detected - using content field');
+      }
     }
     
     formData.append('data', JSON.stringify(dataToSend));

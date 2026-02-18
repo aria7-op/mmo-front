@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getEventById, createEvent, updateEvent } from '../../services/events.service';
 import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
 import { sanitizeInput, sanitizeTextInput, validateFormData } from '../../utils/inputSanitizer';
+import { IMAGE_BASE_URL } from '../../config/api.config';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
@@ -50,10 +51,13 @@ const EventsForm = () => {
         try {
             setLoading(true);
             const event = await getEventById(id);
-            if (event && event.data) {
-                const data = event.data;
+            
+            // The API returns data directly, not wrapped in .data
+            if (event && (event.title || event._id)) {
+                const data = event;
+                
                 const eventDateTime = data.eventDate ? new Date(data.eventDate) : new Date();
-                setFormData({
+                const formDataToSet = {
                     title: {
                         en: sanitizeTextInput(data.title?.en || ''),
                         per: sanitizeTextInput(data.title?.per || ''),
@@ -74,9 +78,14 @@ const EventsForm = () => {
                     status: sanitizeTextInput(data.status || 'upcoming'),
                     image: null,
                     existingImage: data.image,
-                });
+                };
+                
+                setFormData(formDataToSet);
+            } else {
+                console.error('[EventsForm] No event data found:', event);
             }
         } catch (error) {
+            console.error('[EventsForm] Failed to load event:', error);
             showErrorToast('Failed to load event');
             navigate('/admin/events');
         } finally {
@@ -250,7 +259,14 @@ const EventsForm = () => {
                                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                                 }}>
                                     <img 
-                                        src={typeof formData.existingImage === 'string' ? formData.existingImage : formData.existingImage.url} 
+                                        src={typeof formData.existingImage === 'string' 
+                                            ? (formData.existingImage.startsWith('http') 
+                                                ? formData.existingImage 
+                                                : `${IMAGE_BASE_URL}${formData.existingImage.startsWith('/') ? formData.existingImage.slice(1) : formData.existingImage}`)
+                                            : (formData.existingImage?.url?.startsWith('http') 
+                                                ? formData.existingImage.url 
+                                                : `${IMAGE_BASE_URL}${formData.existingImage?.url?.startsWith('/') ? formData.existingImage.url.slice(1) : formData.existingImage.url || ''}`)
+                                        } 
                                         alt="Current event image" 
                                         style={{ maxWidth: '300px', height: '200px', objectFit: 'cover', display: 'block' }} 
                                     />
