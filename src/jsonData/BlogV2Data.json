@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "thumb": "acdo-blog-1.jpg",
+        "author": "MMO WASH Team",
+        "date": "10 Dec 2024",
+        "title": "Clean Water Access for Communities",
+        "text": "MMO's WASH programs provide clean water and sanitation facilities to vulnerable communities across Afghanistan"
+    },
+    {
+        "id": 2,
+        "thumb": "acdo-blog-2.jpg",
+        "author": "MMO Education Team",
+        "date": "15 Jan 2025",
+        "title": "Community-Based Education Programs",
+        "text": "Supporting equal education opportunities through community-based education programs for children in rural areas"
+    },
+    {
+        "id": 3,
+        "thumb": "acdo-blog-3.jpg",
+        "author": "MMO Infrastructure Team",
+        "date": "20 Jan 2025",
+        "title": "WASH Infrastructure Development",
+        "text": "Building sustainable water and sanitation infrastructure to improve community health and well-being"
+    },
+    {
+        "id": 4,
+        "thumb": "acdo-blog-4.jpg",
+        "author": "MMO Construction Team",
+        "date": "25 Jan 2025",
+        "title": "School Construction Projects",
+        "text": "Constructing schools and educational facilities to ensure quality education access for all children"
+    },
+    {
+        "id": 5,
+        "thumb": "acdo-blog-5.jpg",
+        "author": "MMO Child Protection Team",
+        "date": "28 Jan 2025",
+        "title": "Child Protection Initiatives",
+        "text": "Protecting vulnerable children and ensuring their access to education, healthcare, and safe environments"
+    },
+    {
+        "id": 6,
+        "thumb": "acdo-blog-6.jpg",
+        "author": "MMO Emergency Response",
+        "date": "30 Jan 2025",
+        "title": "Emergency Response Programs",
+        "text": "Providing rapid humanitarian assistance to communities affected by natural disasters and crises"
+    }
+]

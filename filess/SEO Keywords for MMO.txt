@@ -1,0 +1,143 @@
+SEO Keywords for MMO
+
+3) Keyword groups & suggested keywords (ready to use)
+Tip: Put the highest priority terms (donate, programs, education in Afghanistan) on main pages and meta titles; use long-tail phrases for blog/news posts and resource pages.
+
+A — Primary / Short-tail (High level — use on homepage & main nav)
+    1. NGO Afghanistan
+    2. humanitarian organization Afghanistan
+    3. education NGO Afghanistan
+    4. food security Afghanistan
+    5. WASH Afghanistan
+    6. protection NGO Afghanistan
+    7. livelihoods Afghanistan
+    8. emergency shelter Afghanistan
+    9. donate Afghanistan NGO
+    10. Mission Mind Organization
+
+B — Mid-tail (Program / Services focused — good for program landing pages)
+    1. community based education Afghanistan
+    2. literacy programs Afghanistan
+    3. nutrition programs Afghanistan
+    4. GBV protection services Afghanistan
+    5. food security and agriculture programs Afghanistan
+    6. WASH infrastructure projects Afghanistan
+    7. NFIs distribution Afghanistan
+    8. emergency shelter programs Afghanistan
+    9. livelihoods support Afghanistan
+    10. education projects in rural Afghanistan
+    11. NGO partners in Afghanistan
+    12. humanitarian aid organizations Afghanistan
+    13. NGO jobs Afghanistan
+    14. volunteer opportunities Afghanistan NGO
+    15. reports and publications MMO
+
+C — Long-tail & Intent (High conversion — use in blog posts, news, FAQs, resource pages)
+    1. how to donate to an NGO in Afghanistan
+    2. where to donate for education in Afghanistan
+    3. apply for NGO jobs in Afghanistan 2025
+    4. community based education programs in [Province Name] Afghanistan
+    5. literacy programs for women in Afghanistan
+    6. food security projects helping farmers in Afghanistan
+    7. WASH project case studies Afghanistan
+    8. how NGOs support GBV survivors in Afghanistan
+    9. nutrition assistance programs for children Afghanistan
+    10. emergency shelter and NFI distribution in Afghanistan
+    11. Mission Mind Organization annual report 2025 download
+    12. MMO success stories education program
+    13. RFQ RFP NGO Afghanistan (use on resources page)
+    14. NGO partnership opportunities Afghanistan
+    15. volunteer with education NGO in Kabul
+    16. best humanitarian organizations working in Afghanistan
+    17. how to partner with UN agencies in Afghanistan
+    18. community resilience projects Afghanistan case study
+    19. donor-funded education initiatives Afghanistan
+    20. child literacy campaign Afghanistan
+
+D — Local / Geo-targeted variations (use on landing pages for provinces)
+    1. education NGO Kabul
+    2. food security Herat province
+    3. WASH projects Nangarhar
+    4. livelihood programs Balkh province
+    5. GBV support Mazar-e-Sharif
+    6. emergency shelter Kandahar
+    7. literacy programs in Jalalabad
+    8. NGO jobs in Kabul
+    9. volunteer in Herat NGO
+    10. community development programs in [Province]
+(Replace [Province] with the 15 specific provinces you work in; this increases local visibility.)
+
+E — Resource & Action-oriented keywords (use on Resources, Reports, Jobs, Donate pages)
+    1. MMO annual report PDF
+    2. NGO project reports Afghanistan
+    3. download MMO annual report
+    4. MMO job vacancies
+    5. apply MMO job Afghanistan
+    6. MMO RFQ RFP opportunities
+    7. MMO success stories PDF
+    8. NGO policies and procedures Afghanistan
+    9. how to volunteer with MMO
+    10. donate now MMO
+
+F — SEO for specific programs (SITC, TAABAN, Stay In Afghanistan)
+    1. SITC program Afghanistan
+    2. SITC education initiative MMO
+    3. TAABAN program livelihood Afghanistan
+    4. TAABAN community resilience project
+    5. Stay In Afghanistan program support
+    6. Stay In Afghanistan reintegration programs
+    7. MMO SITC success story
+    8. TAABAN beneficiary story
+
+G — Brand + Trust & Partnership keywords (good for About & Partnerships pages)
+    1. Mission Mind Organization partners
+    2. MMO partners UN agencies
+    3. MMO board of directors
+    4. MMO transparency and accountability
+    5. NGO compliance and ethics Afghanistan
+    6. NGO funding partners Afghanistan
+
+H — Multilingual / Language variants (important in Afghanistan — consider translations)
+    • English + local languages (Dari / Pashto). Example English → Dari / Pashto phrases to target local search:
+        ◦ “education programs in Afghanistan” → translate to Dari/Pashto equivalents and add them as pages or hreflang content.
+        ◦ Example translated keywords to add as alt / meta / H1s: (You should translate accurately for your audience.)
+
+I — Keyword phrases for social/engagement & media
+    1. MMO news and events
+    2. MMO gallery photos video
+    3. MMO success stories volunteers
+    4. MMO press release Afghanistan
+    5. MMO community stories
+
+4) How to map & prioritize these keywords (quick roadmap)
+    1. Homepage: Primary short-tail + branded phrases (e.g., “Mission Mind Organization — humanitarian organization Afghanistan”, “Donate to education & WASH programs in Afghanistan”).
+    2. Programs pages: One main mid-tail per program (Education page → “community based education Afghanistan”), plus 4–6 long-tails as H2s/FAQ entries.
+    3. Resources/Reports: Use transactional/resource keywords (e.g., “MMO annual report PDF”, “RFP NGO Afghanistan”).
+    4. Donate page: Transactional long-tails (“how to donate to an NGO in Afghanistan”, “donate now MMO”).
+    5. Jobs page: “NGO jobs in Kabul”, “apply MMO job Afghanistan 2025”.
+    6. Blog/News: Use long-tail educational content and case studies (“WASH project case study Afghanistan”, “how NGOs support GBV survivors in Afghanistan”).
+    7. Local landing pages: Create localized pages for each province and use geo keywords.
+5) Implementation tips (quick)
+    • Put main keyword in page title, H1, URL slug, meta description and first paragraph.
+    • Use long-tail phrases naturally in subheadings and FAQ sections.
+    • Add structured data for organization, events, jobs and publications.
+    • Translate top pages into Dari and Pashto (hreflang) for local reach.
+    • Add ALT text to images using keywords (e.g., “WASH project MMO Balkh 2025”).
+    • Create resource PDFs (annual report) with crawlable text and link them with keyworded anchor text (“Download MMO annual report 2025 (PDF)”).
+6) Quick prioritized list (Top 15 to start with)
+    1. donate NGO Afghanistan
+    2. education NGO Afghanistan
+    3. community based education Afghanistan
+    4. WASH projects Afghanistan
+    5. food security Afghanistan
+    6. protection GBV services Afghanistan
+    7. MMO annual report PDF
+    8. NGO jobs in Afghanistan
+    9. volunteer with NGO Afghanistan
+    10. emergency shelter Afghanistan
+    11. livelihoods programs Afghanistan
+    12. literacy programs Afghanistan
+    13. TAABAN program Afghanistan
+    14. SITC program MMO
+    15. Stay In Afghanistan program
+

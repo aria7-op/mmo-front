@@ -1,0 +1,426 @@
+/**
+ * Responsive Tester Component Styles
+ */
+
+.responsive-tester {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.viewport-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.viewport-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.current-viewport {
+    font-weight: bold;
+    color: #4ecdc4;
+}
+
+.current-breakpoint {
+    color: #ffd93d;
+    font-size: 11px;
+}
+
+.preset-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.preset-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 60px;
+}
+
+.preset-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.control-btn {
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.control-btn.active {
+    background: rgba(78, 205, 196, 0.3);
+    border-color: #4ecdc4;
+}
+
+.control-btn.close {
+    background: rgba(255, 107, 107, 0.3);
+    border-color: #ff6b6b;
+}
+
+.issues-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.issues-panel h4 {
+    margin: 10px 15px;
+    color: #ff6b6b;
+    font-size: 12px;
+}
+
+.issues-list {
+    padding: 0 15px 15px;
+}
+
+.issue-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-left: 3px solid #ddd;
+    font-size: 11px;
+}
+
+.issue-type {
+    min-width: 80px;
+    font-weight: bold;
+    color: #ffd93d;
+}
+
+.issue-message {
+    flex: 1;
+    color: #fff;
+}
+
+.issue-severity {
+    min-width: 50px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+.grid-columns,
+.grid-rows {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.grid-column {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 8.33%;
+    border-left: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.grid-row {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 8.33%;
+    border-top: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.ruler-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+.ruler-horizontal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.ruler-vertical {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ruler-mark-h,
+.ruler-mark-v {
+    position: relative;
+    border: 1px solid rgba(255, 255, 0, 0.5);
+}
+
+.ruler-mark-h {
+    width: 1px;
+    height: 10px;
+    margin-left: 100px;
+}
+
+.ruler-mark-v {
+    width: 10px;
+    height: 1px;
+    margin-top: 100px;
+}
+
+.ruler-label {
+    position: absolute;
+    font-size: 8px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.ruler-mark-h .ruler-label {
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ruler-mark-v .ruler-label {
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+}
+
+.viewport-frame {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #4ecdc4;
+    background: rgba(78, 205, 196, 0.1);
+    pointer-events: none;
+    z-index: 9997;
+    transition: all 0.3s ease;
+}
+
+.viewport-label {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4ecdc4;
+    color: #000;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.breakpoint-indicators {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+}
+
+.indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    font-size: 10px;
+    transition: all 0.2s;
+}
+
+.indicator.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.indicator-dot.mobile {
+    background: #ff6b6b;
+}
+
+.indicator-dot.tablet {
+    background: #4ecdc4;
+}
+
+.indicator-dot.desktop {
+    background: #45b7d1;
+}
+
+.indicator-dot.large-desktop {
+    background: #96ceb4;
+}
+
+.indicator.active .indicator-dot {
+    transform: scale(1.5);
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* Responsive adjustments for the tester itself */
+@media (max-width: 768px) {
+    .viewport-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .preset-buttons {
+        justify-content: center;
+    }
+    
+    .control-buttons {
+        justify-content: center;
+    }
+    
+    .preset-btn {
+        min-width: 50px;
+        font-size: 9px;
+        padding: 6px 8px;
+    }
+    
+    .control-btn {
+        font-size: 9px;
+        padding: 6px 8px;
+    }
+    
+    .breakpoint-indicators {
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .viewport-info {
+        text-align: center;
+    }
+    
+    .preset-buttons {
+        gap: 4px;
+    }
+    
+    .preset-btn {
+        min-width: 40px;
+        font-size: 8px;
+        padding: 4px 6px;
+    }
+    
+    .control-btn {
+        font-size: 8px;
+        padding: 4px 6px;
+    }
+    
+    .issues-panel {
+        max-height: 150px;
+    }
+    
+    .issue-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .issue-type {
+        min-width: auto;
+    }
+}
+
+/* Animation classes */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.responsive-tester {
+    animation: slideDown 0.3s ease-out;
+}
+
+.issues-panel {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Print styles */
+@media print {
+    .responsive-tester {
+        display: none !important;
+    }
+}

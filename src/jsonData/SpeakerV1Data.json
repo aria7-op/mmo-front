@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "thumb": "speaker_1.jpg",
+        "name": "Alexander Hart",
+        "designation": "speaker",
+        "text": "Lorem ipsum dolor sit amet, leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque nibh donec eleifend etiam eu. Praesent tellus ali leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque"
+    },
+    {
+        "id": 2,
+        "thumb": "speaker_4.jpg",
+        "name": "Charlotte Patel",
+        "designation": "speaker",
+        "text": "Lorem ipsum dolor sit amet, leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque nibh donec eleifend etiam eu. Praesent tellus ali leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque"
+    },
+    {
+        "id": 3,
+        "thumb": "speaker_2.jpg",
+        "name": "Arthur Westwood",
+        "designation": "speaker",
+        "text": "Lorem ipsum dolor sit amet, leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque nibh donec eleifend etiam eu. Praesent tellus ali leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque"
+    },
+    {
+        "id": 4,
+        "thumb": "speaker_5.jpg",
+        "name": "Isabella Clarke",
+        "designation": "speaker",
+        "text": "Lorem ipsum dolor sit amet, leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque nibh donec eleifend etiam eu. Praesent tellus ali leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque"
+    },
+    {
+        "id": 5,
+        "thumb": "speaker_3.jpg",
+        "name": "Henry Lawson",
+        "designation": "speaker",
+        "text": "Lorem ipsum dolor sit amet, leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque nibh donec eleifend etiam eu. Praesent tellus ali leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque"
+    },
+    {
+        "id": 6,
+        "thumb": "speaker_6.jpg",
+        "name": "Eleanor Harrison",
+        "designation": "speaker",
+        "text": "Lorem ipsum dolor sit amet, leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque nibh donec eleifend etiam eu. Praesent tellus ali leo nulla condimentum dui eleifend in magna, suscipit ac neque ac egestas, quisque"
+    }
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "thumb": "acdo-testimonial-1.jpg",
+        "name": "International Donor",
+        "designation": "Supporting Education",
+        "text": "MMO's transparent approach and measurable impact make them an excellent partner for humanitarian giving."
+    },
+    {
+        "id": 2,
+        "thumb": "acdo-testimonial-2.jpg",
+        "name": "Corporate Partner",
+        "designation": "WASH Programs",
+        "text": "We've seen firsthand how MMO transforms communities through sustainable water and sanitation projects."
+    },
+    {
+        "id": 3,
+        "thumb": "acdo-testimonial-3.jpg",
+        "name": "Individual Supporter",
+        "designation": "Emergency Response",
+        "text": "Supporting MMO means directly helping vulnerable families in Afghanistan. Their dedication is inspiring."
+    }
+]

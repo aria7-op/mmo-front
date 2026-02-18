@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "thumb": "cause-widget-1.jpg",
+        "title": "Construction of water well",
+        "text": "Lorem ipsum dolor sit amet mattis vehicula scelerisque ."
+    },
+    {
+        "id": 2,
+        "thumb": "",
+        "title": "Financial help for homeless child",
+        "text": "Lorem ipsum dolor sit amet mattis vehicula scelerisque ."
+    },
+    {
+        "id": 3,
+        "thumb": "cause-widget-2.jpg",
+        "title": "Back to school",
+        "text": "Lorem ipsum dolor sit amet mattis vehicula scelerisque ."
+    }
+]

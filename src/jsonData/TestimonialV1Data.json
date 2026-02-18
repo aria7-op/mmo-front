@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "thumb": "acdo-testimonial-1.jpg",
+        "name": "Waisullah Sadqi",
+        "designation": "President, MMO",
+        "text": "Mission Mind Organization has been at the forefront of humanitarian work in Afghanistan. Our commitment to providing education, WASH facilities, and emergency response has transformed thousands of lives across 15 provinces."
+    },
+    {
+        "id": 2,
+        "thumb": "acdo-testimonial-2.jpg",
+        "name": "Community Leader",
+        "designation": "Balkh Province",
+        "text": "MMO's community-based education programs have given our children hope for a better future. Their dedication to quality education and infrastructure development is truly remarkable."
+    },
+    {
+        "id": 3,
+        "thumb": "acdo-testimonial-3.jpg",
+        "name": "Program Beneficiary",
+        "designation": "Nangarhar Province",
+        "text": "The WASH projects implemented by MMO have brought clean water and sanitation to our village. This has significantly improved the health and well-being of our community members."
+    },
+    {
+        "id": 4,
+        "thumb": "acdo-testimonial-4.jpg",
+        "name": "Partner Organization",
+        "designation": "Kabul, Afghanistan",
+        "text": "Working with Mission Mind Organization has been a privilege. Their transparent operations, dedication to beneficiaries, and impact-driven approach make them a trusted partner in humanitarian work."
+    }
+]

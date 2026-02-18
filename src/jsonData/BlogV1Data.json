@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "thumb": "acdo-blog-1.jpg",
+        "title": "MMO General Assembly 2024 - Annual Review and Future Plans",
+        "author": "MMO Communications",
+        "date": "10 Dec 2024",
+        "text": "Mission Mind Organization successfully concluded its Annual General Assembly 2024, reviewing achievements across 15 provinces in Afghanistan. The assembly highlighted progress in education, WASH, food security, and emergency response programs, benefiting over 224,780 people. Key discussions focused on expanding community-based education initiatives and strengthening partnerships for sustainable development."
+    },
+    {
+        "id": 2,
+        "thumb": "acdo-blog-2.jpg",
+        "title": "Community-Based Education Program Launched in Baghlan Province",
+        "author": "MMO Education Team",
+        "date": "15 Jan 2025",
+        "text": "Mission Mind Organization has launched a new Community-Based Education (CBE) program in Baghlan Province, providing quality education opportunities for children in rural areas. The program includes teacher training, educational materials distribution, and community mobilization to ensure sustainable access to education. This initiative is part of MMO's commitment to supporting equal education opportunities across Afghanistan."
+    },
+    {
+        "id": 3,
+        "thumb": "acdo-blog-3.jpg",
+        "title": "WASH Infrastructure Projects Transform Communities in Nangarhar",
+        "author": "MMO WASH Team",
+        "date": "20 Jan 2025",
+        "text": "MMO's Water, Sanitation, and Hygiene (WASH) infrastructure projects have successfully improved access to clean water and sanitation facilities in Nangarhar Province. The projects include well construction, water distribution systems, and hygiene education programs. These initiatives have significantly reduced waterborne diseases and improved the overall health and well-being of beneficiary communities."
+    }
+]

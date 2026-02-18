@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "thumb": "acdo-event-2.jpg",
+        "icon1": "fa-solid fa-location-dot",
+        "icon2": "fa-regular fa-calendar",
+        "icon3": "fa-regular fa-clock",
+        "title": "Community-Based Education Program Launch",
+        "location": "Baghlan Province",
+        "date": "15 Jan 2025",
+        "time": "09:00 AM"
+    },
+    {
+        "id": 2,
+        "thumb": "acdo-event-3.jpg",
+        "icon1": "fa-solid fa-location-dot",
+        "icon2": "fa-regular fa-calendar",
+        "icon3": "fa-regular fa-clock",
+        "title": "WASH Infrastructure Workshop",
+        "location": "Nangarhar Province",
+        "date": "20 Jan 2025",
+        "time": "02:00 PM"
+    },
+    {
+        "id": 3,
+        "thumb": "acdo-event-4.jpg",
+        "icon1": "fa-solid fa-location-dot",
+        "icon2": "fa-regular fa-calendar",
+        "icon3": "fa-regular fa-clock",
+        "title": "School Construction Ceremony",
+        "location": "Paktia Province",
+        "date": "25 Jan 2025",
+        "time": "11:00 AM"
+    }
+]

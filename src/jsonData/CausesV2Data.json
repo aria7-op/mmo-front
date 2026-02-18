@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "thumb": "",
+        "currentValue": 75,
+        "minimumValue": 0,
+        "maximumValue": 100,
+        "width": "75%",
+        "count": 75,
+        "title": "clean water for child",
+        "text": "Lorem ipsum dolor sit amet, vitae mattis vehicula scelerisque suscipit donec, tortor duis phasellus vivamus wisi",
+        "raised": 7500,
+        "goal": 9500
+    },
+    {
+        "id": 2,
+        "thumb": "",
+        "currentValue": 90,
+        "minimumValue": 0,
+        "maximumValue": 100,
+        "width": "90%",
+        "count": 90,
+        "title": "home for homeless child",
+        "text": "Lorem ipsum dolor sit amet, vitae mattis vehicula scelerisque suscipit donec, tortor duis phasellus vivamus wisi",
+        "raised": 8500,
+        "goal": 9500
+    },
+    {
+        "id": 3,
+        "thumb": "",
+        "currentValue": 80,
+        "minimumValue": 0,
+        "maximumValue": 100,
+        "width": "80%",
+        "count": 80,
+        "title": "education for child",
+        "text": "Lorem ipsum dolor sit amet, vitae mattis vehicula scelerisque suscipit donec, tortor duis phasellus vivamus wisi",
+        "raised": 9000,
+        "goal": 9500
+    },
+    {
+        "id": 4,
+        "thumb": "",
+        "currentValue": 60,
+        "minimumValue": 0,
+        "maximumValue": 100,
+        "width": "60%",
+        "count": 60,
+        "title": "new kindergarten",
+        "text": "Lorem ipsum dolor sit amet, vitae mattis vehicula scelerisque suscipit donec, tortor duis phasellus vivamus wisi",
+        "raised": 7000,
+        "goal": 10500
+    },
+    {
+        "id": 5,
+        "thumb": "",
+        "currentValue": 90,
+        "minimumValue": 0,
+        "maximumValue": 100,
+        "width": "90%",
+        "count": 90,
+        "title": "help senior citizens",
+        "text": "Lorem ipsum dolor sit amet, vitae mattis vehicula scelerisque suscipit donec, tortor duis phasellus vivamus wisi",
+        "raised": 7000,
+        "goal": 10500
+    },
+    {
+        "id": 6,
+        "thumb": "",
+        "currentValue": 65,
+        "minimumValue": 0,
+        "maximumValue": 100,
+        "width": "65%",
+        "count": 65,
+        "title": "clothes for every child",
+        "text": "Lorem ipsum dolor sit amet, vitae mattis vehicula scelerisque suscipit donec, tortor duis phasellus vivamus wisi",
+        "raised": 7000,
+        "goal": 10500
+    }
+]

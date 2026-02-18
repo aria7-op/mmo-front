@@ -1,0 +1,1357 @@
+/* ============================================
+   ORGANIZATIONAL TREE CHART - HIERARCHICAL
+   ============================================ */
+
+/* Main Container */
+.org-structure-sec {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: auto;
+  padding: 2rem 0;
+}
+
+.org-tree-container {
+  position: relative;
+  min-height: 600px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 2rem;
+  overflow-x: auto;
+}
+
+/* ============================================
+   TREE STRUCTURE - CORE
+   ============================================ */
+.tree {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Universal list reset for tree */
+.tree ul {
+  position: relative;
+  padding-top: 30px;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.tree li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 15px 0 15px;
+}
+
+/* ============================================
+   CONNECTING LINES
+   ============================================ */
+
+/* Vertical line from parent down */
+.tree li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: 30px;
+  background: linear-gradient(180deg, #0f68bb 0%, #0d5ba0 100%);
+  transform: translateX(-50%);
+}
+
+/* Horizontal line connecting siblings */
+.tree li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #0f68bb 0%, #0d5ba0 100%);
+}
+
+/* Remove lines for root element */
+.tree > ul > li::before,
+.tree > ul > li::after {
+  display: none;
+}
+
+/* Horizontal line adjustments for first and last child */
+.tree li:first-child::after {
+  left: 50%;
+  width: 50%;
+  border-radius: 3px 0 0 0;
+}
+
+.tree li:last-child::after {
+  right: 50%;
+  left: auto;
+  width: 50%;
+  border-radius: 0 3px 0 0;
+}
+
+/* Single child - no horizontal line */
+.tree li:only-child::after {
+  display: none;
+}
+
+/* Extend line for single child */
+.tree li:only-child::before {
+  height: 30px;
+}
+
+/* ============================================
+   LEVEL 1 - CEO / ROOT NODE
+   ============================================ */
+.tree-node {
+  position: relative;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.tree-node.level-0 .node-card,
+.ceo-node .node-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  padding: 2rem 3rem;
+  box-shadow: 
+    0 15px 35px rgba(15, 104, 187, 0.2),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 4px solid #0f68bb;
+  min-width: 280px;
+  max-width: 350px;
+  text-align: center;
+  position: relative;
+}
+
+.tree-node.level-0 .node-card::before,
+.ceo-node .node-card::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(135deg, #0f68bb, #ffc107, #0f68bb);
+  border-radius: 22px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tree-node.level-0:hover .node-card::before,
+.ceo-node:hover .node-card::before {
+  opacity: 1;
+}
+
+.tree-node.level-0:hover .node-card,
+.ceo-node:hover .node-card {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(15, 104, 187, 0.3),
+    0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* CEO Icon */
+.node-icon.level-0,
+.ceo-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #0f68bb 0%, #094578 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 1.25rem;
+  box-shadow: 0 8px 20px rgba(15, 104, 187, 0.4);
+  position: relative;
+}
+
+.node-icon.level-0::after,
+.ceo-icon::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* CEO Text */
+.node-title.level-0,
+.ceo-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.node-subtitle.level-0,
+.ceo-position {
+  font-size: 1.1rem;
+  color: #0f68bb;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.node-meta.level-0 {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Connector from CEO */
+.tree-node.level-0::after,
+.ceo-node::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 30px;
+  background: linear-gradient(180deg, #0f68bb 0%, #0d5ba0 100%);
+  border-radius: 2px;
+}
+
+/* ============================================
+   LEVEL 2 - MANAGEMENT / EXECUTIVES
+   ============================================ */
+.tree-level-1,
+.management-level {
+  position: relative;
+  display: flex;
+  gap: 2rem;
+  padding-top: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Horizontal connector for management level */
+.tree-level-1::before,
+.management-level::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 30px;
+  background: linear-gradient(180deg, #0f68bb 0%, #0d5ba0 100%);
+}
+
+.tree-node.level-1 .node-card,
+.department-node {
+  background: white;
+  border-radius: 16px;
+  padding: 1.75rem 2.25rem;
+  box-shadow: 
+    0 10px 25px rgba(13, 91, 160, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+  border: 3px solid #0d5ba0;
+  min-width: 220px;
+  max-width: 280px;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tree-node.level-1:hover .node-card,
+.department-node:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 18px 35px rgba(13, 91, 160, 0.25),
+    0 8px 15px rgba(0, 0, 0, 0.1);
+  border-color: #0f68bb;
+}
+
+.node-icon.level-1,
+.department-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #0d5ba0 0%, #094578 100%);
+  color: white;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto 1rem;
+  box-shadow: 0 6px 15px rgba(13, 91, 160, 0.3);
+}
+
+.node-title.level-1,
+.department-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.35rem;
+}
+
+.node-subtitle.level-1,
+.department-head {
+  font-size: 0.95rem;
+  color: #0d5ba0;
+  font-weight: 500;
+}
+
+.node-meta.level-1 {
+  font-size: 0.85rem;
+  color: #868e96;
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   LEVEL 3 - TEAMS / SUB-DEPARTMENTS
+   ============================================ */
+.tree-level-2,
+.team-wings {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+  padding-top: 25px;
+  position: relative;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Connector from department to teams */
+.tree-level-2::before,
+.team-wings::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 25px;
+  background: linear-gradient(180deg, #0d5ba0 0%, #5a9fd4 100%);
+}
+
+.tree-node.level-2 .node-card,
+.team-node {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  border: 2px solid #5a9fd4;
+  min-width: 180px;
+  max-width: 220px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tree-node.level-2:hover .node-card,
+.team-node:hover {
+  transform: translateY(-5px);
+  background: white;
+  border-color: #0d5ba0;
+  box-shadow: 0 12px 25px rgba(13, 91, 160, 0.2);
+}
+
+.node-icon.level-2,
+.team-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #5a9fd4 0%, #0d5ba0 100%);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin: 0 auto 0.75rem;
+  box-shadow: 0 4px 10px rgba(90, 159, 212, 0.3);
+}
+
+.node-title.level-2,
+.team-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.25rem;
+}
+
+.node-subtitle.level-2,
+.team-lead {
+  font-size: 0.85rem;
+  color: #5a9fd4;
+  font-weight: 500;
+}
+
+/* ============================================
+   LEVEL 4 - MEMBERS / INDIVIDUAL NODES
+   ============================================ */
+.tree-level-3,
+.member-level {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding-top: 20px;
+  max-width: 280px;
+  position: relative;
+}
+
+.tree-level-3::before,
+.member-level::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg, #5a9fd4 0%, #adb5bd 100%);
+}
+
+.tree-node.level-3 .node-card,
+.member-node {
+  background: white;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #dee2e6;
+  min-width: 100px;
+  max-width: 130px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.tree-node.level-3:hover .node-card,
+.member-node:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: #5a9fd4;
+}
+
+.node-icon.level-3,
+.member-avatar {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #495057;
+  font-size: 1rem;
+  margin: 0 auto 0.5rem;
+  border: 2px solid #dee2e6;
+  overflow: hidden;
+}
+
+.node-icon.level-3 img,
+.member-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.node-title.level-3,
+.member-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-subtitle.level-3,
+.member-role {
+  font-size: 0.75rem;
+  color: #868e96;
+}
+
+/* ============================================
+   LEVEL 5+ - DEEP NESTED NODES
+   ============================================ */
+.tree-node.level-4 .node-card,
+.tree-node.level-5 .node-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e9ecef;
+  min-width: 90px;
+  text-align: center;
+}
+
+.node-icon.level-4,
+.node-icon.level-5 {
+  width: 32px;
+  height: 32px;
+  background: #e9ecef;
+  color: #6c757d;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  margin: 0 auto 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.node-title.level-4,
+.node-title.level-5 {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* ============================================
+   WING LAYOUTS - LEFT / RIGHT / CENTER
+   ============================================ */
+
+/* Wing Container */
+.tree-wings {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding-top: 30px;
+  position: relative;
+  width: 100%;
+}
+
+.tree-wings::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 30px;
+  background: linear-gradient(180deg, #0f68bb 0%, #0d5ba0 100%);
+}
+
+/* Horizontal bar connecting wings */
+.tree-wings::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #0d5ba0 10%, 
+    #0d5ba0 90%, 
+    transparent 100%);
+}
+
+/* Individual Wings */
+.wing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-top: 30px;
+}
+
+.wing::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 30px;
+  background: #0d5ba0;
+}
+
+.wing-left {
+  align-items: flex-end;
+}
+
+.wing-right {
+  align-items: flex-start;
+}
+
+.wing-center {
+  align-items: center;
+}
+
+/* Wing with children layout */
+.wing-children {
+  display: flex;
+  gap: 1rem;
+  padding-top: 25px;
+  position: relative;
+}
+
+.wing-children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 25px;
+  background: #5a9fd4;
+}
+
+/* Horizontal connector for wing children */
+.wing-children.has-siblings::after {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #5a9fd4;
+}
+
+/* ============================================
+   BRANCH CONNECTORS
+   ============================================ */
+.branch-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Vertical branch line */
+.branch-connector-vertical {
+  width: 3px;
+  height: 30px;
+  background: linear-gradient(180deg, #0d5ba0 0%, #5a9fd4 100%);
+  margin: 0 auto;
+}
+
+/* Horizontal branch connector */
+.branch-connector-horizontal {
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #0d5ba0 5%, 
+    #0d5ba0 95%, 
+    transparent 100%);
+  width: 100%;
+  position: relative;
+}
+
+/* T-connector */
+.branch-t-connector {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.branch-t-connector::before {
+  content: '';
+  width: 3px;
+  height: 20px;
+  background: #0d5ba0;
+}
+
+.branch-t-connector::after {
+  content: '';
+  width: 100%;
+  height: 3px;
+  background: #0d5ba0;
+}
+
+/* ============================================
+   HIERARCHICAL GRID LAYOUT (Alternative)
+   ============================================ */
+.org-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.org-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  position: relative;
+  padding-top: 40px;
+}
+
+.org-row:first-child {
+  padding-top: 0;
+}
+
+.org-row:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 40px;
+  background: #0d5ba0;
+}
+
+.org-row.has-multiple::after {
+  content: '';
+  position: absolute;
+  top: 40px;
+  height: 3px;
+  background: #0d5ba0;
+  left: calc(50% - var(--row-width, 200px) / 2);
+  width: var(--row-width, 200px);
+}
+
+/* ============================================
+   COLLAPSIBLE BRANCHES
+   ============================================ */
+.collapsible-branch {
+  position: relative;
+}
+
+.collapse-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0f68bb 0%, #0d5ba0 100%);
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  z-index: 5;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(15, 104, 187, 0.3);
+}
+
+.collapse-toggle:hover {
+  transform: scale(1.15);
+  box-shadow: 0 5px 12px rgba(15, 104, 187, 0.4);
+}
+
+.collapse-toggle::before {
+  content: '−';
+  font-weight: bold;
+}
+
+.branch-collapsed .collapse-toggle::before {
+  content: '+';
+}
+
+.branch-collapsed > .tree-level-2,
+.branch-collapsed > .team-wings,
+.branch-collapsed > .member-level,
+.branch-collapsed > ul {
+  display: none;
+}
+
+/* Collapsed indicator */
+.branch-collapsed .node-card::after {
+  content: '...';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #6c757d;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+/* ============================================
+   SELECTION & HIGHLIGHT STATES
+   ============================================ */
+.tree-node.selected .node-card {
+  border-color: #ffc107;
+  box-shadow: 
+    0 0 0 4px rgba(255, 193, 7, 0.3),
+    0 10px 25px rgba(15, 104, 187, 0.2);
+}
+
+.tree-node.highlighted .node-card {
+  animation: highlight-pulse 1.5s infinite;
+}
+
+@keyframes highlight-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 0 0 rgba(15, 104, 187, 0.4),
+      0 10px 25px rgba(15, 104, 187, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 0 10px rgba(15, 104, 187, 0),
+      0 10px 25px rgba(15, 104, 187, 0.2);
+  }
+}
+
+/* Dimmed state for non-relevant nodes */
+.tree-node.dimmed .node-card {
+  opacity: 0.4;
+  filter: grayscale(50%);
+}
+
+/* ============================================
+   STATUS INDICATORS
+   ============================================ */
+.node-status {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.node-status.active {
+  background: #28a745;
+}
+
+.node-status.inactive {
+  background: #dc3545;
+}
+
+.node-status.pending {
+  background: #ffc107;
+}
+
+.node-status.away {
+  background: #6c757d;
+}
+
+/* ============================================
+   BADGES & COUNTS
+   ============================================ */
+.node-badge {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  min-width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(220, 53, 69, 0.4);
+}
+
+.node-count {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.node-count i {
+  font-size: 0.65rem;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes drawLineDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--line-height, 30px);
+  }
+}
+
+@keyframes drawLineAcross {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Staggered entry animations */
+.tree-node.level-0 {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+.tree-node.level-1 {
+  animation: fadeInDown 0.5s ease-out forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.tree-node.level-2 {
+  animation: fadeInDown 0.5s ease-out forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.tree-node.level-3 {
+  animation: fadeInUp 0.4s ease-out forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.tree-node.level-4 {
+  animation: fadeInUp 0.4s ease-out forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+/* Line drawing animations */
+.animate-lines .branch-connector-vertical,
+.animate-lines li::before {
+  animation: drawLineDown 0.4s ease-out forwards;
+  height: 0;
+}
+
+.animate-lines .branch-connector-horizontal,
+.animate-lines li::after {
+  animation: drawLineAcross 0.4s ease-out forwards;
+  animation-delay: 0.3s;
+  width: 0;
+}
+
+/* ============================================
+   EMPTY / PLACEHOLDER STATES
+   ============================================ */
+.tree-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #6c757d;
+  text-align: center;
+  padding: 3rem;
+}
+
+.tree-empty-icon {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, #f1f3f5 0%, #e9ecef 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.tree-empty-icon i {
+  font-size: 4rem;
+  color: #adb5bd;
+}
+
+.tree-empty-icon::before {
+  content: '';
+  position: absolute;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  border-radius: 50%;
+  border: 3px dashed #dee2e6;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.tree-empty-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.tree-empty-text {
+  font-size: 1rem;
+  color: #868e96;
+  max-width: 400px;
+}
+
+/* Loading skeleton */
+.tree-skeleton .node-card {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================
+   TOOLTIPS
+   ============================================ */
+.node-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 100;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.node-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a1a2e;
+}
+
+.tree-node:hover .node-tooltip {
+  opacity: 1;
+  visibility: visible;
+  bottom: calc(100% + 15px);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1400px) {
+  .tree-wings {
+    gap: 2rem;
+  }
+  
+  .tree-node.level-1 .node-card {
+    min-width: 200px;
+    padding: 1.5rem 1.75rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .tree-level-1,
+  .management-level,
+  .tree-wings {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  
+  .wing {
+    min-width: 280px;
+  }
+  
+  .tree-level-2,
+  .team-wings {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 992px) {
+  .org-tree-container {
+    padding: 2rem 1rem;
+  }
+  
+  .tree-node.level-0 .node-card,
+  .ceo-node .node-card {
+    min-width: 250px;
+    padding: 1.5rem 2rem;
+  }
+  
+  .tree-node.level-1 .node-card {
+    min-width: 180px;
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .tree-wings::after {
+    display: none;
+  }
+  
+  .wing::before {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .org-structure-sec {
+    padding: 1rem 0;
+  }
+  
+  .org-tree-container {
+    padding: 1.5rem 0.5rem;
+    min-height: auto;
+  }
+  
+  /* Stack vertically on mobile */
+  .tree-level-1,
+  .management-level,
+  .tree-wings {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .tree-level-2,
+  .team-wings {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Adjust card sizes */
+  .tree-node.level-0 .node-card,
+  .ceo-node .node-card {
+    min-width: 260px;
+    max-width: 300px;
+  }
+  
+  .tree-node.level-1 .node-card,
+  .department-node {
+    min-width: 240px;
+    max-width: 280px;
+  }
+  
+  .tree-node.level-2 .node-card,
+  .team-node {
+    min-width: 200px;
+    max-width: 260px;
+  }
+  
+  /* Simplified connectors for mobile */
+  .tree li::before {
+    height: 20px;
+  }
+  
+  .tree li::after {
+    display: none;
+  }
+  
+  .tree-wings::before {
+    height: 20px;
+  }
+  
+  /* Hide horizontal connectors */
+  .branch-connector-horizontal {
+    display: none;
+  }
+  
+  .branch-connector-vertical {
+    height: 20px;
+  }
+  
+  /* Adjust wing connections */
+  .wing {
+    padding-top: 20px;
+  }
+  
+  .wing-children {
+    flex-direction: column;
+    padding-top: 15px;
+    gap: 0.75rem;
+  }
+  
+  .wing-children::after {
+    display: none;
+  }
+  
+  /* Member grid on mobile */
+  .tree-level-3,
+  .member-level {
+    max-width: 100%;
+    padding: 1rem;
+  }
+  
+  .tree-node.level-3 .node-card,
+  .member-node {
+    min-width: 100px;
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 576px) {
+  .node-icon.level-0,
+  .ceo-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .node-title.level-0,
+  .ceo-title {
+    font-size: 1.3rem;
+  }
+  
+  .node-icon.level-1,
+  .department-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .node-title.level-1,
+  .department-title {
+    font-size: 1.1rem;
+  }
+  
+  .collapse-toggle {
+    width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
+  }
+  
+  .tree-level-3,
+  .member-level {
+    gap: 0.5rem;
+  }
+  
+  .tree-node.level-3 .node-card,
+  .member-node {
+    padding: 0.5rem;
+    min-width: 85px;
+  }
+  
+  .node-icon.level-3,
+  .member-avatar {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .node-title.level-3,
+  .member-name {
+    font-size: 0.75rem;
+  }
+  
+  .node-subtitle.level-3,
+  .member-role {
+    font-size: 0.65rem;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  .org-structure-sec {
+    background: white !important;
+    min-height: auto;
+  }
+  
+  .collapse-toggle {
+    display: none !important;
+  }
+  
+  .tree-node .node-card {
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+    break-inside: avoid;
+  }
+  
+  .branch-collapsed > ul,
+  .branch-collapsed > .tree-level-2,
+  .branch-collapsed > .team-wings {
+    display: flex !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+.tree-node:focus-visible .node-card {
+  outline: 3px solid #0f68bb;
+  outline-offset: 3px;
+}
+
+.collapse-toggle:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .tree-node .node-card {
+    border-width: 3px;
+  }
+  
+  .tree li::before,
+  .tree li::after,
+  .branch-connector-vertical,
+  .branch-connector-horizontal {
+    background: #000;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tree-node,
+  .node-card,
+  .collapse-toggle,
+  .ceo-icon::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,205 @@
+SERVICE AGREEMENT CONTRACT
+Between Mission Mind Organization (MMO) & Aria Delta Consulting Group
+
+1. CONTRACT INFORMATION
+Contract Title: Website Design, Development, Deployment & 1-Year Maintenance Agreement
+Contract Duration: 45 Days Development + 12 Months Free Maintenance
+Effective Date: _December 10, 2025
+
+
+2. PARTIES TO THE AGREEMENT
+2.1 Client (Party A)
+Organization Name: Mission Mind Organization (MMO)
+Abbreviation: MMO
+Registration Number: 5249
+Registration Date: 2021/07/13
+Registered With: Ministry of Commerce & Industries, Afghanistan
+Address: 15th House, 4th St, Qalai Fatullah, Kabul, Afghanistan
+Email: info.missionmind@gmail.com
+Phone: +93 77 975 2121 | +93 78 843 8438
+President Name: Mr. Waisullah Sadqi
+Technical Advisor: Mr. Khalid Hamdard
+
+2.2 Developer (Party B)
+Company Name: Aria Delta Consulting Group
+Registration Number: 34998
+Registration Date: 2012/01/15
+Registered With: Ministry of Commerce & Industries, Afghanistan
+Address: Kabul, Afghanistan
+Operation Manager: Mr. Jawid Masood
+
+3. PURPOSE OF THE AGREEMENT
+This Agreement defines the terms and conditions under which Aria Delta Consulting Group (“Developer”) shall design, develop, host, deploy, and maintain the official website of Mission Mind Organization (“Client”).
+
+4. PROJECT SCOPE OF WORK
+The Developer shall design, build, test, deploy, and deliver the website mmo.org.af and its related services as per the structure outlined in the project requirement documents and the PPT file provided by MMO 
+
+
+
+4.1 Website Domain & DNS Configuration
+    • Primary Domain: mmo.arg.af
+    • DNS Servers:
+        ◦ NS1: nsm1.khwanzay.school
+        ◦ NS2: nsm2.khwanzay.school
+    • Domain registration through MCIT (.af Department)
+4.2 Website Design Requirements
+    • UI/UX Theme Colors:
+        ◦ #0f68bb (Primary Blue)
+        ◦ #f5b51e (Secondary Yellow)
+    • Text Colors: Dark & White depending on background
+    • Fully responsive design (mobile, tablet, desktop)
+    • Professional NGO-themed design aligned with MMO brand
+4.3 Website Structure
+The website must include but is not limited to the following sections (as outlined in PPT) 
+A. Home Page
+    • Slider, Welcome Text, Program Highlights
+    • “Our Projects”, “Programs”, “Success Stories”
+    • 12 Sub-sections in 4-column format
+    • "Need Help?" widget (WhatsApp Business + Facebook Messenger)
+B. About Section
+    • About MMO
+    • Mission, Vision, Story
+    • Organization Profile
+    • Strategic Units
+    • Board of Directors & Executive Team
+    • Organizational Structure
+C. What We Do
+    • Focus Areas (Education, WASH, Nutrition, Livelihood, GBV Protection, Food Security, Agriculture, etc.)
+    • Description of work in 15 provinces
+D. Programs
+    • SITC (individual page)
+    • TAABAN (individual page)
+    • Stay in Afghanistan Program (individual page)
+E. Resources
+    • News & Events
+    • Reports & Publications
+    • Policies
+    • RFQs / RFPs
+    • Jobs Form + Attachment
+    • Gallery (Images + Videos)
+    • Annual Reports
+    • Success Stories
+    • Case Studies
+    • Volunteer Section
+F. Additional Required Sections
+    • Complaints & Feedback Mechanism
+    • Ethics & Compliance
+    • Terms of Use
+    • Privacy Policy
+    • Cookies Settings
+    • Footer with “Powered by: Aria Delta”
+
+4.4 Technologies to Be Used
+Frontend: React
+Backend: Node.js
+Database: MongoDB
+Methodology: Agile (Sprint-by-Sprint Development)
+Localization:  English (Default Language) , Dari , Pushto)
+
+5. HOSTING AND DOMAIN SERVICES
+5.1 Hosting Package Provided
+    • VPS Dedicated Hosting
+    • 100 GB Storage
+    • Unlimited Email Accounts
+    • Unlimited Bandwidth
+    • Unlimited Subdomains
+    • SSL Installation
+5.2 Hosting Fee
+    • 100 USD per year
+5.3 Domain Registration Fee
+    • 30 USD per year
+
+6. PROJECT TIMELINE
+    • Total Development Time: 45 Days
+    • Project Duration Granted: 1.5 Months
+    • Divided into Sprints under Agile methodology
+    • Deliverables reviewed with MMO in each sprint
+
+7. SEO & Digital Optimization
+Developer shall implement basic SEO including:
+    • Keyword integration (as provided by MMO Word file)
+    • Basic metadata
+    • SEO-friendly structure
+    • Sitemap generation
+    • Google indexing setup
+
+
+8. PAYMENT TERMS
+Total Website Design & Development Cost 250 USD
+Payment Schedule:
+    1. 50% (125 USD) – Upon contract signing
+    2. 30% (75 USD) – After beta launch
+    3. 20% (50 USD) – After final delivery & approval
+Additional Fees (Yearly):
+    • Hosting Renewal: 100 USD
+    • Domain Renewal: 30 USD
+Total Payment: 380 USD
+
+9. MAINTENANCE & SUPPORT
+Maintenance Period: 12 Months (Free Support)
+Includes:
+    • Bug fixes
+    • Security updates
+    • Server monitoring
+    • Email configuration support
+    • Minor UI adjustments (not major redesigns)
+Excludes:
+    • New modules
+    • New pages
+    • New features
+    • Major redesigns
+    • External integrations
+Any new development will follow a new quotation and approval.
+
+10. INTELLECTUAL PROPERTY RIGHTS
+    • MMO shall own full rights to the domain, hosting, website content, codes, backend database, UI/UX, and all digital assets after full payment.
+    • Aria Delta may showcase the project in its portfolio with written permission from MMO.
+
+11. CONFIDENTIALITY
+Both parties agree to protect sensitive information including:
+    • Internal documents
+    • Designs
+    • Donor information
+    • Organizational data
+Information shall not be shared with any third party without consent.
+
+
+12. TERMINATION CLAUSE
+The Agreement may be terminated if:
+    • Either party fails to deliver responsibilities
+    • Any fraudulent or harmful activity is detected
+    • Payment obligations are not met
+MMO reserves the right to terminate with written notice of 15 days.
+Upon termination:
+    • Developer shall hand over all completed work to MMO
+    • No refund shall be issued for completed milestones
+
+13. LIABILITY
+Aria Delta shall ensure:
+    • Security best practices
+    • Clean coding structure
+    • No malicious scripts
+    • No data sharing to third parties
+Aria Delta is not responsible for:
+    • Server outages caused by third-party hosting providers
+    • Cyberattacks beyond normal security standards
+
+14. GOVERNING LAW
+This Agreement shall be governed by the laws of:
+The Islamic Republic of Afghanistan
+Ministry of Commerce & Industries regulations apply.
+
+15. DISPUTE RESOLUTION
+Any dispute shall be resolved through:
+    1. Negotiation between the parties
+    2. If unresolved → Mediation through MCCIA
+    3. Last option → Legal process under Afghan law
+
+
+16. SIGNATURES OF THE PARTIES
+
+For Mission Mind Organization (MMO)
+President: 
+Name: Mr. Wasiullah Sadiqi
+Signature: __________________________
+Date: __________________________

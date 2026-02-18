@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "icon": "donate.png",
+        "title1": "Donate Money",
+        "title2": "help for poor"
+    },
+    {
+        "id": 2,
+        "icon": "team.png",
+        "title1": "Become Volunteer",
+        "title2": "give your best services"
+    },
+    {
+        "id": 3,
+        "icon": "sponsor.png",
+        "title1": "Sponsorship",
+        "title2": "join with us good partner"
+    }
+]

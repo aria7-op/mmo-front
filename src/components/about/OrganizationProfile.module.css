@@ -1,0 +1,155 @@
+.orgProfile {
+  padding: 60px 0;
+  background-color: #ffffff;
+  margin-bottom: 40px;
+}
+
+.headerSection {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.headerTitle {
+  color: #1e293b;
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.headerUnderline {
+  width: 80px;
+  height: 4px;
+  background-color: #0f68bb;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.spinnerContainer {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f4f6;
+  border-top: 4px solid #0f68bb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorBox {
+  text-align: center;
+  padding: 40px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+}
+
+.profileContent {
+  /* Content wrapper */
+}
+
+.profileDescription {
+  background-color: #f8fafc;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.profileDescriptionText {
+  color: #475569;
+  line-height: 1.7;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.registrationCard {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+  background-color: #0f68bb;
+  color: #ffffff;
+  padding: 20px 30px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.cardContent {
+  padding: 30px;
+}
+
+.detailsGrid {
+  display: grid;
+  gap: 20px;
+}
+
+.itemsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.detailItem {
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.detailLabel {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailValue {
+  font-size: 1.1rem;
+  color: #1e293b;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.fullWidthItem {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .headerTitle {
+    font-size: 1.8rem;
+  }
+
+  .orgProfile {
+    padding: 40px 0;
+    margin-bottom: 20px;
+  }
+
+  .itemsContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .cardContent {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,84 @@
+[
+    {
+        "id": 1,
+        "thumb": "product-1.png",
+        "oldPrice": "",
+        "newPrice": 150.00,
+        "name": "mug",
+        "categories": "men, women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 2,
+        "thumb": "product-2.png",
+        "oldPrice": "",
+        "newPrice": 160.00,
+        "name": "t-Shirt",
+        "categories": "men",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 3,
+        "thumb": "product-3.png",
+        "oldPrice": "",
+        "newPrice": 500.00,
+        "name": "bag",
+        "categories": "men, women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 4,
+        "thumb": "product-4.png",
+        "oldPrice": "",
+        "newPrice": 120.00,
+        "name": "handbag",
+        "categories": "women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 5,
+        "thumb": "product-5.png",
+        "oldPrice": 75.00,
+        "newPrice": 55.00,
+        "name": "pant",
+        "categories": "women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 6,
+        "thumb": "product-6.png",
+        "batch": "new",
+        "oldPrice": "",
+        "newPrice": 950.00,
+        "name": "jacket",
+        "categories": "men, women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 7,
+        "thumb": "product-7.png",
+        "oldPrice": "",
+        "newPrice": 85.00,
+        "name": "t-Shirt",
+        "categories": "men, women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 8,
+        "thumb": "product-8.png",
+        "oldPrice": "",
+        "newPrice": 45.00,
+        "name": "mug",
+        "categories": "men, women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    },
+    {
+        "id": 9,
+        "thumb": "product-9.png",
+        "oldPrice": "",
+        "newPrice": 40.00,
+        "name": "hat",
+        "categories": "men, women",
+        "productInfo": "Lorem ipsum dolor sit amet, est mauris ut condimentum vel facilisi, fusce tortor tincidunt ut aenean magna eu, vehicula nullam wisi nunc non, sit nunc egestas magna erat, accumsan non. Dui scelerisque ut tortor arcu ac magna, dui tellus nibh sit donec ante sodales."
+    }
+]

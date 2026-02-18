@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "icon": "manager.png",
+        "start": 0,
+        "end": 5468,
+        "info": "total donor"
+    },
+    {
+        "id": 2,
+        "icon": "exam.png",
+        "start": 0,
+        "end": 6875,
+        "info": "total donor"
+    },
+    {
+        "id": 3,
+        "icon": "users.png",
+        "start": 0,
+        "end": "5468",
+        "info": "volunteer"
+    },
+    {
+        "id": 4,
+        "icon": "coins.png",
+        "start": 0,
+        "end": 57468,
+        "info": "donation"
+    }
+]

@@ -1,0 +1,73 @@
+# URL Encryption Redirect Rules
+# Redirect all plain URLs to encrypted URLs
+
+# Enable rewrite engine
+RewriteEngine On
+
+# Admin panel routing - handle admin routes separately
+RewriteCond %{REQUEST_URI} ^/admin/?$ [NC]
+RewriteRule ^admin/?$ /index.html [L]
+
+RewriteCond %{REQUEST_URI} ^/admin/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f [NC]
+RewriteCond %{REQUEST_FILENAME} !-d [NC]
+RewriteRule ^admin/(.*)$ /index.html [L]
+
+# Don't redirect if already accessing encrypted URL or API routes
+RewriteCond %{REQUEST_URI} ^/e/ [NC]
+RewriteRule ^ - [L]
+
+# Handle API routes - proxy to backend (for production)
+RewriteCond %{REQUEST_URI} ^/bak/ [NC]
+RewriteRule ^bak/(.*)$ https://khwanzay.school/bak/$1 [P,L]
+
+# Don't redirect admin routes to encrypted versions
+RewriteCond %{REQUEST_URI} !^/e/ [NC]
+RewriteCond %{REQUEST_URI} !^/admin/ [NC]
+RewriteCond %{REQUEST_URI} !^/bak/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f [NC]
+RewriteCond %{REQUEST_FILENAME} !-d [NC]
+
+# For specific routes, redirect to encrypted versions
+RewriteRule ^about/?$ /e/about [R=301,L]
+RewriteRule ^about/([^/]+)/?$ /e/about/$1 [R=301,L]
+RewriteRule ^what-we-do/?$ /e/what-we-do [R=301,L]
+RewriteRule ^what-we-do/([^/]+)/?$ /e/what-we-do/$1 [R=301,L]
+RewriteRule ^programs/([^/]+)/?$ /e/programs/$1 [R=301,L]
+RewriteRule ^projects/([^/]+)/?$ /e/projects/$1 [R=301,L]
+RewriteRule ^resources/?$ /e/resources [R=301,L]
+RewriteRule ^resources/([^/]+)/?$ /e/resources/$1 [R=301,L]
+RewriteRule ^contact/?$ /e/contact [R=301,L]
+RewriteRule ^donation/?$ /e/donation [R=301,L]
+RewriteRule ^volunteer/?$ /e/volunteer [R=301,L]
+RewriteRule ^gallery/([^/]+)/?$ /e/gallery/$1 [R=301,L]
+RewriteRule ^blog-([^/]+)/?$ /e/blog-$1 [R=301,L]
+RewriteRule ^search/?$ /e/search [R=301,L]
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set X-Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none';"
+</IfModule>
+
+# Cache control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+# SPA (Single Page Application) routing - catch all other routes and serve index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/admin/ [NC]
+RewriteCond %{REQUEST_URI} !^/e/ [NC]
+RewriteCond %{REQUEST_URI} !^/bak/ [NC]
+RewriteRule ^(.*)$ /index.html [L,QSA]

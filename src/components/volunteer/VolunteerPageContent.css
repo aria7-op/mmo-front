@@ -1,0 +1,145 @@
+.volunteer-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 80px 0;
+  min-height: 100vh;
+}
+
+.volunteer-header {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInDown 0.6s ease;
+}
+
+.volunteer-header h2 {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text-dark, #333);
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.volunteer-header p {
+  font-size: 16px;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.volunteer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 0 16px;
+}
+
+.volunteer-card-wrapper {
+  display: flex;
+  animation: fadeInUp 0.6s ease;
+  height: 100%;
+}
+
+.volunteer-card-wrapper .premium-card {
+  width: 100%;
+  height: 100%;
+}
+
+/* Stagger animation for cards */
+.volunteer-card-wrapper:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.volunteer-card-wrapper:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.volunteer-card-wrapper:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.volunteer-card-wrapper:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.volunteer-card-wrapper:nth-child(n + 5) {
+  animation-delay: 0.5s;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .volunteer-header h2 {
+    font-size: 36px;
+  }
+
+  .volunteer-grid {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .volunteer-section {
+    padding: 60px 0;
+  }
+
+  .volunteer-header h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .volunteer-header p {
+    font-size: 14px;
+  }
+
+  .volunteer-header {
+    margin-bottom: 40px;
+  }
+
+  .volunteer-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .volunteer-section {
+    padding: 40px 0;
+  }
+
+  .volunteer-header h2 {
+    font-size: 24px;
+  }
+
+  .volunteer-header p {
+    font-size: 13px;
+  }
+
+  .volunteer-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

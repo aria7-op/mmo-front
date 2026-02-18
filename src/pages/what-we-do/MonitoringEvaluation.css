@@ -1,0 +1,416 @@
+/* Monitoring & Evaluation Page Styles */
+
+/* Page Content Layout */
+.page-content {
+    padding: 80px 0;
+    min-height: 600px;
+    background-color: #f8fafc;
+}
+
+/* Main Content Card */
+.me-content-card {
+    background-color: white;
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Header Section */
+.me-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.me-title {
+    color: #2c3e50;
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.2;
+}
+
+.me-intro {
+    margin-bottom: 50px;
+}
+
+.me-intro p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #6c757d;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Features Grid */
+.me-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.me-feature-card {
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.me-feature-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #667eea;
+}
+
+.me-feature-card.performance::before {
+    background: #667eea;
+}
+
+.me-feature-card.impact::before {
+    background: #28a745;
+}
+
+.me-feature-card.data::before {
+    background: #ffc107;
+}
+
+.me-feature-card.reporting::before {
+    background: #17a2b8;
+}
+
+.me-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.me-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: white;
+}
+
+.me-feature-card.performance .me-card-icon {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.me-feature-card.impact .me-card-icon {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.me-feature-card.data .me-card-icon {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+}
+
+.me-feature-card.reporting .me-card-icon {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.me-feature-card h3 {
+    color: #0a4f9d;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.me-feature-card p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* Framework Section */
+.me-framework-section {
+    margin-top: 50px;
+    padding: 40px;
+    background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.me-framework-header h3 {
+    color: #0a4f9d;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.me-framework-header p {
+    font-size: 16px;
+    color: #6c757d;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+/* Stats Grid */
+.me-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.me-stat-item {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.me-stat-item:hover {
+    transform: translateY(-3px);
+}
+
+.me-stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.me-stat-item.reports .me-stat-number {
+    color: #667eea;
+}
+
+.me-stat-item.datapoints .me-stat-number {
+    color: #28a745;
+}
+
+.me-stat-item.accuracy .me-stat-number {
+    color: #ffc107;
+}
+
+.me-stat-item.monitoring .me-stat-number {
+    color: #17a2b8;
+}
+
+.me-stat-label {
+    font-size: 16px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+
+/* Large Tablets and Small Desktops */
+@media (max-width: 992px) {
+    .me-content-card {
+        padding: 40px 30px;
+    }
+    
+    .me-title {
+        font-size: 36px;
+    }
+    
+    .me-features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+    
+    .me-framework-section {
+        padding: 30px 20px;
+    }
+    
+    .me-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .page-content {
+        padding: 60px 0;
+    }
+    
+    .me-content-card {
+        padding: 30px 20px;
+    }
+    
+    .me-title {
+        font-size: 32px;
+        margin-bottom: 25px;
+    }
+    
+    .me-intro p {
+        font-size: 16px;
+    }
+    
+    .me-features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .me-feature-card {
+        padding: 25px;
+    }
+    
+    .me-framework-section {
+        padding: 25px 15px;
+        margin-top: 40px;
+    }
+    
+    .me-framework-header h3 {
+        font-size: 24px;
+    }
+    
+    .me-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .me-stat-number {
+        font-size: 30px;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 576px) {
+    .page-content {
+        padding: 40px 0;
+    }
+    
+    .me-content-card {
+        padding: 25px 15px;
+        border-radius: 8px;
+    }
+    
+    .me-title {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+    
+    .me-intro p {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+    
+    .me-feature-card {
+        padding: 20px;
+    }
+    
+    .me-card-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .me-feature-card h3 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+    
+    .me-feature-card p {
+        font-size: 15px;
+    }
+    
+    .me-framework-section {
+        padding: 20px 15px;
+        margin-top: 30px;
+    }
+    
+    .me-framework-header h3 {
+        font-size: 22px;
+    }
+    
+    .me-framework-header p {
+        font-size: 15px;
+    }
+    
+    .me-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .me-stat-item {
+        padding: 15px;
+    }
+    
+    .me-stat-number {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+    
+    .me-stat-label {
+        font-size: 14px;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 400px) {
+    .me-content-card {
+        padding: 20px 12px;
+    }
+    
+    .me-title {
+        font-size: 24px;
+    }
+    
+    .me-feature-card {
+        padding: 15px;
+    }
+    
+    .me-framework-section {
+        padding: 15px 10px;
+    }
+}
+
+/* RTL Support */
+.rtl-direction .me-content-card,
+.rtl-direction .me-feature-card,
+.rtl-direction .me-framework-section {
+    direction: rtl;
+}
+
+.rtl-direction .me-feature-card::before {
+    right: 0;
+    left: auto;
+}
+
+/* Accessibility Improvements */
+.me-feature-card:focus-within {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.me-stat-item:focus-within {
+    outline: 2px solid #17a2b8;
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .page-content {
+        background: white;
+        padding: 20px 0;
+    }
+    
+    .me-content-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    .me-framework-section {
+        background: white;
+        border: 1px solid #ddd;
+    }
+}

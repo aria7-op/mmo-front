@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "thumb": "acdo-blog-1.jpg",
+        "title": "MMO General Assembly 2024 - Annual Review",
+        "date": "10 Dec 2024",
+        "author": "MMO Communications"
+    },
+    {
+        "id": 2,
+        "thumb": "acdo-blog-2.jpg",
+        "title": "Community-Based Education Program Launch",
+        "date": "15 Jan 2025",
+        "author": "MMO Education Team"
+    },
+    {
+        "id": 3,
+        "thumb": "acdo-blog-3.jpg",
+        "title": "WASH Infrastructure Workshop Completed",
+        "date": "20 Jan 2025",
+        "author": "MMO WASH Team"
+    }
+]

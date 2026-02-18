@@ -1,0 +1,331 @@
+.chatWidget {
+    position: fixed;
+    bottom: 50%;
+    right: 20px;
+    z-index: 1000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    transform: translateY(50%);
+
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.chatWidget.rtl {
+    right: auto;
+    left: 20px;
+    align-items: flex-start;
+}
+
+.chatButton {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    color: white;
+    font-size: 24px;
+    outline: none;
+}
+
+.chatButton:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+}
+
+.chatButton:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.chatButton:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.chatButton.pulse {
+    animation: pulse 2s infinite;
+}
+
+.chatButton.open {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7), inset 0 0 0 0 rgba(37, 211, 102, 0.1);
+    }
+    70% {
+        box-shadow: 0 0 0 12px rgba(37, 211, 102, 0), inset 0 0 0 0 rgba(37, 211, 102, 0.1);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), inset 0 0 0 0 rgba(37, 211, 102, 0.1);
+    }
+}
+
+.chatTooltip {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: rgba(51, 51, 51, 0.95);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+}
+
+.chatTooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 16px;
+    border: 6px solid transparent;
+    border-top-color: rgba(51, 51, 51, 0.95);
+}
+
+.chatWidget.rtl .chatTooltip {
+    right: auto;
+    left: 0;
+}
+
+.chatWidget.rtl .chatTooltip::after {
+    right: auto;
+    left: 16px;
+}
+
+.chatButton:hover .chatTooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.chatOptions {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 16px;
+    min-width: 240px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.chatOptions.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.chatWidget.rtl .chatOptions {
+    right: auto;
+    left: 0;
+}
+
+.chatOption {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: #760f0f;
+    margin-bottom: 8px;
+    background: transparent;
+}
+
+.chatOption:last-child {
+    margin-bottom: 0;
+}
+
+.chatOption:hover {
+    background: #f8f9fa;
+    transform: translateX(4px);
+}
+
+.chatWidget.rtl .chatOption:hover {
+    transform: translateX(-4px);
+}
+
+.chatOption:focus-visible {
+    outline: 2px solid #25D366;
+    outline-offset: -2px;
+}
+
+.chatOptionIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.chatWidget.rtl .chatOptionIcon {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+.chatOption:hover .chatOptionIcon {
+    transform: scale(1.1);
+}
+
+.chatOptionText {
+    flex: 1;
+}
+
+.chatOptionTitle {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: #222;
+}
+
+.chatOptionDesc {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.3;
+}
+
+.whatsappIcon {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+    box-shadow: 0 3px 12px rgba(37, 211, 102, 0.25);
+}
+
+.messengerIcon {
+    background: linear-gradient(135deg, #0084FF 0%, #0055e5 100%);
+    color: white;
+    box-shadow: 0 3px 12px rgba(0, 132, 255, 0.25);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .chatWidget {
+        right: 15px;
+        bottom: 20px;
+        transform: translateY(0);
+    }
+
+    .chatWidget.rtl {
+        right: auto;
+        left: 15px;
+    }
+    
+    .chatButton {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        font-size: 20px;
+    }
+    
+    .chatOptions {
+        bottom: 65px;
+        min-width: 200px;
+        padding: 12px;
+    }
+
+    .chatOptionIcon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .chatOptionTitle {
+        font-size: 13px;
+    }
+
+    .chatOptionDesc {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chatWidget {
+        right: 12px;
+    }
+
+    .chatWidget.rtl {
+        left: 12px;
+    }
+
+    .chatButton {
+        width: 48px;
+        height: 48px;
+    }
+
+    .chatOptions {
+        min-width: 180px;
+        gap: 4px;
+    }
+
+    .chatTooltip {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .chatOption {
+        color: #e0e0e0;
+    }
+
+    .chatOption:hover {
+        background: #dad8d8;
+    }
+
+    .chatOptionTitle {
+        color: blue;
+    }
+
+    .chatOptionDesc {
+        color: black;
+    }
+
+    .chatOptions {
+        background: white;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .chatTooltip {
+        background: rgba(40, 40, 40, 0.95);
+    }
+
+    .chatTooltip::after {
+        border-top-color: rgba(40, 40, 40, 0.95);
+    }
+}
+
+/* Print styles */
+@media print {
+    .chatWidget {
+        display: none;
+    }
+}

@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "thumb": "event_1.jpg",
+        "date": "january 05, 2024",
+        "time": "10:00am - 11:30am",
+        "place": "uttarkhan,dhaka",
+        "title": "clean water for child",
+        "text": "Lorem ipsum dolor sit amet, tempor elit turpis ligula arcu vestibulum gravida, wisi dapibus, venenatis aliquet sed pharetra in vivamus. Quam class arcu eget augue, phasellus lorem, in id enim cras et turpis ligula arcu vestibulum gravida, wisi dapibus"
+    },
+    {
+        "id": 2,
+        "thumb": "event_2.jpg",
+        "date": "February 05, 2024",
+        "time": "10:00am - 11:30am",
+        "place": "uttarkhan,dhaka",
+        "title": "help for homeless child",
+        "text": "Lorem ipsum dolor sit amet, tempor elit turpis ligula arcu vestibulum gravida, wisi dapibus, venenatis aliquet sed pharetra in vivamus. Quam class arcu eget augue, phasellus lorem, in id enim cras et turpis ligula arcu vestibulum gravida, wisi dapibus"
+    },
+    {
+        "id": 3,
+        "thumb": "event_3.jpg",
+        "date": "March 05, 2024",
+        "time": "10:00am - 11:30am",
+        "place": "uttarkhan,dhaka",
+        "title": "clean water for child",
+        "text": "Lorem ipsum dolor sit amet, tempor elit turpis ligula arcu vestibulum gravida, wisi dapibus, venenatis aliquet sed pharetra in vivamus. Quam class arcu eget augue, phasellus lorem, in id enim cras et turpis ligula arcu vestibulum gravida, wisi dapibus"
+    }
+]

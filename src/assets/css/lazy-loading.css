@@ -1,0 +1,178 @@
+/**
+ * Lazy Loading CSS
+ * Styles for smooth lazy loading transitions and placeholders
+ */
+
+/* Base lazy image styles */
+.lazy-image {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.lazy-image.loading {
+    opacity: 0;
+}
+
+.lazy-image.loaded {
+    opacity: 1;
+}
+
+.lazy-image-error {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-size: 14px;
+    min-height: 100px;
+}
+
+/* Lazy background styles */
+.lazy-background {
+    transition: background-image 0.3s ease-in-out;
+}
+
+.lazy-background.loading {
+    background-color: #f8fafc;
+}
+
+.lazy-background.error {
+    background-color: #f3f4f6;
+    background-image: none !important;
+}
+
+/* Hero slider lazy loading */
+.single-slide.loading {
+    background-color: #f8fafc;
+}
+
+.single-slide.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, #f8fafc 0%, #e5e7eb 50%, #f8fafc 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    z-index: 1;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Page hero lazy loading */
+.page-hero-section.loading {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.page-hero-section.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 50%, rgba(102, 126, 234, 0.1) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    z-index: 1;
+}
+
+/* Gallery lazy loading */
+.gallery-item .lazy-image.loading {
+    background: linear-gradient(45deg, #f3f4f6 25%, transparent 37%, transparent 63%, #f3f4f6 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Admin table images */
+.admin-table-image {
+    transition: all 0.3s ease-in-out;
+}
+
+.admin-table-image.loading {
+    background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1s infinite;
+}
+
+/* Loading spinner for images */
+.image-loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 50%;
+    border-top-color: #3b82f6;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive lazy loading */
+@media (max-width: 768px) {
+    .lazy-image {
+        transition: opacity 0.2s ease-in-out;
+    }
+    
+    .single-slide.loading::before,
+    .page-hero-section.loading::before {
+        animation-duration: 1s;
+    }
+}
+
+/* Print styles - ensure images are visible when printing */
+@media print {
+    .lazy-image.loading,
+    .lazy-background.loading {
+        opacity: 1 !important;
+        background-image: none !important;
+        background-color: #fff !important;
+    }
+    
+    .single-slide.loading::before,
+    .page-hero-section.loading::before {
+        display: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .lazy-image-error {
+        background-color: #000;
+        color: #fff;
+        border-color: #fff;
+    }
+    
+    .lazy-background.error {
+        background-color: #000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .lazy-image,
+    .lazy-background,
+    .single-slide,
+    .page-hero-section {
+        transition: opacity 0.1s ease-in-out;
+    }
+    
+    .single-slide.loading::before,
+    .page-hero-section.loading::before,
+    .gallery-item .lazy-image.loading,
+    .admin-table-image.loading {
+        animation: none;
+    }
+}

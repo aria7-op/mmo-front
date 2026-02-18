@@ -1,0 +1,131 @@
+/* Sidebar Tutorial Styles */
+.sidebar-tutorial {
+  position: fixed;
+  z-index: 10000;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  max-width: 250px;
+  font-size: 14px;
+  line-height: 1.4;
+  animation: fadeIn 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-tutorial::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid #2c3e50;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.sidebar-tutorial .tutorial-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.sidebar-tutorial .tutorial-content {
+  margin-bottom: 12px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.sidebar-tutorial .tutorial-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.sidebar-tutorial .tutorial-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.sidebar-tutorial .tutorial-btn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  min-width: 30px;
+  text-align: center;
+}
+
+.sidebar-tutorial .tutorial-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.sidebar-tutorial .tutorial-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+}
+
+.sidebar-tutorial .tutorial-btn-prev {
+  background-color: #6c757d;
+  color: white;
+}
+
+.sidebar-tutorial .tutorial-btn-next {
+  background-color: #28a745;
+  color: white;
+}
+
+.sidebar-tutorial .tutorial-btn-skip {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Highlight effect for menu items */
+.sidebar-menu-item.tutorial-highlight {
+  background-color: #007bff !important;
+  color: white !important;
+  border-radius: 4px;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0,123,255,0.3);
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar-tutorial {
+    max-width: 200px;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+  
+  .sidebar-tutorial .tutorial-title {
+    font-size: 14px;
+  }
+  
+  .sidebar-tutorial .tutorial-content {
+    font-size: 12px;
+  }
+}

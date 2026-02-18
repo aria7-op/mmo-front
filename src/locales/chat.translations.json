@@ -1,0 +1,50 @@
+{
+  "en": {
+    "chat": {
+      "chatWithUs": "Chat with Us",
+      "openChat": "Open chat menu",
+      "whatsapp": "WhatsApp",
+      "whatsappDesc": "Chat on WhatsApp",
+      "whatsappLabel": "Chat with us on WhatsApp",
+      "messenger": "Messenger",
+      "messengerDesc": "Chat on Facebook",
+      "messengerLabel": "Chat with us on Messenger"
+    }
+  },
+  "ar": {
+    "chat": {
+      "chatWithUs": "تحدث معنا",
+      "openChat": "فتح قائمة الدردشة",
+      "whatsapp": "واتساب",
+      "whatsappDesc": "الدردشة على واتساب",
+      "whatsappLabel": "تحدث معنا على واتساب",
+      "messenger": "ماسنجر",
+      "messengerDesc": "الدردشة على فيسبوك",
+      "messengerLabel": "تحدث معنا على ماسنجر"
+    }
+  },
+  "fa": {
+    "chat": {
+      "chatWithUs": "با ما گفتگو کنید",
+      "openChat": "باز کردن منوی چت",
+      "whatsapp": "واتس‌اپ",
+      "whatsappDesc": "چت در واتس‌اپ",
+      "whatsappLabel": "با ما در واتس‌اپ گفتگو کنید",
+      "messenger": "مسنجر",
+      "messengerDesc": "چت در فیس‌بوک",
+      "messengerLabel": "با ما در مسنجر گفتگو کنید"
+    }
+  },
+  "ps": {
+    "chat": {
+      "chatWithUs": "زموږ سره خبرې وکړئ",
+      "openChat": "د چیت مینو پرانیستل",
+      "whatsapp": "واتس اپ",
+      "whatsappDesc": "د واتس اپ پر مټ خبرې",
+      "whatsappLabel": "زموږ سره د واتس اپ پر مټ خبرې وکړئ",
+      "messenger": "مسنجر",
+      "messengerDesc": "د فیس بک پر مټ خبرې",
+      "messengerLabel": "زموږ سره د مسنجر پر مټ خبرې وکړئ"
+    }
+  }
+}
