@@ -114,6 +114,12 @@ export const getImageUrlFromObject = (imageObject) => {
         return directUrl;
       }
       
+      // If URL starts with /includes/images/ but doesn't have /bak, add it
+      if (imageObject.url.startsWith('/includes/images/') && !imageObject.url.includes('/bak/includes/images/')) {
+        const correctedUrl = imageObject.url.replace('/includes/images/', '/bak/includes/images/');
+        return correctedUrl;
+      }
+      
       // If the URL is already a full URL with wrong domain, replace the domain
       if (imageObject.url.includes('museum.khwanzay.school')) {
         const correctedUrl = imageObject.url.replace('museum.khwanzay.school', 'khwanzay.school');
@@ -129,6 +135,12 @@ export const getImageUrlFromObject = (imageObject) => {
       // Fix URLs that are missing /bak prefix - if URL contains khwanzay.school/includes/images/
       if (imageObject.url.includes('khwanzay.school/includes/images/')) {
         const correctedUrl = imageObject.url.replace('khwanzay.school/includes/images/', 'khwanzay.school/bak/includes/images/');
+        return correctedUrl;
+      }
+      
+      // Fix backend.mmo.org.af URLs to use khwanzay.school/bak
+      if (imageObject.url.includes('backend.mmo.org.af/includes/images/')) {
+        const correctedUrl = imageObject.url.replace('backend.mmo.org.af/includes/images/', 'khwanzay.school/bak/includes/images/');
         return correctedUrl;
       }
       

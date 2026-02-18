@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import MissionVisionFormModal from '../components/MissionVisionFormModal';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { draftManager } from '../../utils/draftManager';
 import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
 import { getMissionVision, updateMissionVision } from '../../services/organizationProfile.service';
