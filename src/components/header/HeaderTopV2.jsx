@@ -20,7 +20,7 @@ const HeaderTopV2 = () => {
 
     // Extract data from API response structure
     const apiData = organizationData?.data || organizationData;
-    const organizationName = apiData?.name || 'Mission Mind Organization';
+    const organizationName = apiData?.name || '';
     const tagline = apiData?.tagline || 'Empowering Communities, Building Futures';
     return (
         <>

@@ -610,7 +610,7 @@ export function Navbar() {
               image: item.image,
               description:
                 item.path === "/about"
-                  ? `Mission Mind Organization (MMO) is a dedicated NGO working relentlessly in Afghanistan since 2021. Our mission is to transform lives through sustainable interventions in education, health, and economic development.`
+                  ? ''
                   : item.description,
               customComponent: item.customComponent,
             }

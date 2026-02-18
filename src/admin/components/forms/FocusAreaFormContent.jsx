@@ -23,7 +23,7 @@ const FocusAreaFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
     ];
 
     const [formData, setFormData] = useState({
-        title: { en: '', per: '', ps: '' },
+        name: { en: '', per: '', ps: '' },
         description: { en: '', per: '', ps: '' },
         slug: '',
         status: 'Published',
@@ -46,10 +46,10 @@ const FocusAreaFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
     useEffect(() => {
         if (initialFormData) {
             setFormData({
-                title: {
-                    en: sanitizeByType(initialFormData.title?.en || '', 'text'),
-                    per: sanitizeByType(initialFormData.title?.per || '', 'text'),
-                    ps: sanitizeByType(initialFormData.title?.ps || '', 'text')
+                name: {
+                    en: sanitizeByType(initialFormData.name?.en || '', 'text'),
+                    per: sanitizeByType(initialFormData.name?.per || '', 'text'),
+                    ps: sanitizeByType(initialFormData.name?.ps || '', 'text')
                 },
                 description: {
                     en: sanitizeByType(initialFormData.description?.en || '', 'textarea'),
@@ -94,16 +94,16 @@ const FocusAreaFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
         e.preventDefault();
 
         // Validate required fields
-        const titleEn = typeof formData.title.en === 'string' ? formData.title.en.trim() : '';
+        const nameEn = typeof formData.name.en === 'string' ? formData.name.en.trim() : '';
         const descriptionEn = typeof formData.description.en === 'string' ? formData.description.en.trim() : '';
         
-        if (!titleEn || !descriptionEn) {
+        if (!nameEn || !descriptionEn) {
             showErrorToast(t('admin.fillRequiredFields', 'Please fill in all required fields'));
             return;
         }
 
         const data = {
-            title: formData.title,
+            name: formData.name,
             description: formData.description,
             slug: formData.slug,
             status: formData.status,
@@ -150,7 +150,7 @@ const FocusAreaFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
             <div style={{ marginBottom: '24px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
                     <i className="fas fa-bullseye" style={{ color: '#0f68bb' }}></i>
-                    <span>{t('admin.focusAreaTitle', 'Focus Area Title')} *</span>
+                    <span>{t('admin.focusAreaName', 'Focus Area Name')} *</span>
                 </label>
                 <div style={{ marginBottom: '10px' }}>
                     <select
@@ -178,9 +178,9 @@ const FocusAreaFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
                     </select>
                     <input
                         type="text"
-                        value={safeGetContent('title', activeLang)}
-                        onChange={(e) => handleChange('title', e.target.value, activeLang)}
-                        placeholder={`${activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} ${t('admin.focusAreaTitle', 'Focus Area Title')}`}
+                        value={safeGetContent('name', activeLang)}
+                        onChange={(e) => handleChange('name', e.target.value, activeLang)}
+                        placeholder={`${activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} ${t('admin.focusAreaName', 'Focus Area Name')}`}
                         required={activeLang === 'en'}
                         style={{ 
                             width: '100%', 
@@ -194,7 +194,7 @@ const FocusAreaFormContent = ({ formData: initialFormData, isEdit, onSave, onCan
                 </div>
                 <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
                     Current: {activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} - 
-                    {safeGetContent('title', 'en') && ' EN: ✓'}{safeGetContent('title', 'per') && ' DR: ✓'}{safeGetContent('title', 'ps') && ' PS: ✓'}
+                    {safeGetContent('name', 'en') && ' EN: ✓'}{safeGetContent('name', 'per') && ' DR: ✓'}{safeGetContent('name', 'ps') && ' PS: ✓'}
                 </div>
             </div>
 

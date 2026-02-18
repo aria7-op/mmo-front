@@ -122,7 +122,7 @@ const WelcomeSection = () => {
         stripHtmlTags(formatMultilingualContent(about?.description)) ||
         stripHtmlTags(formatMultilingualContent(welcomeSettings.description)) ||
         t('homepage.welcome.description', {
-            defaultValue: 'Mission Mind Organization (MMO) is a dedicated NGO working relentlessly in Afghanistan since 2021. Our mission is to transform lives through sustainable interventions in education, health, and economic development.'
+            defaultValue: ''
         });
 
     const displaySubtitle = formatMultilingualContent(welcomeData?.subtitle) ||

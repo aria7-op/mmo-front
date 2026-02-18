@@ -36,10 +36,10 @@ const FocusAreaFormModal = ({
     if (!data || typeof data !== 'object') return null;
     
     return {
-      title: {
-        en: typeof data.title?.en === 'string' ? data.title.en : '',
-        per: typeof data.title?.per === 'string' ? data.title.per : '',
-        ps: typeof data.title?.ps === 'string' ? data.title.ps : ''
+      name: {
+        en: typeof data.name?.en === 'string' ? data.name.en : '',
+        per: typeof data.name?.per === 'string' ? data.name.per : '',
+        ps: typeof data.name?.ps === 'string' ? data.name.ps : ''
       },
       description: {
         en: typeof data.description?.en === 'string' ? data.description.en : '',

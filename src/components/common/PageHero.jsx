@@ -188,9 +188,9 @@ const PageHero = ({ pageName, fallbackDescription = null }) => {
         onError: (src) => console.error('Page hero image failed to load:', src)
     });
 
-    const fallbackTitle = humanize(pageName) || null;
-
-    const shouldRenderDefault = !settings || !settings.title;
+    // Check if this is the home page - only show text on home page
+    const isHomePage = pageName === 'home' || pageName === '/' || pageName === '';
+    const shouldShowText = isHomePage && title;
 
     return (
         <div 
@@ -213,22 +213,24 @@ const PageHero = ({ pageName, fallbackDescription = null }) => {
                 padding: '60px 20px'
             }}
         >
-            {/* Overlay - always show when there's an image or fallback */}
-            <div
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                    zIndex: 1
-                }}
-            />
+            {/* Overlay - only show on home page or when no image */}
+            {(isHomePage || !backgroundImage) && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                        zIndex: 1
+                    }}
+                />
+            )}
 
-            {/* Content */}
-            <div style={{ position: 'relative', zIndex: 2, maxWidth: '800px' }}>
-                {title && (
+            {/* Content - only show on home page */}
+            {shouldShowText && (
+                <div style={{ position: 'relative', zIndex: 2, maxWidth: '800px' }}>
                     <h1 style={{
                         fontSize: '48px',
                         fontWeight: 'bold',
@@ -239,20 +241,20 @@ const PageHero = ({ pageName, fallbackDescription = null }) => {
                     }}>
                         {title}
                     </h1>
-                )}
-                {(settings?.description && typeof settings.description === 'string') ? (
-                    <p style={{
-                        fontSize: '18px',
-                        lineHeight: 1.6,
-                        color: '#fff',
-                        margin: '0 0 20px',
-                        textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
-                        animation: 'fadeInDown 0.6s ease-out'
-                    }}>
-                        {settings.description}
-                    </p>
-                ) : null}
-            </div>
+                    {(settings?.description && typeof settings.description === 'string') ? (
+                        <p style={{
+                            fontSize: '18px',
+                            lineHeight: 1.6,
+                            color: '#fff',
+                            margin: '0 0 20px',
+                            textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                            animation: 'fadeInDown 0.6s ease-out'
+                        }}>
+                            {settings.description}
+                        </p>
+                    ) : null}
+                </div>
+            )}
         </div>
     );
 };

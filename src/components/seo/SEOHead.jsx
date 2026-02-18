@@ -27,7 +27,7 @@ const SEOHead = ({ page, customMeta = {} }) => {
 
   return (
     <Helmet>
-      <title>{metaTags.title || 'Mission Mind Organization (MMO)'}</title>
+      <title>{metaTags.title || ''}</title>
       <meta name="description" content={metaTags.description || ''} />
       <meta name="keywords" content={metaTags.keywords || ''} />
       

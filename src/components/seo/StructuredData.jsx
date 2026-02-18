@@ -12,7 +12,7 @@ const StructuredData = ({ type, data }) => {
         return {
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: data.name || 'Mission Mind Organization (MMO)',
+          name: data.name || '',
           alternateName: 'MMO',
           url: data.url || 'https://mmo.arg.af',
           logo: data.logo || 'https://mmo.arg.af/img/logo/logo.png',

@@ -19,7 +19,7 @@ const FocusAreasForm = () => {
     const [saving, setSaving] = useState(false);
     
     const [formData, setFormData] = useState({
-        title: { en: '', per: '', ps: '' },
+        name: { en: '', per: '', ps: '' },
         description: { en: '', per: '', ps: '' },
         slug: '',
         status: 'draft',
@@ -50,10 +50,10 @@ const FocusAreasForm = () => {
             if (focusArea && focusArea.data) {
                 const data = focusArea.data;
                 setFormData({
-                    title: {
-                        en: sanitizeTextInput(data.title?.en || ''),
-                        per: sanitizeTextInput(data.title?.per || ''),
-                        ps: sanitizeTextInput(data.title?.ps || '')
+                    name: {
+                        en: sanitizeTextInput(data.name?.en || ''),
+                        per: sanitizeTextInput(data.name?.per || ''),
+                        ps: sanitizeTextInput(data.name?.ps || '')
                     },
                     description: {
                         en: sanitizeInput(data.description?.en || ''),
@@ -105,14 +105,14 @@ const FocusAreasForm = () => {
         setSaving(true);
         try {
             // Validate required fields
-            if (!formData.title.en || !formData.description.en) {
-                showErrorToast('Please fill in English title and description');
+            if (!formData.name.en || !formData.description.en) {
+                showErrorToast('Please fill in English name and description');
                 return;
             }
 
             const token = localStorage.getItem('authToken');
             const data = {
-                title: formData.title,
+                name: formData.name,
                 description: formData.description,
                 slug: formData.slug,
                 status: formData.status,
@@ -361,7 +361,7 @@ const FocusAreasForm = () => {
                             fontSize: '16px',
                             color: '#374151'
                         }}>
-                            Focus Area Title *
+                            Focus Area Name *
                         </label>
                         <div style={{ display: 'grid', gap: '16px' }}>
                             <div>
@@ -371,13 +371,13 @@ const FocusAreasForm = () => {
                                     color: '#64748b',
                                     marginBottom: '6px'
                                 }}>
-                                    English Title *
+                                    English Name *
                                 </div>
                                 <input 
                                     type="text" 
-                                    value={formData.title.en} 
-                                    onChange={(e) => handleChange('title', e.target.value, 'en')} 
-                                    placeholder="Enter English focus area title" 
+                                    value={formData.name.en} 
+                                    onChange={(e) => handleChange('name', e.target.value, 'en')} 
+                                    placeholder="Enter English focus area name" 
                                     required 
                                     style={{
                                         width: '100%',
@@ -399,9 +399,9 @@ const FocusAreasForm = () => {
                                 </div>
                                 <input 
                                     type="text" 
-                                    value={formData.title.per} 
-                                    onChange={(e) => handleChange('title', e.target.value, 'per')} 
-                                    placeholder="Enter Dari focus area title" 
+                                    value={formData.name.per} 
+                                    onChange={(e) => handleChange('name', e.target.value, 'per')} 
+                                    placeholder="Enter Dari focus area name" 
                                     style={{
                                         width: '100%',
                                         padding: '14px 16px',
@@ -422,9 +422,9 @@ const FocusAreasForm = () => {
                                 </div>
                                 <input 
                                     type="text" 
-                                    value={formData.title.ps} 
-                                    onChange={(e) => handleChange('title', e.target.value, 'ps')} 
-                                    placeholder="Enter Pashto focus area title" 
+                                    value={formData.name.ps} 
+                                    onChange={(e) => handleChange('name', e.target.value, 'ps')} 
+                                    placeholder="Enter Pashto focus area name" 
                                     style={{
                                         width: '100%',
                                         padding: '14px 16px',
