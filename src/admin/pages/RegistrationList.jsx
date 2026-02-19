@@ -159,7 +159,11 @@ const RegistrationList = () => {
 
     const handleGenerateCertificateId = async () => {
         try {
-            const response = await certificateService.generateCertificateId();
+            if (!selectedRegistration) {
+                showErrorToast('Please select a registration first');
+                return;
+            }
+            const response = await certificateService.generateCertificateId(selectedRegistration._id);
             if (response.success) {
                 setCertificateData(prev => ({
                     ...prev,

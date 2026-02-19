@@ -165,8 +165,8 @@ export const API_ENDPOINTS = {
   FORM_LINKS_BY_ID: (id) => `/form-links/${id}`,
 
   // Registration
-  REGISTRATION: 'registration',
-  REGISTRATION_BY_ID: (id) => `registration/${id}`,
+  REGISTRATION: '/registration',
+  REGISTRATION_BY_ID: (id) => `/registration/${id}`,
 
   // Events
   EVENTS: 'events',

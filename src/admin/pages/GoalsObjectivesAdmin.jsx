@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
 import AdminLayout from '../layouts/AdminLayout';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { API_BASE_URL } from '../../config/api.config';
 
 const GoalsObjectivesAdmin = () => {

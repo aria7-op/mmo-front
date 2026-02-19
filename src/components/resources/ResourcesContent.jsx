@@ -45,7 +45,7 @@ const ResourcesContent = () => {
         {
             titleKey: 'resources.rfqRfpCardTitle',
             descriptionKey: 'resources.rfqRfpCardDescription',
-            link: '/resources/rfq-rfp',
+            link: '/resources/rfq',
             icon: 'fa-handshake'
         },
         {

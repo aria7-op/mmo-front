@@ -24,7 +24,7 @@ export function getMenuConfig(t) {
           isCategory: true,
           children: [
             { label: t('navigation.submenu.boardDirectors'), path: '/about/board-directors' },
-            { label: t('navigation.submenu.executiveTeam'), path: '/about/executive-team' },
+            // { label: t('navigation.submenu.executiveTeam'), path: '/about/executive-team' },
             { label: t('navigation.submenu.organizationalStructure'), path: '/about/organizational-structure' },
           ]
         },
@@ -130,7 +130,6 @@ export function getMenuConfig(t) {
             // { label: t('navigation.submenu.certificates'), path: '/resources/certificates' },
             // { label: t('navigation.submenu.procurements'), path: '/resources/procurements' },
             // { label: t('navigation.submenu.tenders'), path: '/resources/tenders' },
-            { label: t('navigation.submenu.rfp'), path: '/resources/rfp' },
             { label: t('navigation.submenu.rfq'), path: '/resources/rfq' },
             { label: t('navigation.submenu.gallery'), path: '/gallery-full' },
           ]

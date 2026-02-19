@@ -68,7 +68,7 @@ const PageHero = ({ pageName, fallbackDescription = null }) => {
                 'about/organizational-structure': ['/about/organizational-structure', '%2Fabout%2Forganizational-structure'],
                 // Resources pages
                 'resources/reports': ['/resources/reports', '%2Fresources%2Freports'],
-                'resources/rfq-rfp': ['/resources/rfq-rfp', '%2Fresources%2Frfq-rfp'],
+                'resources/rfq': ['/resources/rfq', '%2Fresources%2Frfq'],
                 'resources/jobs': ['/resources/jobs', '%2Fresources%2Fjobs'],
                 'resources/news-events': ['/resources/news-events', '%2Fresources%2Fnews-events'],
                 'resources/annual-reports': ['/resources/annual-reports', '%2Fresources%2Fannual-reports'],

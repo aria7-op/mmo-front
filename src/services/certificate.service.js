@@ -79,9 +79,9 @@ const certificateService = {
     },
 
     // Generate certificate ID
-    generateCertificateId: async () => {
+    generateCertificateId: async (registrationId) => {
         try {
-            const response = await post('/certificates/generate-id');
+            const response = await post('/certificates/generate-id', { registrationId });
             return response;
         } catch (error) {
             throw new Error(error.response?.data?.message || 'Failed to generate certificate ID');

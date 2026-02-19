@@ -198,7 +198,8 @@ export const getPublishedJobs = async (params = {}) => {
       ...params,
     };
 
-    const response = await get('/jobs/published', queryParams);
+    // Use /jobs endpoint to get all jobs (any status) instead of just published ones
+    const response = await get('/jobs', queryParams);
     
     if (response.success) {
       return {

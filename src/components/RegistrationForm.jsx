@@ -4,7 +4,7 @@ import { showSuccessToast, showErrorToast } from '../utils/errorHandler';
 import formConfigService from '../services/formConfig.service';
 
 // Cloudflare Turnstile integration
-const CLOUDFLARE_TURNSTILE_SITE_KEY = '0x4AAAAAACPm_44mTMtQD8O5';
+// const CLOUDFLARE_TURNSTILE_SITE_KEY = '0x4AAAAAACPm_44mTMtQD8O5';
 
 // Security validation functions
 const sanitizeInput = (input) => {
@@ -65,8 +65,8 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [turnstileToken, setTurnstileToken] = useState(null);
-    const [turnstileLoaded, setTurnstileLoaded] = useState(false);
+    // const [turnstileToken, setTurnstileToken] = useState(null);
+    // const [turnstileLoaded, setTurnstileLoaded] = useState(false);
     const [formConfig, setFormConfig] = useState(null);
     const [configLoading, setConfigLoading] = useState(true);
 
@@ -114,43 +114,43 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
     }, []);
 
     // Load Cloudflare Turnstile
-    useEffect(() => {
-        const loadTurnstile = () => {
-            if (window.turnstile) {
-                setTurnstileLoaded(true);
-                return;
-            }
+    // useEffect(() => {
+    //     const loadTurnstile = () => {
+    //         if (window.turnstile) {
+    //             setTurnstileLoaded(true);
+    //             return;
+    //         }
 
-            const script = document.createElement('script');
-            script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-            script.async = true;
-            script.defer = true;
-            script.onload = () => {
-                setTurnstileLoaded(true);
-            };
-            document.head.appendChild(script);
-        };
+    //         const script = document.createElement('script');
+    //         script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    //         script.async = true;
+    //         script.defer = true;
+    //         script.onload = () => {
+    //             setTurnstileLoaded(true);
+    //         };
+    //         document.head.appendChild(script);
+    //     };
 
-        loadTurnstile();
-    }, []);
+    //     loadTurnstile();
+    // }, []);
 
     // Initialize Turnstile when loaded
-    useEffect(() => {
-        if (turnstileLoaded && window.turnstile && !turnstileToken) {
-            const container = document.getElementById('turnstile-container');
-            if (container) {
-                window.turnstile.render(container, {
-                    sitekey: CLOUDFLARE_TURNSTILE_SITE_KEY,
-                    callback: (token) => {
-                        setTurnstileToken(token);
-                    },
-                    'error-callback': () => {
-                        showErrorToast('Verification failed. Please try again.');
-                    }
-                });
-            }
-        }
-    }, [turnstileLoaded, turnstileToken]);
+    // useEffect(() => {
+    //     if (turnstileLoaded && window.turnstile && !turnstileToken) {
+    //         const container = document.getElementById('turnstile-container');
+    //         if (container) {
+    //             window.turnstile.render(container, {
+    //                 sitekey: CLOUDFLARE_TURNSTILE_SITE_KEY,
+    //                 callback: (token) => {
+    //                     setTurnstileToken(token);
+    //                 },
+    //                 'error-callback': () => {
+    //                     showErrorToast('Verification failed. Please try again.');
+    //                 }
+    //             });
+    //         }
+    //     }
+    // }, [turnstileLoaded, turnstileToken]);
 
     const provinces = [
         'Kabul', 'Herat', 'Kandahar', 'Mazar-i-Sharif', 'Jalalabad',
@@ -254,9 +254,9 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
         }
 
         // Cloudflare Turnstile validation
-        if (!turnstileToken) {
-            newErrors.turnstile = 'Please complete the security verification';
-        }
+        // if (!turnstileToken) {
+        //     newErrors.turnstile = 'Please complete security verification';
+        // }
 
         console.log('Validation errors:', newErrors);
         setErrors(newErrors);
@@ -329,7 +329,7 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
                 motivation: sanitizeInput(formData.motivation),
                 consentToContact: formData.consentToContact,
                 agreeToTerms: formData.agreeToTerms,
-                turnstileToken: turnstileToken
+                // turnstileToken: turnstileToken
             };
 
             const apiUrl = 'https://khwanzay.school/bak/registration';
@@ -338,8 +338,8 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-Turnstile-Token': turnstileToken
+                    'Content-Type': 'application/json'
+                    // 'X-Turnstile-Token': turnstileToken
                 },
                 body: JSON.stringify(sanitizedFormData)
             });
@@ -373,22 +373,22 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
                 });
                 
                 // Reset Turnstile
-                setTurnstileToken(null);
-                if (window.turnstile) {
-                    const container = document.getElementById('turnstile-container');
-                    if (container) {
-                        container.innerHTML = '';
-                        window.turnstile.render(container, {
-                            sitekey: CLOUDFLARE_TURNSTILE_SITE_KEY,
-                            callback: (token) => {
-                                setTurnstileToken(token);
-                            },
-                            'error-callback': () => {
-                                showErrorToast('Verification failed. Please try again.');
-                            }
-                        });
-                    }
-                }
+                // setTurnstileToken(null);
+                // if (window.turnstile) {
+                //     const container = document.getElementById('turnstile-container');
+                //     if (container) {
+                //         container.innerHTML = '';
+                //         window.turnstile.render(container, {
+                //             sitekey: CLOUDFLARE_TURNSTILE_SITE_KEY,
+                //             callback: (token) => {
+                //                 setTurnstileToken(token);
+                //             },
+                //             'error-callback': () => {
+                //                 showErrorToast('Verification failed. Please try again.');
+                //             }
+                //         });
+                //     }
+                // }
             } else {
                 showErrorToast(result.message || 'Failed to submit registration');
             }
@@ -876,7 +876,7 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
 
                 {/* Security Verification */}
                 <div style={{ marginBottom: '25px' }}>
-                    <h3 style={{
+                    {/* <h3 style={{
                         marginBottom: '15px',
                         color: '#2c3e50',
                         fontSize: '16px',
@@ -915,23 +915,23 @@ const RegistrationForm = ({ onClose, onSubmitSuccess }) => {
                                 {errors.turnstile}
                             </div>
                         )}
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Submit Button */}
                 <div style={{ textAlign: 'center' }}>
                     <button
                         type="submit"
-                        disabled={isSubmitting || !turnstileToken}
+                        disabled={isSubmitting}
                         style={{
-                            backgroundColor: (isSubmitting || !turnstileToken) ? '#6c757d' : '#007bff',
+                            backgroundColor: isSubmitting ? '#6c757d' : '#007bff',
                             color: '#fff',
                             border: 'none',
                             borderRadius: '6px',
                             padding: '12px 30px',
                             fontSize: '16px',
                             fontWeight: '500',
-                            cursor: (isSubmitting || !turnstileToken) ? 'not-allowed' : 'pointer',
+                            cursor: isSubmitting ? 'not-allowed' : 'pointer',
                             transition: 'background-color 0.2s ease'
                         }}
                     >

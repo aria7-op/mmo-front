@@ -121,7 +121,7 @@ export const ROUTE_MAP = {
   '/resources/annual-reports': 'annual-reports',
   '/resources/success-stories': 'success-stories',
   '/resources/case-studies': 'case-studies',
-  '/resources/rfq-rfp': 'rfq-rfp',
+  '/resources/rfq': 'rfq',
   '/resources/policies': 'policies',
   '/resources/jobs': 'jobs',
   '/competencies': 'competencies',

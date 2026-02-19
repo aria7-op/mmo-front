@@ -196,19 +196,59 @@ const CoverageAreaAdmin = () => {
         e.preventDefault();
         if (saving) return;
         
+        // Validation for required fields
+        if (!formData.title.en || formData.title.en.trim().length < 3) {
+            showErrorToast('English title is required (minimum 3 characters)');
+            setActiveTab('content');
+            setActiveLang('en');
+            return;
+        }
+        
+        if (!formData.introduction.en || formData.introduction.en.trim().length < 10) {
+            showErrorToast('English introduction is required (minimum 10 characters)');
+            setActiveTab('content');
+            setActiveLang('en');
+            return;
+        }
+        
+        // Validation for provinces
+        for (let i = 0; i < formData.provinces.length; i++) {
+            const province = formData.provinces[i];
+            if (!province.name.en || province.name.en.trim().length < 3) {
+                showErrorToast(`Province ${i + 1}: English name is required (minimum 3 characters)`);
+                setActiveTab('provinces');
+                setActiveLang('en');
+                return;
+            }
+            
+            if (!province.description.en || province.description.en.trim().length < 10) {
+                showErrorToast(`Province ${i + 1}: English description is required (minimum 10 characters)`);
+                setActiveTab('provinces');
+                setActiveLang('en');
+                return;
+            }
+        }
+        
         setSaving(true);
         try {
             const token = localStorage.getItem('authToken');
             const formDataToSend = new FormData();
             
-            formDataToSend.append('title', JSON.stringify(formData.title));
-            formDataToSend.append('subtitle', JSON.stringify(formData.subtitle));
-            formDataToSend.append('introduction', JSON.stringify(formData.introduction));
-            formDataToSend.append('coverageStatistics', JSON.stringify(formData.coverageStatistics));
-            formDataToSend.append('provinces', JSON.stringify(formData.provinces));
-            formDataToSend.append('futureExpansion', JSON.stringify(formData.futureExpansion));
-            formDataToSend.append('status', formData.status);
+            // Create the data object that matches backend expectations
+            const data = {
+                title: formData.title,
+                subtitle: formData.subtitle,
+                introduction: formData.introduction,
+                coverageStatistics: formData.coverageStatistics,
+                provinces: formData.provinces,
+                futureExpansion: formData.futureExpansion,
+                status: formData.status
+            };
             
+            // Append the data as a JSON string
+            formDataToSend.append('data', JSON.stringify(data));
+            
+            // Append images
             if (heroImage) formDataToSend.append('heroImage', heroImage);
             if (mapImage) formDataToSend.append('mapImage', mapImage);
             
@@ -577,7 +617,7 @@ const CoverageAreaAdmin = () => {
                                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
                                                     <div>
                                                         <label style={{ display: 'block', marginBottom: '6px', fontSize: '12px', fontWeight: '600', color: '#495057' }}>
-                                                            Name ({activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'})
+                                                            Name ({activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'}) *
                                                         </label>
                                                         <input
                                                             type="text"
@@ -591,6 +631,25 @@ const CoverageAreaAdmin = () => {
                                                                 fontSize: '12px'
                                                             }}
                                                             placeholder="Province name"
+                                                            required={activeLang === 'en'}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label style={{ display: 'block', marginBottom: '6px', fontSize: '12px', fontWeight: '600', color: '#495057' }}>
+                                                            Capital ({activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'})
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            value={province.capital[activeLang] || ''}
+                                                            onChange={(e) => handleUpdateProvince(index, 'capital', activeLang, e.target.value)}
+                                                            style={{
+                                                                width: '100%',
+                                                                padding: '8px',
+                                                                border: '1px solid #ced4da',
+                                                                borderRadius: '4px',
+                                                                fontSize: '12px'
+                                                            }}
+                                                            placeholder="Capital city"
                                                         />
                                                     </div>
                                                     <div>
@@ -612,6 +671,46 @@ const CoverageAreaAdmin = () => {
                                                             min="0"
                                                         />
                                                     </div>
+                                                    <div>
+                                                        <label style={{ display: 'block', marginBottom: '6px', fontSize: '12px', fontWeight: '600', color: '#495057' }}>
+                                                            Area (km²)
+                                                        </label>
+                                                        <input
+                                                            type="number"
+                                                            value={province.area}
+                                                            onChange={(e) => handleUpdateProvince(index, 'area', null, e.target.value)}
+                                                            style={{
+                                                                width: '100%',
+                                                                padding: '8px',
+                                                                border: '1px solid #ced4da',
+                                                                borderRadius: '4px',
+                                                                fontSize: '12px'
+                                                            }}
+                                                            placeholder="0"
+                                                            min="0"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div style={{ marginTop: '12px' }}>
+                                                    <label style={{ display: 'block', marginBottom: '6px', fontSize: '12px', fontWeight: '600', color: '#495057' }}>
+                                                        Description ({activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'}) *
+                                                    </label>
+                                                    <textarea
+                                                        value={province.description[activeLang] || ''}
+                                                        onChange={(e) => handleUpdateProvince(index, 'description', activeLang, e.target.value)}
+                                                        style={{
+                                                            width: '100%',
+                                                            padding: '8px',
+                                                            border: '1px solid #ced4da',
+                                                            borderRadius: '4px',
+                                                            fontSize: '12px',
+                                                            minHeight: '80px',
+                                                            resize: 'vertical'
+                                                        }}
+                                                        placeholder={`Enter province description in ${activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} (minimum 10 characters)`}
+                                                        required={activeLang === 'en'}
+                                                        minLength="10"
+                                                    />
                                                 </div>
                                             </div>
                                         ))}

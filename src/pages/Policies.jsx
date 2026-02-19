@@ -6,7 +6,7 @@ import Footer from '../components/footer/Footer';
 import SEOHead from '../components/seo/SEOHead';
 import { usePolicies } from '../hooks/usePolicies';
 import { useTranslation } from 'react-i18next';
-import { formatMultilingualContent, getImageUrlFromObject, stripHtmlTags } from '../utils/apiUtils';
+import { formatMultilingualContent, getImageUrlFromObject, stripHtmlTags, truncateText, formatDate } from '../utils/apiUtils';
 
 const Policies = () => {
     const { t, i18n } = useTranslation();

@@ -699,7 +699,7 @@ export function Navbar() {
                     {
                         title: null,
                         links: [
-                            { label: t('navigation.submenu.rfqRfp'), href: '/resources/rfq-rfp' },
+                            { label: t('navigation.submenu.rfq'), href: '/resources/rfq' },
                             { label: t('navigation.submenu.jobs', 'Jobs'), href: '/resources/jobs' },
                             { label: t('navigation.submenu.gallery'), href: '/gallery-full' },
                         ],

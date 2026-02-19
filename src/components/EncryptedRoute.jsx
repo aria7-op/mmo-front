@@ -94,7 +94,7 @@ const routeMap = {
     '/resources/case-studies': CaseStudies,
     '/competencies': Competencies,
     '/stakeholders': Stakeholders,
-    '/resources/rfq-rfp': RFQRFP,
+    '/resources/rfq': RFQRFP,
     '/resources/policies': Policies,
     '/resources/jobs': Jobs,
     '/terms-of-use': TermsOfUse,

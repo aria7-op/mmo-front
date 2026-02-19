@@ -256,6 +256,30 @@ export const programService = {
     }
   },
 
+  // Get focus area by slug
+  getFocusAreaBySlug: async (slug, lang = 'en') => {
+    try {
+      const queryParams = new URLSearchParams({ lang });
+      const response = await fetch(`${API_BASE_URL}/focus-areas/${slug}?${queryParams}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      return data.data || data;
+    } catch (error) {
+      console.error('Error fetching focus area by slug:', error);
+      throw error;
+    }
+  },
+
   // Create new program
   createProgram: async (programData, files = {}) => {
     try {
@@ -378,6 +402,7 @@ export const createFocusArea = programService.createFocusArea;
 export const updateFocusAreaStatus = programService.updateFocusAreaStatus;
 export const updateFocusArea = programService.updateFocusArea;
 export const getFocusAreaById = programService.getFocusAreaById;
+export const getFocusAreaBySlug = programService.getFocusAreaBySlug;
 export const createProgram = programService.createProgram;
 export const updateProgram = programService.updateProgram;
 export const deleteProgram = programService.deleteProgram;

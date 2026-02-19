@@ -19,8 +19,8 @@ const RFQRFP = () => {
                 description: t('resources.rfqRfpSEODescription', "Access Mission Mind Organization RFQ and RFP opportunities. MMO RFQ RFP opportunities for vendors and partners in Afghanistan.")
             }} />
             <HeaderV1 />
-            <PageHero pageName="/resources/rfq-rfp" />
-            <Breadcrumb pageTitle={t('resources.rfqRfp', 'RFQs / RFPs')} breadcrumb={t('resources.rfqRfp', 'RFQs / RFPs')} pageName="/resources/rfq-rfp" />
+            <PageHero pageName="/resources/rfq" />
+            <Breadcrumb pageTitle={t('resources.rfq', 'RFQs')} breadcrumb={t('resources.rfq', 'RFQs')} pageName="/resources/rfq" />
             <div className={`rfq-rfp-page-sec ${isRTL ? 'rtl-direction' : ''}`} style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
                 {/* Removed extra hero section as requested */}
                 <div className="container pt-40 pb-60">
@@ -41,7 +41,7 @@ const RFQList = () => {
     const [page, setPage] = React.useState(1);
     const [limit, setLimit] = React.useState(10);
     const [status, setStatus] = React.useState('open');
-    const [type, setType] = React.useState('RFP'); // default to RFP
+    const [type, setType] = React.useState('RFQ'); // default to RFQ
 
     const isRTL = i18n.dir() === 'rtl' || i18n.language === 'dr' || i18n.language === 'ps';
 
@@ -52,24 +52,19 @@ const RFQList = () => {
         <>
             <div className="top-row">
                 <div className="section-header">
-                    <h2 className="section-title">{t('resources.rfqRfp', 'RFQs / RFPs')}</h2>
-                    <p className="section-description">{t('resources.rfqRfpIntro', 'View our Requests for Quotations (RFQs) and Requests for Proposals (RFPs).')}</p>
+                    <h2 className="section-title">{t('resources.rfq', 'RFQs')}</h2>
+                    <p className="section-description">{t('resources.rfqIntro', 'View our Requests for Quotations (RFQs).')}</p>
                 </div>
             </div>
 
-            {/* Tabs for All / RFQs / RFPs */}
-            <div className="tabs-bar">
-                <button className={`tab-btn ${type === '' ? 'active' : ''}`} onClick={() => { setType(''); setPage(1); }}>{t('resources.all', 'All')}</button>
-                <button className={`tab-btn ${type === 'RFQ' ? 'active' : ''}`} onClick={() => { setType('RFQ'); setPage(1); }}>RFQ</button>
-                <button className={`tab-btn ${type === 'RFP' ? 'active' : ''}`} onClick={() => { setType('RFP'); setPage(1); }}>RFP</button>
-            </div>
+            {/* Removed tabs - only RFQs now */}
 
             {/* Filters */}
             <div className="filters-bar">
                 <div className="filter-group">
                     <input
                         className="search-input"
-                        placeholder={t('resources.search', 'Search RFQs / RFPs')}
+                        placeholder={t('resources.search', 'Search RFQ')}
                         onChange={(e) => { /* optional client filter */ }}
                     />
                 </div>
@@ -92,7 +87,6 @@ const RFQList = () => {
                     >
                         <option value="">{t('resources.allTypes', 'All types')}</option>
                         <option value="RFQ">RFQ</option>
-                        <option value="RFP">RFP</option>
                     </select>
                 </div>
                 <div className="filter-group">
@@ -123,7 +117,7 @@ const RFQList = () => {
             {error && (
                 <div className="error-message">
                     <i className="fas fa-exclamation-circle"></i>
-                    <span>{t('resources.errorLoadingRFQs', 'Error loading RFQs/RFPs')}: {error.message || String(error)}</span>
+                    <span>{t('resources.errorLoadingRFQs', 'Error loading RFQs')}: {error.message || String(error)}</span>
                 </div>
             )}
 
@@ -165,7 +159,7 @@ const RFQList = () => {
                                         {fileUrl ? (
                                             <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="download-btn">
                                                 <i className="fas fa-download"></i>
-                                                {t('resources.downloadRfx', 'Download RFQ/RFP')}
+                                                {t('resources.downloadRfx', 'Download RFQ')}
                                             </a>
                                         ) : (
                                             <span className="no-file">{t('resources.noFile', 'No file available')}</span>
@@ -178,8 +172,8 @@ const RFQList = () => {
                                 <div className="empty-icon">
                                     <i className="fas fa-file-contract"></i>
                                 </div>
-                                <h3>{t('resources.noRFQsTitle', 'No RFQs/RFPs Available')}</h3>
-                                <p>{t('resources.noRFQs', 'There are currently no Requests for Quotations or Proposals available. Please check back later.')}</p>
+                                <h3>{t('resources.noRFQsTitle', 'No RFQs Available')}</h3>
+                                <p>{t('resources.noRFQs', 'There are currently no Requests for Quotations available. Please check back later.')}</p>
                             </div>
                         )}
                     </div>

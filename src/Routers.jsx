@@ -184,7 +184,6 @@ const Routers = () => {
                 <Route path='/competencies' element={<Competencies />}></Route>
                 <Route path='/stakeholders' element={<Stakeholders />}></Route>
                 <Route path='/resources/rfq' element={<RFQRFP />}></Route>
-                <Route path='/resources/rfq-rfp' element={<RFQRFP />}></Route>
                 <Route path='/resources/policies' element={<Policies />}></Route>
                 <Route path='/resources/jobs' element={<Jobs />}></Route>
                 <Route path='/terms-of-use' element={<TermsOfUse />}></Route>

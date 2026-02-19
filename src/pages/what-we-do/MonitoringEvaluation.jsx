@@ -5,6 +5,7 @@ import Footer from '../../components/footer/Footer';
 import SEOHead from '../../components/seo/SEOHead';
 import { useTranslation } from 'react-i18next';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { getFocusAreaBySlug } from '../../services/programs.service';
 import './MonitoringEvaluation.css';
 
 const MonitoringEvaluation = () => {
@@ -21,11 +22,10 @@ const MonitoringEvaluation = () => {
     const fetchContent = async () => {
         try {
             setLoading(true);
-            const response = await fetch('https://khwanzay.school/bak/monitoring-evaluation');
-            const data = await response.json();
+            const data = await getFocusAreaBySlug('monitoring-evaluation');
             
-            if (data.success) {
-                setContent(data.data);
+            if (data) {
+                setContent(data);
             } else {
                 setError('Failed to load content');
             }
