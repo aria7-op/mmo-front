@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { usePolicies } from '../../hooks/usePolicies';
 import { deletePolicy, getPolicyById, createPolicy, updatePolicy } from '../../services/resources.service';
 import { formatMultilingualContent, getImageUrlFromObject, formatDate, stripHtmlTags } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';

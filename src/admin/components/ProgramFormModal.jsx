@@ -36,16 +36,27 @@ const ProgramFormModal = ({
     if (!data || typeof data !== 'object') return null;
     
     return {
-      name: {
-        en: typeof data.name?.en === 'string' ? data.name.en : '',
-        per: typeof data.name?.per === 'string' ? data.name.per : '',
-        ps: typeof data.name?.ps === 'string' ? data.name.ps : ''
+      title: {
+        en: typeof data.title?.en === 'string' ? data.title.en : '',
+        per: typeof data.title?.per === 'string' ? data.title.per : '',
+        ps: typeof data.title?.ps === 'string' ? data.title.ps : ''
       },
       description: {
         en: typeof data.description?.en === 'string' ? data.description.en : '',
         per: typeof data.description?.per === 'string' ? data.description.per : '',
         ps: typeof data.description?.ps === 'string' ? data.description.ps : ''
       },
+      overview: {
+        en: typeof data.overview?.en === 'string' ? data.overview.en : '',
+        per: typeof data.overview?.per === 'string' ? data.overview.per : '',
+        ps: typeof data.overview?.ps === 'string' ? data.overview.ps : ''
+      },
+      readMoreLink: {
+        en: typeof data.readMoreLink?.en === 'string' ? data.readMoreLink.en : '',
+        per: typeof data.readMoreLink?.per === 'string' ? data.readMoreLink.per : '',
+        ps: typeof data.readMoreLink?.ps === 'string' ? data.readMoreLink.ps : ''
+      },
+      slug: typeof data.slug === 'string' ? data.slug : '',
       focusArea: typeof data.focusArea === 'string' ? data.focusArea : '',
       provinces: Array.isArray(data.provinces) ? data.provinces : [],
       status: typeof data.status === 'string' ? data.status : 'draft',
@@ -68,9 +79,9 @@ const ProgramFormModal = ({
     dm.saveDraft(modalId, data, isEdit);
   };
 
-  const handleSend = async (data) => {
+  const handleSend = async (data, file) => {
     try {
-      await onSave(data);
+      await onSave(data, file);
       dm.deleteDraft(modalId);
       onClose();
     } catch (error) {

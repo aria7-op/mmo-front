@@ -4,7 +4,7 @@ import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import registrationService from '../../services/registration.service';
 import certificateService from '../../services/certificate.service';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 
 const RegistrationList = () => {
     const { t, i18n } = useTranslation();

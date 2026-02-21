@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getAllJobs, deleteJob, getJobById, createJob, updateJob } from '../../services/jobs.service';
 import { formatMultilingualContent, formatDate } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import JobFormModal from '../components/JobFormModal';

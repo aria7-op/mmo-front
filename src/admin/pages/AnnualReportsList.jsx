@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useAnnualReports } from '../../hooks/useAnnualReports';
 import { deleteAnnualReport, getAnnualReportById, createAnnualReport, updateAnnualReport } from '../../services/resources.service';
 import { formatMultilingualContent, getImageUrlFromObject } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -174,10 +174,10 @@ const AnnualReportsList = () => {
         try {
             const token = localStorage.getItem('authToken');
             await deleteAnnualReport(id, token);
-            showSuccessToast(t('admin.annualReportDeleted', 'Annual report deleted successfully'));
+            showCrudToasts.delete('Annual report');
             refetch();
         } catch (error) {
-            showErrorToast(error.message || t('admin.failedToDeleteAnnualReport', 'Failed to delete annual report'));
+            showCrudToasts.deleteError('Annual report', error.message || 'Unknown error');
             console.error('Delete error:', error);
         } finally {
             setDeleting(null);
@@ -187,6 +187,8 @@ const AnnualReportsList = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
+        
+        const loadingToastId = showLoadingToast(editingReport ? 'Updating annual report...' : 'Creating annual report...');
         
         try {
             const data = {
@@ -198,17 +200,24 @@ const AnnualReportsList = () => {
             const token = localStorage.getItem('authToken');
             if (editingReport) {
                 await updateAnnualReport(editingReport._id, data, formData.pdfFile, token);
-                showSuccessToast(t('admin.annualReportUpdated', 'Annual report updated successfully'));
+                dismissToast(loadingToastId);
+                showCrudToasts.update('Annual report');
             } else {
                 await createAnnualReport(data, formData.pdfFile, token);
-                showSuccessToast(t('admin.annualReportCreated', 'Annual report created successfully'));
+                dismissToast(loadingToastId);
+                showCrudToasts.create('Annual report');
             }
             
             setShowModal(false);
             resetForm();
             refetch();
         } catch (error) {
-            showErrorToast(error.message || 'Failed to save annual report');
+            dismissToast(loadingToastId);
+            if (editingReport) {
+                showCrudToasts.updateError('Annual report', error.message || 'Unknown error');
+            } else {
+                showCrudToasts.createError('Annual report', error.message || 'Unknown error');
+            }
         } finally {
             setSubmitting(false);
         }

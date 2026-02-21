@@ -17,8 +17,10 @@ import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
 
 const StakeholdersList = () => {
   const { t } = useTranslation();
+  const isRTL = t('currentLanguage') === 'dr' || t('currentLanguage') === 'ps';
   const { stakeholders, loading, refetch } = useStakeholders();
   const [deleting, setDeleting] = useState(null);
+  const [searchInput, setSearchInput] = useState('');
   const [modals, setModals] = useState(() => {
     try {
       const saved = localStorage.getItem('stakeholder-modal-instances');
@@ -86,6 +88,20 @@ const StakeholdersList = () => {
     }
   };
 
+  // Filter stakeholders based on search
+  const filteredStakeholders = useMemo(() => {
+    if (!searchInput) return stakeholders;
+    const searchLower = searchInput.toLowerCase();
+    return stakeholders?.filter(item => {
+      const name = typeof formatMultilingualContent(item.name) === 'string' 
+        ? formatMultilingualContent(item.name).toLowerCase() 
+        : '';
+      const type = item.type?.toLowerCase() || '';
+      const website = item.website?.toLowerCase() || '';
+      return name.includes(searchLower) || type.includes(searchLower) || website.includes(searchLower);
+    }) || [];
+  }, [stakeholders, searchInput]);
+
   if (loading) {
     return (
       <AdminLayout>
@@ -98,350 +114,385 @@ const StakeholdersList = () => {
 
   return (
     <AdminLayout>
-      <div className="container-fluid" style={{ padding: '20px' }}>
+      <div className="admin-stakeholders-list" style={{ direction: isRTL ? 'rtl' : 'ltr', padding: '16px' }}>
         {/* Header */}
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <div>
-            <h2 className="mb-1" style={{ 
-              color: '#2c3e50', 
-              fontWeight: '600',
-              fontSize: '28px'
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '16px',
+          padding: '16px',
+          backgroundColor: '#fff',
+          borderRadius: '6px',
+          border: '1px solid #dee2e6'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '4px',
+              backgroundColor: '#e3f2fd',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#1976d2',
+              fontSize: '14px'
             }}>
-              <i className="fas fa-handshake me-3"></i>
-              {t('admin.stakeholders', 'Stakeholders')}
-            </h2>
-            <p className="text-muted mb-0">
-              {t('admin.manageStakeholders', 'View and manage stakeholders and partners')}
-            </p>
+              <i className="fas fa-handshake"></i>
+            </div>
+            <div>
+              <h1 style={{ fontSize: '18px', margin: 0, fontWeight: '600', color: '#212529' }}>
+                Stakeholders Management
+              </h1>
+              <p style={{ margin: '2px 0 0 0', fontSize: '12px', color: '#6c757d' }}>
+                Manage organizational stakeholders and partners
+              </p>
+            </div>
           </div>
-          <div className="d-flex gap-2">
+          <div style={{ display: 'flex', gap: '8px' }}>
             <button
-              className="btn btn-outline-secondary"
-              onClick={refetch}
-              disabled={loading}
+              onClick={openCreate}
+              style={{
+                padding: '6px 12px',
+                backgroundColor: '#007bff',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '13px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'background-color 0.2s'
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#0056b3'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#007bff'}
+              title="Add new stakeholder"
             >
-              <i className="fas fa-sync-alt me-2"></i>
-              {t('common.refresh', 'Refresh')}
+              <i className="fas fa-plus"></i>
+              Add Stakeholder
             </button>
             <button
-              className="btn btn-primary"
-              onClick={openCreate}
+              onClick={() => refetch()}
+              style={{
+                padding: '6px 12px',
+                backgroundColor: '#6c757d',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '13px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'background-color 0.2s'
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#5a6268'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#6c757d'}
+              title="Refresh stakeholders list"
             >
-              <i className="fas fa-plus me-2"></i>
-              {t('admin.addStakeholder', 'Add Stakeholder')}
+              <i className="fas fa-refresh"></i>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Search */}
+        <div style={{ marginBottom: '16px' }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <input
+              type="text"
+              placeholder="Search stakeholders..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              style={{
+                flex: 1,
+                padding: '8px 12px',
+                borderRadius: '4px',
+                border: '1px solid #ced4da',
+                fontSize: '13px'
+              }}
+            />
+            <button
+              onClick={() => setSearchInput('')}
+              style={{
+                padding: '8px 12px',
+                backgroundColor: '#6c757d',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '13px',
+                cursor: 'pointer'
+              }}
+              title="Clear search"
+            >
+              <i className="fas fa-times"></i>
             </button>
           </div>
         </div>
 
         {/* Stakeholders Table */}
-        <div className="card">
-          <div className="card-body p-0">
-            <div className="table-responsive">
-              <table className="table table-hover mb-0">
-                <thead className="table-light">
-                  <tr>
-                    <th style={{ fontWeight: '600' }}>
-                      <i className="fas fa-image me-2"></i>
-                      {t('admin.logo', 'Logo')}
-                    </th>
-                    <th style={{ fontWeight: '600' }}>
-                      <i className="fas fa-building me-2"></i>
-                      {t('admin.name', 'Name')}
-                    </th>
-                    <th style={{ fontWeight: '600' }}>
-                      <i className="fas fa-tag me-2"></i>
-                      {t('admin.type', 'Type')}
-                    </th>
-                    <th style={{ fontWeight: '600' }}>
-                      <i className="fas fa-globe me-2"></i>
-                      {t('admin.website', 'Website')}
-                    </th>
-                    <th style={{ fontWeight: '600' }}>
-                      <i className="fas fa-info-circle me-2"></i>
-                      {t('admin.status', 'Status')}
-                    </th>
-                    <th style={{ fontWeight: '600', textAlign: 'center' }}>
-                      {t('admin.actions', 'Actions')}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stakeholders?.length ? stakeholders.map(item => (
-                    <tr key={item._id}>
-                      <td>
-                        {item.logo?.url ? (
-                          <img 
-                            src={item.logo.url} 
-                            alt={typeof formatMultilingualContent(item.name) === 'string' ? formatMultilingualContent(item.name) : 'Stakeholder logo'} 
-                            style={{ width: 50, height: 50, objectFit: 'contain', borderRadius: 4 }} 
-                          />
-                        ) : (
-                          <div style={{ 
-                            width: 50, 
-                            height: 50, 
-                            background: '#f1f3f5', 
-                            borderRadius: 4, 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center', 
-                            color: '#999', 
-                            fontSize: 12 
-                          }}>
-                            {t('admin.noLogo', 'No Logo')}
-                          </div>
-                        )}
-                      </td>
-                      <td>
-                        <div style={{ fontWeight: '500' }}>
-                          {typeof formatMultilingualContent(item.name) === 'string' 
-                              ? formatMultilingualContent(item.name) 
-                              : t('admin.noName', 'No name')
-                          }
-                        </div>
-                      </td>
-                      <td>
-                        <span className="badge bg-info text-dark">
-                          {item.type || t('admin.notSpecified', 'Not specified')}
-                        </span>
-                      </td>
-                      <td>
-                        {item.website ? (
-                          <a 
-                            href={item.website} 
-                            target="_blank" 
-                            rel="noreferrer" 
-                            className="text-decoration-none"
-                          >
-                            {item.website}
-                          </a>
-                        ) : (
-                          <span className="text-muted">-</span>
-                        )}
-                      </td>
-                      <td>
-                        <span className={`badge ${
-                          item.status === 'Published' 
-                            ? 'bg-success' 
-                            : item.status === 'Draft' 
-                            ? 'bg-warning text-dark' 
-                            : 'bg-secondary'
-                        }`}>
-                          {item.status || t('admin.unknown', 'Unknown')}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="d-flex gap-2 justify-content-center">
-                          <button 
-                            className="btn btn-sm btn-outline-primary"
-                            onClick={() => openEdit(item._id)} 
-                            title={t('admin.edit', 'Edit')}
-                          >
-                            <i className="fas fa-edit"></i>
-                          </button>
-                          <button 
-                            className="btn btn-sm btn-outline-danger"
-                            onClick={() => handleDelete(item._id)} 
-                            disabled={deleting === item._id}
-                            title={t('admin.delete', 'Delete')}
-                          >
-                            {deleting === item._id ? (
-                              <i className="fas fa-spinner fa-spin"></i>
-                            ) : (
-                              <i className="fas fa-trash"></i>
-                            )}
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  )) : (
-                    <tr>
-                      <td colSpan={6} className="text-center py-5">
-                        <div className="text-muted">
-                          <i className="fas fa-handshake fa-3x mb-3 d-block"></i>
-                          {t('admin.noStakeholdersFound', 'No stakeholders found')}
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+        <div style={{ 
+          backgroundColor: '#fff', 
+          borderRadius: '6px', 
+          border: '1px solid #dee2e6',
+          overflow: 'hidden'
+        }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '80px 1fr 120px 200px 100px 120px',
+            padding: '12px',
+            backgroundColor: '#f8f9fa',
+            borderBottom: '1px solid #dee2e6',
+            fontWeight: '600',
+            fontSize: '13px',
+            color: '#495057'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="fas fa-image"></i>
+              Logo
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="fas fa-building"></i>
+              Name
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="fas fa-tag"></i>
+              Type
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="fas fa-globe"></i>
+              Website
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="fas fa-info-circle"></i>
+              Status
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}>
+              <i className="fas fa-cog"></i>
+              Actions
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Draft tray and multi-instance modals */}
-      {(() => {
-        const minimized = modals.filter(m => m.minimized);
-        const draftList = draftManager.getAllDrafts().filter(d => d.modalId?.startsWith('stakeholder-'));
-        const openIds = new Set(modals.map(m => m.id));
-        const draftsNotOpen = draftList.filter(d => !openIds.has(d.modalId));
-        if (minimized.length === 0 && draftsNotOpen.length === 0) return null;
-        return (
-          <div className="fixed-bottom bg-light border-top p-2 d-flex flex-wrap gap-2" style={{ zIndex: 9999 }}>
-            <button
-              className="btn btn-sm btn-outline-secondary"
-              onClick={() => {
-                try {
-                  const all = draftList;
-                  const unsaved = new Set(all.filter(d => !d?.data?._id).map(d => d.modalId));
-                  minimized.forEach(m => { if (!draftManager.loadDraft(m.id)) unsaved.add(m.id); });
-                  unsaved.forEach(id => { try { draftManager.deleteDraft(id); } catch {} });
-                  setModals(prev => {
-                    const next = prev.filter(m => !unsaved.has(m.id));
-                    localStorage.setItem('stakeholder-modal-instances', JSON.stringify(next));
-                    return next;
-                  });
-                } catch {}
-              }}
-              title={t('admin.clearUnsavedDrafts', 'Clear unsaved drafts')}
+          
+          {filteredStakeholders?.map((item) => (
+            <div key={item._id} style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '80px 1fr 120px 200px 100px 120px',
+              padding: '12px',
+              borderBottom: '1px solid #f1f3f4',
+              fontSize: '13px',
+              transition: 'background-color 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
             >
-              <i className="fas fa-eraser me-1"></i> {t('admin.clearUnsaved', 'Clear unsaved')}
-            </button>
-            {minimized.length > 0 && (
-              <button
-                className="btn btn-sm btn-outline-primary"
-                onClick={() => {
-                  setModals(prev => {
-                    const next = prev.map(x => x.minimized ? { ...x, minimized: false } : x);
-                    localStorage.setItem('stakeholder-modal-instances', JSON.stringify(next));
-                    return next;
-                  });
-                }}
-                title={t('admin.restoreAll', 'Restore all')}
-              >
-                <i className="fas fa-window-restore me-1"></i> {t('admin.restoreAll', 'Restore all')}
-              </button>
-            )}
-            {(minimized.length > 0 || draftsNotOpen.length > 0) && (
-              <button
-                className="btn btn-sm btn-outline-danger"
-                onClick={() => {
-                  try { draftList.forEach(d => draftManager.deleteDraft(d.modalId)); } catch {}
-                  setModals([]);
-                  localStorage.setItem('stakeholder-modal-instances', JSON.stringify([]));
-                }}
-                title={t('admin.clearAllDrafts', 'Clear all drafts')}
-              >
-                <i className="fas fa-trash me-1"></i> {t('admin.clearAll', 'Clear all')}
-              </button>
-            )}
-
-            {/* Minimized active windows */}
-            {minimized.map(m => {
-              const draft = draftManager.loadDraft(m.id);
-              const title = draft?.data?.name?.["en"] || draft?.data?.name?.["per"] || draft?.data?.name?.["ps"] || (m.mode === 'edit' ? t('admin.editingStakeholder', 'Editing Stakeholder') : t('admin.newStakeholder', 'New Stakeholder'));
-              return (
-                <div key={m.id} className="d-inline-flex position-relative">
-                  <button
-                    className="btn btn-sm btn-outline-primary me-1"
-                    onClick={() => {
-                      setModals(prev => {
-                        const next = prev.map(x => x.id === m.id ? { ...x, minimized: false } : x);
-                        localStorage.setItem('stakeholder-modal-instances', JSON.stringify(next));
-                        return next;
-                      });
-                    }}
-                    title={t('admin.restoreDraft', 'Restore draft')}
-                  >
-                    <i className="fas fa-window-restore me-1"></i>
-                    {title}
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      try { draftManager.deleteDraft(m.id); } catch {}
-                      setModals(prev => {
-                        const next = prev.filter(x => x.id !== m.id);
-                        localStorage.setItem('stakeholder-modal-instances', JSON.stringify(next));
-                        return next;
-                      });
-                    }}
-                    title={t('admin.deleteDraft', 'Delete draft')}
-                  >
-                    <i className="fas fa-times"></i>
-                  </button>
+              {/* Logo */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {item.logo?.url ? (
+                  <img 
+                    src={item.logo.url} 
+                    alt={typeof formatMultilingualContent(item.name) === 'string' ? formatMultilingualContent(item.name) : 'Stakeholder logo'} 
+                    style={{ 
+                      width: '60px', 
+                      height: '60px', 
+                      objectFit: 'contain', 
+                      borderRadius: '4px',
+                      border: '1px solid #e9ecef'
+                    }} 
+                  />
+                ) : (
+                  <div style={{ 
+                    width: '60px', 
+                    height: '60px', 
+                    background: '#f8f9fa', 
+                    borderRadius: '4px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    color: '#6c757d', 
+                    fontSize: '11px',
+                    border: '1px solid #e9ecef',
+                    textAlign: 'center'
+                  }}>
+                    No Logo
+                  </div>
+                )}
+              </div>
+              
+              {/* Name */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ fontWeight: '500', color: '#212529' }}>
+                  {typeof formatMultilingualContent(item.name) === 'string' 
+                      ? formatMultilingualContent(item.name) 
+                      : 'No name'
+                  }
                 </div>
-              );
-            })}
-
-            {/* Saved drafts not currently open */}
-            {draftsNotOpen.map(d => {
-              const title = d.data?.name?.["en"] || d.data?.name?.["per"] || d.data?.name?.["ps"] || t('admin.draftStakeholder', 'Draft Stakeholder');
-              return (
-                <div key={d.modalId} className="d-inline-flex position-relative">
-                  <button
-                    className="btn btn-sm btn-outline-success me-1"
-                    onClick={() => {
-                      const instance = { id: d.modalId, mode: d.isEdit ? 'edit' : 'create', minimized: false, data: d.data };
-                      setModals(prev => {
-                        const filtered = prev.filter(x => x.id !== d.modalId);
-                        const next = [...filtered, instance];
-                        localStorage.setItem('stakeholder-modal-instances', JSON.stringify(next));
-                        return next;
-                      });
-                      setTimeout(() => {
-                        setModals(prev => prev.map(x => x.id === d.modalId ? { ...x, minimized: false } : x));
-                      }, 10);
+              </div>
+              
+              {/* Type */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <span style={{
+                  padding: '4px 8px',
+                  borderRadius: '12px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  backgroundColor: item.type === 'Partner' ? '#e3f2fd' : '#f3e5f5',
+                  color: item.type === 'Partner' ? '#1976d2' : '#7b1fa2'
+                }}>
+                  {item.type || 'Unknown'}
+                </span>
+              </div>
+              
+              {/* Website */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {item.website ? (
+                  <a 
+                    href={item.website} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{
+                      color: '#007bff',
+                      textDecoration: 'none',
+                      fontSize: '12px'
                     }}
-                    title={t('admin.openSavedDraft', 'Open saved draft')}
+                    onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                    onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
                   >
-                    <i className="fas fa-sticky-note me-1"></i>
-                    {title}
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      try { draftManager.deleteDraft(d.modalId); } catch {}
-                      setModals(prev => [...prev]);
-                    }}
-                    title={t('admin.deleteDraft', 'Delete draft')}
-                  >
-                    <i className="fas fa-times"></i>
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })()}
+                    {item.website.replace(/^https?:\/\//, '').substring(0, 25)}
+                    {item.website.length > 25 && '...'}
+                  </a>
+                ) : (
+                  <span style={{ color: '#6c757d', fontSize: '12px' }}>No website</span>
+                )}
+              </div>
+              
+              {/* Status */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <span style={{
+                  padding: '4px 8px',
+                  borderRadius: '12px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  backgroundColor: item.status === 'Published' ? '#d4edda' : '#f8d7da',
+                  color: item.status === 'Published' ? '#155724' : '#721c24'
+                }}>
+                  {item.status || 'Unknown'}
+                </span>
+              </div>
+              
+              {/* Actions */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                <button
+                  onClick={() => openEdit(item._id)}
+                  style={{
+                    padding: '4px 8px',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '3px',
+                    fontSize: '11px',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#0056b3'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = '#007bff'}
+                  title="Edit stakeholder"
+                >
+                  <i className="fas fa-edit"></i>
+                </button>
+                <button
+                  onClick={() => handleDelete(item._id)}
+                  disabled={deleting === item._id}
+                  style={{
+                    padding: '4px 8px',
+                    backgroundColor: deleting === item._id ? '#6c757d' : '#dc3545',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '3px',
+                    fontSize: '11px',
+                    cursor: deleting === item._id ? 'not-allowed' : 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (deleting !== item._id) e.target.style.backgroundColor = '#c82333';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (deleting !== item._id) e.target.style.backgroundColor = '#dc3545';
+                  }}
+                  title="Delete stakeholder"
+                >
+                  <i className={`fas fa-${deleting === item._id ? 'spinner fa-spin' : 'trash'}`}></i>
+                </button>
+              </div>
+            </div>
+          ))}
+          
+          {!filteredStakeholders?.length && (
+            <div style={{ 
+              padding: '40px', 
+              textAlign: 'center', 
+              color: '#6c757d',
+              fontSize: '14px'
+            }}>
+              <i className="fas fa-handshake" style={{ fontSize: '48px', marginBottom: '16px', opacity: 0.5 }}></i>
+              <div>
+                {searchInput ? 'No stakeholders found matching your search' : 'No stakeholders found'}
+              </div>
+              {!searchInput && (
+                <button
+                  onClick={openCreate}
+                  style={{
+                    marginTop: '16px',
+                    padding: '8px 16px',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '13px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <i className="fas fa-plus me-2"></i>
+                  Add First Stakeholder
+                </button>
+              )}
+            </div>
+          )}
+        </div>
 
-      {/* Render modals */}
-      {modals.map(m => (
-        <StakeholderFormModal
-          key={m.id}
-          isOpen={true}
-          onClose={() => closeModal(m.id)}
-          stakeholderData={m.data || null}
-          isEdit={m.mode === 'edit'}
-          minimized={m.minimized}
-          modalId={m.id}
-          onMinimize={() => {
-            setModals(prev => {
-              const next = prev.map(x => x.id === m.id ? { ...x, minimized: true } : x);
-              localStorage.setItem('stakeholder-modal-instances', JSON.stringify(next));
-              return next;
-            });
-          }}
-          onRestore={() => {
-            setModals(prev => {
-              const next = prev.map(x => x.id === m.id ? { ...x, minimized: false } : x);
-              localStorage.setItem('stakeholder-modal-instances', JSON.stringify(next));
-              return next;
-            });
-          }}
-          onSave={async (data, file) => {
-            const token = localStorage.getItem('authToken');
-            if (m.mode === 'edit' && m.stakeholderId) {
-              return await updateStakeholder(m.stakeholderId, data, file, token);
-            } else {
-              return await createStakeholder(data, file, token);
-            }
-          }}
-        />
-      ))}
+        {/* Render modals */}
+        {modals.map(m => (
+          <StakeholderFormModal
+            key={m.id}
+            isOpen={true}
+            onClose={() => closeModal(m.id)}
+            isEdit={m.mode === 'edit'}
+            stakeholderData={m.data}
+            onSave={async (data, file) => {
+              const token = localStorage.getItem('authToken');
+              if (m.mode === 'edit' && m.stakeholderId) {
+                return await saveItem(m.stakeholderId, data, file, token, true);
+              } else {
+                return await saveItem(null, data, file, token, false);
+              }
+            }}
+            minimized={m.minimized}
+            modalId={m.id}
+            onMinimize={() => {
+              setModals(prev => prev.map(modal => 
+                modal.id === m.id ? { ...modal, minimized: true } : modal
+              ));
+            }}
+            onRestore={() => {
+              setModals(prev => prev.map(modal => 
+                modal.id === m.id ? { ...modal, minimized: false } : modal
+              ));
+            }}
+          />
+        ))}
+      </div>
     </AdminLayout>
   );
 };

@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSuccessStories } from '../../hooks/useSuccessStories';
 import { deleteSuccessStory, getSuccessStoryById, createSuccessStory, updateSuccessStory } from '../../services/resources.service';
 import { formatMultilingualContent, getImageUrlFromObject, formatDate, stripHtmlTags } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -509,7 +509,7 @@ const SuccessStoriesList = () => {
                                         }}>
                                             <div>
                                                 <ImageCell 
-                                                    imageUrl={item.image} 
+                                                    imageUrl={item.images && item.images.length > 0 ? item.images[0].url : null} 
                                                     alt={safeFormatContent(item.title, 'Success story image')} 
                                                 />
                                             </div>

@@ -29,7 +29,7 @@ export const API_ENDPOINTS = {
   AUTH_LOGIN: '/admin/auth/login',
   AUTH_ME: '/admin/auth/me',
   AUTH_LOGOUT: '/admin/auth/logout',
-  DASHBOARD_STATS: '/dashboard/stats',
+  DASHBOARD_STATS: '/admin/dashboard/stats',
   SESSION_ACTIVITY: '/session/activity',
 
   // News

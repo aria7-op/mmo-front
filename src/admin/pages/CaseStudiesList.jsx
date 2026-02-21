@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useCaseStudies } from '../../hooks/useCaseStudies';
 import { deleteCaseStudy, getCaseStudyById, createCaseStudy, updateCaseStudy } from '../../services/resources.service';
 import { formatMultilingualContent, getImageUrlFromObject, formatDate, stripHtmlTags } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -197,10 +197,10 @@ const CaseStudiesList = () => {
         try {
             const token = localStorage.getItem('authToken');
             await deleteCaseStudy(id, token);
-            showSuccessToast(t('admin.caseStudyDeleted', 'Case study deleted successfully'));
+            showCrudToasts.delete('Case study');
             refetch();
         } catch (error) {
-            showErrorToast(error.message || t('admin.failedToDeleteCaseStudy', 'Failed to delete case study'));
+            showCrudToasts.deleteError('Case study', error.message || 'Unknown error');
             console.error('Delete error:', error);
         } finally {
             setDeleting(null);
@@ -210,6 +210,8 @@ const CaseStudiesList = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
+        
+        const loadingToastId = showLoadingToast(editingStudy ? 'Updating case study...' : 'Creating case study...');
         
         try {
             const data = {
@@ -229,17 +231,24 @@ const CaseStudiesList = () => {
             const token = localStorage.getItem('authToken');
             if (editingStudy) {
                 await updateCaseStudy(editingStudy._id, data, formData.image, token);
-                showSuccessToast(t('admin.caseStudyUpdated', 'Case study updated successfully'));
+                showCrudToasts.update('Case study');
             } else {
                 await createCaseStudy(data, formData.image, token);
-                showSuccessToast(t('admin.caseStudyCreated', 'Case study created successfully'));
+                showCrudToasts.create('Case study');
             }
             
+            dismissToast(loadingToastId);
             setShowModal(false);
             resetForm();
             refetch();
         } catch (error) {
-            showErrorToast(error.message || 'Failed to save case study');
+            dismissToast(loadingToastId);
+            if (editingStudy) {
+                showCrudToasts.updateError('Case study', error.message || 'Unknown error');
+            } else {
+                showCrudToasts.createError('Case study', error.message || 'Unknown error');
+            }
+            console.error('Save error:', error);
         } finally {
             setSubmitting(false);
         }

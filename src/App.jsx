@@ -24,30 +24,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../src/assets/css/main.css'
 import '../src/assets/css/responsive.css'
 
-// Defer non-critical CSS loading
-const loadDeferredCSS = () => {
-  const links = [
-    'react-modal-video/css/modal-video.css',
-    'bootstrap/dist/js/bootstrap.bundle',
-    '@fortawesome/fontawesome-free/css/all.css',
-    'swiper/css/bundle',
-    'react-rangeslider/lib/index.css',
-    'photoswipe/dist/photoswipe.css',
-    '../src/assets/css/progress-circle.css'
-  ];
-  
-  links.forEach(href => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
-  });
-};
-
-// Load deferred CSS after initial render
-if (typeof window !== 'undefined') {
-  window.addEventListener('load', loadDeferredCSS);
-}
+// Import non-critical CSS
+import 'react-modal-video/css/modal-video.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'swiper/swiper-bundle.css'
+import 'react-rangeslider/lib/index.css'
+import 'photoswipe/dist/photoswipe.css'
+import '../src/assets/css/progress-circle.css'
 
 function App() {
   // Performance optimizations
@@ -58,10 +41,9 @@ function App() {
     // Initialize lazy loading for images
     lazyLoadImages();
     
-    // Preload critical resources
+    // Preload critical resources (only favicon for now)
     preloadCriticalResources([
-      { url: '/favicon.ico', type: 'image' },
-      { url: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap', type: 'style', crossorigin: true }
+      { url: '/favicon.ico', type: 'image' }
     ]);
     
     // Load fonts optimally
@@ -98,6 +80,7 @@ function App() {
                   <link rel="shortcut icon" href="favicon.ico" />
                   <link rel="preconnect" href="https://fonts.googleapis.com" />
                   <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+                  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
                 </Helmet>
                 <Suspense fallback={
                   <div style={{ 

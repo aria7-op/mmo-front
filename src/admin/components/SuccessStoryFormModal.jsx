@@ -50,7 +50,7 @@ const SuccessStoryFormModal = ({
       program: typeof data.program === 'string' ? data.program : '',
       focusArea: typeof data.focusArea === 'string' ? data.focusArea : '',
       province: typeof data.province === 'string' ? data.province : '',
-      image: data.image || null
+      image: data.images && data.images.length > 0 ? data.images[0] : null
     };
   };
 

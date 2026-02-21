@@ -22,8 +22,11 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
     ];
 
     const [formData, setFormData] = useState({
-        name: { en: '', per: '', ps: '' },
+        title: { en: '', per: '', ps: '' },
         description: { en: '', per: '', ps: '' },
+        overview: { en: '', per: '', ps: '' },
+        readMoreLink: { en: '', per: '', ps: '' },
+        slug: '',
         focusArea: '',
         provinces: [],
         status: 'draft',
@@ -48,16 +51,27 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
     useEffect(() => {
         if (initialFormData) {
             setFormData({
-                name: {
-                    en: sanitizeByType(initialFormData.name?.en || '', 'text'),
-                    per: sanitizeByType(initialFormData.name?.per || '', 'text'),
-                    ps: sanitizeByType(initialFormData.name?.ps || '', 'text')
+                title: {
+                    en: sanitizeByType(initialFormData.title?.en || '', 'text'),
+                    per: sanitizeByType(initialFormData.title?.per || '', 'text'),
+                    ps: sanitizeByType(initialFormData.title?.ps || '', 'text')
                 },
                 description: {
                     en: sanitizeByType(initialFormData.description?.en || '', 'textarea'),
                     per: sanitizeByType(initialFormData.description?.per || '', 'textarea'),
                     ps: sanitizeByType(initialFormData.description?.ps || '', 'textarea')
                 },
+                overview: {
+                    en: sanitizeByType(initialFormData.overview?.en || '', 'textarea'),
+                    per: sanitizeByType(initialFormData.overview?.per || '', 'textarea'),
+                    ps: sanitizeByType(initialFormData.overview?.ps || '', 'textarea')
+                },
+                readMoreLink: {
+                    en: sanitizeByType(initialFormData.readMoreLink?.en || '', 'text'),
+                    per: sanitizeByType(initialFormData.readMoreLink?.per || '', 'text'),
+                    ps: sanitizeByType(initialFormData.readMoreLink?.ps || '', 'text')
+                },
+                slug: sanitizeByType(initialFormData.slug || '', 'text'),
                 focusArea: sanitizeByType(initialFormData.focusArea || '', 'text'),
                 provinces: Array.isArray(initialFormData.provinces) ? initialFormData.provinces : [],
                 status: sanitizeByType(initialFormData.status || 'draft', 'text'),
@@ -72,6 +86,17 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
     const handleChange = (field, value, lang = null) => {
         if (lang) {
             safeSetContent(field, lang, value);
+            
+            // Auto-generate slug from English title if slug is empty
+            if (field === 'title' && lang === 'en' && !formData.slug.trim()) {
+                const slugValue = value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .trim('-');
+                setFormData(prev => ({ ...prev, slug: slugValue }));
+            }
         } else {
             const sanitizedValue = sanitizeByType(value, 'text');
             setFormData(prev => ({ ...prev, [field]: sanitizedValue }));
@@ -98,18 +123,40 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate required fields
-        const nameEn = typeof formData.name.en === 'string' ? formData.name.en.trim() : '';
+        // Validate required fields (only English required, others will be auto-filled)
+        const titleEn = typeof formData.title.en === 'string' ? formData.title.en.trim() : '';
         const descriptionEn = typeof formData.description.en === 'string' ? formData.description.en.trim() : '';
+        const overviewEn = typeof formData.overview.en === 'string' ? formData.overview.en.trim() : '';
+        const slug = typeof formData.slug === 'string' ? formData.slug.trim() : '';
+        const readMoreLinkEn = typeof formData.readMoreLink.en === 'string' ? formData.readMoreLink.en.trim() : '';
         
-        if (!nameEn || !descriptionEn) {
-            showErrorToast(t('admin.fillRequiredFields', 'Please fill in all required fields'));
+        if (!titleEn || !descriptionEn || !overviewEn || !slug || !readMoreLinkEn) {
+            showErrorToast(t('admin.fillRequiredFields', 'Please fill in all required fields (marked with *)'));
             return;
         }
 
         const data = {
-            name: formData.name,
-            description: formData.description,
+            title: {
+                en: formData.title.en || '',
+                per: formData.title.per || formData.title.en || '',
+                ps: formData.title.ps || formData.title.en || ''
+            },
+            description: {
+                en: formData.description.en || '',
+                per: formData.description.per || formData.description.en || '',
+                ps: formData.description.ps || formData.description.en || ''
+            },
+            overview: {
+                en: formData.overview.en || '',
+                per: formData.overview.per || formData.overview.en || '',
+                ps: formData.overview.ps || formData.overview.en || ''
+            },
+            readMoreLink: {
+                en: formData.readMoreLink.en || '',
+                per: formData.readMoreLink.per || formData.readMoreLink.en || '',
+                ps: formData.readMoreLink.ps || formData.readMoreLink.en || ''
+            },
+            slug: formData.slug || '',
             focusArea: formData.focusArea,
             provinces: formData.provinces,
             status: formData.status,
@@ -158,7 +205,7 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
             <div style={{ marginBottom: '24px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
                     <i className="fas fa-graduation-cap" style={{ color: '#0f68bb' }}></i>
-                    <span>{t('admin.programName', 'Program Name')} *</span>
+                    <span>{t('admin.programName', 'Program Title')} *</span>
                 </label>
                 <div style={{ marginBottom: '10px' }}>
                     <select
@@ -186,9 +233,9 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
                     </select>
                     <input
                         type="text"
-                        value={safeGetContent('name', activeLang)}
-                        onChange={(e) => handleChange('name', e.target.value, activeLang)}
-                        placeholder={`${activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} ${t('admin.programName', 'Program Name')}`}
+                        value={safeGetContent('title', activeLang)}
+                        onChange={(e) => handleChange('title', e.target.value, activeLang)}
+                        placeholder={`${activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} ${t('admin.programName', 'Program Title')}`}
                         required={activeLang === 'en'}
                         style={{ 
                             width: '100%', 
@@ -202,7 +249,33 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
                 </div>
                 <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
                     Current: {activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} - 
-                    {safeGetContent('name', 'en') && ' EN: ✓'}{safeGetContent('name', 'per') && ' DR: ✓'}{safeGetContent('name', 'ps') && ' PS: ✓'}
+                    {safeGetContent('title', 'en') && ' EN: ✓'}{safeGetContent('title', 'per') && ' DR: ✓'}{safeGetContent('title', 'ps') && ' PS: ✓'}
+                </div>
+            </div>
+
+            {/* Slug */}
+            <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
+                    <i className="fas fa-link" style={{ color: '#0f68bb' }}></i>
+                    <span>{t('admin.slug', 'URL Slug')} *</span>
+                </label>
+                <input
+                    type="text"
+                    value={formData.slug}
+                    onChange={(e) => handleChange('slug', e.target.value)}
+                    placeholder="e.g., education-program"
+                    required
+                    style={{ 
+                        width: '100%', 
+                        padding: '12px', 
+                        border: '2px solid #e5e7eb', 
+                        borderRadius: '8px', 
+                        fontSize: '14px',
+                        transition: 'border-color 0.3s' 
+                    }}
+                />
+                <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                    URL-friendly identifier (lowercase, hyphens only)
                 </div>
             </div>
 
@@ -256,6 +329,111 @@ const ProgramFormContent = ({ formData: initialFormData, isEdit, onSave, onCance
                 <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
                     Current: {activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} - 
                     {safeGetContent('description', 'en') && ' EN: ✓'}{safeGetContent('description', 'per') && ' DR: ✓'}{safeGetContent('description', 'ps') && ' PS: ✓'}
+                </div>
+            </div>
+
+            {/* Program Overview */}
+            <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
+                    <i className="fas fa-eye" style={{ color: '#0f68bb' }}></i>
+                    <span>{t('admin.overview', 'Overview')} *</span>
+                </label>
+                <div style={{ marginBottom: '10px' }}>
+                    <select
+                        value={activeLang}
+                        onChange={(e) => setActiveLang(e.target.value)}
+                        style={{
+                            padding: '10px 12px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            fontSize: '13px',
+                            fontWeight: '500',
+                            backgroundColor: '#fff',
+                            cursor: 'pointer',
+                            width: '120px',
+                            height: '44px',
+                            flexShrink: '0',
+                            alignSelf: 'flex-start',
+                            transition: 'all 0.2s',
+                            boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                        }}
+                    >
+                        <option value="en">English</option>
+                        <option value="per">Dari</option>
+                        <option value="ps">Pashto</option>
+                    </select>
+                    <textarea
+                        value={safeGetContent('overview', activeLang)}
+                        onChange={(e) => handleChange('overview', e.target.value, activeLang)}
+                        placeholder={`${activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} ${t('admin.overview', 'Overview')}`}
+                        required={activeLang === 'en'}
+                        rows="4"
+                        style={{ 
+                            width: '100%', 
+                            padding: '12px', 
+                            border: '2px solid #e5e7eb', 
+                            borderRadius: '8px', 
+                            fontSize: '14px', 
+                            resize: 'vertical',
+                            transition: 'border-color 0.3s' 
+                        }}
+                    />
+                </div>
+                <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                    Current: {activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} - 
+                    {safeGetContent('overview', 'en') && ' EN: ✓'}{safeGetContent('overview', 'per') && ' DR: ✓'}{safeGetContent('overview', 'ps') && ' PS: ✓'}
+                </div>
+            </div>
+
+            {/* Read More Link */}
+            <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontWeight: '600', color: '#2c3e50', gap: '8px' }}>
+                    <i className="fas fa-external-link-alt" style={{ color: '#0f68bb' }}></i>
+                    <span>{t('admin.readMoreLink', 'Read More Link')} *</span>
+                </label>
+                <div style={{ marginBottom: '10px' }}>
+                    <select
+                        value={activeLang}
+                        onChange={(e) => setActiveLang(e.target.value)}
+                        style={{
+                            padding: '10px 12px',
+                            border: '2px solid #e5e7eb',
+                            borderRadius: '8px',
+                            fontSize: '13px',
+                            fontWeight: '500',
+                            backgroundColor: '#fff',
+                            cursor: 'pointer',
+                            width: '120px',
+                            height: '44px',
+                            flexShrink: '0',
+                            alignSelf: 'flex-start',
+                            transition: 'all 0.2s',
+                            boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                        }}
+                    >
+                        <option value="en">English</option>
+                        <option value="per">Dari</option>
+                        <option value="ps">Pashto</option>
+                    </select>
+                    <input
+                        type="url"
+                        value={safeGetContent('readMoreLink', activeLang)}
+                        onChange={(e) => handleChange('readMoreLink', e.target.value, activeLang)}
+                        placeholder={`${activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} ${t('admin.readMoreLink', 'Read More Link')}`}
+                        required={activeLang === 'en'}
+                        style={{ 
+                            width: '100%', 
+                            padding: '12px', 
+                            border: '2px solid #e5e7eb', 
+                            borderRadius: '8px', 
+                            fontSize: '14px', 
+                            transition: 'border-color 0.3s' 
+                        }}
+                    />
+                </div>
+                <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                    Current: {activeLang === 'en' ? 'English' : activeLang === 'per' ? 'Dari' : 'Pashto'} - 
+                    {safeGetContent('readMoreLink', 'en') && ' EN: ✓'}{safeGetContent('readMoreLink', 'per') && ' DR: ✓'}{safeGetContent('readMoreLink', 'ps') && ' PS: ✓'}
                 </div>
             </div>
 

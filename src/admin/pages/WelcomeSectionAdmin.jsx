@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast, showInfoToast, showWarningToast } from '../../utils/errorHandler';
 import { sanitizeInput, validateFormData } from '../../utils/inputSanitizer';
 import { API_BASE_URL, API_ENDPOINTS } from '../../config/api.config';
 import ImageUpload from '../components/ImageUpload';
@@ -31,11 +31,11 @@ const WelcomeSectionAdmin = () => {
             beneficiaries: '225k+'
         },
         buttons: {
-            learnMore: {
+            primary: {
                 label: { en: 'Learn More About Us', per: 'بیشتر بدانید', ps: 'نور ولولئ' },
                 url: '/about'
             },
-            contact: {
+            secondary: {
                 label: { en: 'Contact Us', per: 'تماس با ما', ps: 'زموږ سره اړیکه' },
                 url: '/contact'
             }
@@ -54,14 +54,41 @@ const WelcomeSectionAdmin = () => {
             const result = await response.json();
             
             if (result.success) {
-                setWelcomeData(result.data);
+                // Merge API data with default structure to preserve missing fields
+                setWelcomeData(prev => ({
+                    ...prev, // Keep default structure
+                    ...result.data, // Override with API data
+                    statistics: {
+                        yearsExperience: '',
+                        provinces: '',
+                        projectsCount: '',
+                        beneficiaries: '',
+                        ...result.data.statistics // Merge API statistics if available
+                    },
+                    buttons: {
+                        primary: {
+                            text: { en: '', per: '', ps: '' },
+                            url: ''
+                        },
+                        secondary: {
+                            text: { en: '', per: '', ps: '' },
+                            url: ''
+                        },
+                        // Map API buttons (learnMore->primary, contact->secondary)
+                        ...(result.data.buttons?.learnMore ? { primary: { ...result.data.buttons.learnMore } } : {}),
+                        ...(result.data.buttons?.contact ? { secondary: { ...result.data.buttons.contact } } : {}),
+                        // Also handle direct primary/secondary from API
+                        ...(result.data.buttons?.primary ? { primary: { ...result.data.buttons.primary } } : {}),
+                        ...(result.data.buttons?.secondary ? { secondary: { ...result.data.buttons.secondary } } : {})
+                    }
+                }));
                 if (result.data.image) {
                     setImage(result.data.image);
                 }
             }
         } catch (error) {
             console.error('Error fetching welcome section:', error);
-            toast.error('Failed to fetch welcome section data');
+            showErrorToast('Failed to fetch welcome section data');
         } finally {
             setLoading(false);
         }
@@ -116,9 +143,9 @@ const WelcomeSectionAdmin = () => {
             buttons: {
                 ...prev.buttons,
                 [buttonType]: {
-                    ...prev.buttons[buttonType],
-                    [field]: field === 'label' 
-                        ? { ...prev.buttons[buttonType][field], [currentLanguage]: sanitizedValue }
+                    ...(prev.buttons?.[buttonType] || {}),
+                    [field]: field === 'text' 
+                        ? { ...(prev.buttons?.[buttonType]?.text || {}), [currentLanguage]: sanitizedValue }
                         : sanitizedValue
                 }
             }
@@ -139,7 +166,7 @@ const WelcomeSectionAdmin = () => {
             const response = await fetch(uploadUrl, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 },
                 body: formData
             });
@@ -162,17 +189,17 @@ const WelcomeSectionAdmin = () => {
             
             if (result.success) {
                 setImage(result.data);
-                toast.success('Image uploaded successfully');
+                showCrudToasts.upload('Welcome section image');
                 // Force refresh welcome section data to get the latest image
                 setTimeout(() => {
                     fetchWelcomeSection();
                 }, 500);
             } else {
-                toast.error(result.message || 'Failed to upload image');
+                showErrorToast(result.message || 'Failed to upload image');
             }
         } catch (error) {
             console.error('Error uploading image:', error);
-            toast.error('Failed to upload image');
+            showErrorToast('Failed to upload image');
         } finally {
             setUploadingImage(false);
         }
@@ -183,7 +210,7 @@ const WelcomeSectionAdmin = () => {
             const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.WELCOME_SECTION}/delete-image`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 }
             });
 
@@ -191,17 +218,17 @@ const WelcomeSectionAdmin = () => {
             
             if (result.success) {
                 setImage(null);
-                toast.success('Image deleted successfully');
+                showSuccessToast('Image deleted successfully');
                 // Force refresh welcome section data to get latest state
                 setTimeout(() => {
                     fetchWelcomeSection();
                 }, 500);
             } else {
-                toast.error(result.message || 'Failed to delete image');
+                showErrorToast(result.message || 'Failed to delete image');
             }
         } catch (error) {
             console.error('Error deleting image:', error);
-            toast.error('Failed to delete image');
+            showErrorToast('Failed to delete image');
         }
     };
 
@@ -209,13 +236,15 @@ const WelcomeSectionAdmin = () => {
         e.preventDefault();
         setSaving(true);
 
+        const loadingToastId = showLoadingToast('Updating welcome section...');
+
         try {
             // Skip strict validation - allow partial updates
             const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.WELCOME_SECTION}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 },
                 body: JSON.stringify(welcomeData)
             });
@@ -223,14 +252,17 @@ const WelcomeSectionAdmin = () => {
             const result = await response.json();
             
             if (result.success) {
-                toast.success('Welcome section updated successfully');
+                dismissToast(loadingToastId);
+                showCrudToasts.update('Welcome section');
                 setWelcomeData(result.data);
             } else {
-                toast.error(result.message || 'Failed to update welcome section');
+                dismissToast(loadingToastId);
+                showErrorToast(result.message || 'Failed to update welcome section');
             }
         } catch (error) {
+            dismissToast(loadingToastId);
             console.error('Error updating welcome section:', error);
-            toast.error('Failed to update welcome section');
+            showErrorToast('Failed to update welcome section');
         } finally {
             setSaving(false);
         }
@@ -440,7 +472,7 @@ const WelcomeSectionAdmin = () => {
                                     <input
                                         type="text"
                                         placeholder="Enter title"
-                                        value={welcomeData.title[currentLanguage] || ''}
+                                        value={welcomeData.title?.[currentLanguage] || ''}
                                         onChange={(e) => handleMultilingualChange('title', currentLanguage, e.target.value)}
                                         style={{
                                             width: '100%',
@@ -467,7 +499,7 @@ const WelcomeSectionAdmin = () => {
                                     <input
                                         type="text"
                                         placeholder="Enter subtitle"
-                                        value={welcomeData.subtitle[currentLanguage] || ''}
+                                        value={welcomeData.subtitle?.[currentLanguage] || ''}
                                         onChange={(e) => handleMultilingualChange('subtitle', currentLanguage, e.target.value)}
                                         style={{
                                             width: '100%',
@@ -494,7 +526,7 @@ const WelcomeSectionAdmin = () => {
                                     <textarea
                                         rows={3}
                                         placeholder="Enter description"
-                                        value={welcomeData.description[currentLanguage] || ''}
+                                        value={welcomeData.description?.[currentLanguage] || ''}
                                         onChange={(e) => handleMultilingualChange('description', currentLanguage, e.target.value)}
                                         style={{
                                             width: '100%',
@@ -522,7 +554,7 @@ const WelcomeSectionAdmin = () => {
                                     <textarea
                                         rows={2}
                                         placeholder="Enter quote"
-                                        value={welcomeData.quote[currentLanguage] || ''}
+                                        value={welcomeData.quote?.[currentLanguage] || ''}
                                         onChange={(e) => handleMultilingualChange('quote', currentLanguage, e.target.value)}
                                         style={{
                                             width: '100%',
@@ -568,7 +600,7 @@ const WelcomeSectionAdmin = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={welcomeData.statistics.yearsExperience}
+                                        value={welcomeData.statistics?.yearsExperience || ''}
                                         onChange={(e) => handleStatisticsChange('yearsExperience', e.target.value)}
                                         style={{
                                             width: '100%',
@@ -593,7 +625,7 @@ const WelcomeSectionAdmin = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={welcomeData.statistics.provinces}
+                                        value={welcomeData.statistics?.provinces || ''}
                                         onChange={(e) => handleStatisticsChange('provinces', e.target.value)}
                                         style={{
                                             width: '100%',
@@ -618,7 +650,7 @@ const WelcomeSectionAdmin = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={welcomeData.statistics.projectsCount}
+                                        value={welcomeData.statistics?.projectsCount || ''}
                                         onChange={(e) => handleStatisticsChange('projectsCount', e.target.value)}
                                         style={{
                                             width: '100%',
@@ -643,7 +675,7 @@ const WelcomeSectionAdmin = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={welcomeData.statistics.beneficiaries}
+                                        value={welcomeData.statistics?.beneficiaries || ''}
                                         onChange={(e) => handleStatisticsChange('beneficiaries', e.target.value)}
                                         style={{
                                             width: '100%',
@@ -685,8 +717,8 @@ const WelcomeSectionAdmin = () => {
                                             <input
                                                 type="text"
                                                 placeholder="Button label"
-                                                value={welcomeData.buttons.learnMore.label[currentLanguage] || ''}
-                                                onChange={(e) => handleButtonChange('learnMore', 'label', e.target.value)}
+                                                value={welcomeData.buttons?.primary?.text?.[currentLanguage] || ''}
+                                                onChange={(e) => handleButtonChange('primary', 'text', e.target.value)}
                                                 style={{
                                                     width: '100%',
                                                     padding: '8px 10px',
@@ -710,8 +742,8 @@ const WelcomeSectionAdmin = () => {
                                             <input
                                                 type="text"
                                                 placeholder="/about"
-                                                value={welcomeData.buttons.learnMore.url}
-                                                onChange={(e) => handleButtonChange('learnMore', 'url', e.target.value)}
+                                                value={welcomeData.buttons?.primary?.url || ''}
+                                                onChange={(e) => handleButtonChange('primary', 'url', e.target.value)}
                                                 style={{
                                                     width: '100%',
                                                     padding: '8px 10px',
@@ -749,8 +781,8 @@ const WelcomeSectionAdmin = () => {
                                             <input
                                                 type="text"
                                                 placeholder="Button label"
-                                                value={welcomeData.buttons.contact.label[currentLanguage] || ''}
-                                                onChange={(e) => handleButtonChange('contact', 'label', e.target.value)}
+                                                value={welcomeData.buttons?.secondary?.text?.[currentLanguage] || ''}
+                                                onChange={(e) => handleButtonChange('secondary', 'text', e.target.value)}
                                                 style={{
                                                     width: '100%',
                                                     padding: '8px 10px',
@@ -774,8 +806,8 @@ const WelcomeSectionAdmin = () => {
                                             <input
                                                 type="text"
                                                 placeholder="/contact"
-                                                value={welcomeData.buttons.contact.url}
-                                                onChange={(e) => handleButtonChange('contact', 'url', e.target.value)}
+                                                value={welcomeData.buttons?.secondary?.url || ''}
+                                                onChange={(e) => handleButtonChange('secondary', 'url', e.target.value)}
                                                 style={{
                                                     width: '100%',
                                                     padding: '8px 10px',

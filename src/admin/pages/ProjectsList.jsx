@@ -276,46 +276,6 @@ const ProjectsList = () => {
         setSearchInput('');
     };
 
-    // Component for handling cover image with error fallback
-    const CoverImageCell = ({ imageUrl, title }) => {
-        const [imageError, setImageError] = useState(false);
-        
-        if (!imageUrl || imageError) {
-            return (
-                <div style={{ 
-                    width: '80px', 
-                    height: '60px', 
-                    backgroundColor: '#f0f0f0', 
-                    borderRadius: '8px', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    color: '#999', 
-                    fontSize: '10px', 
-                    textAlign: 'center', 
-                    padding: '5px' 
-                }}>
-                    No Cover
-                </div>
-            );
-        }
-        
-        return (
-            <img
-                src={getImageUrlFromObject(imageUrl)}
-                alt={title}
-                style={{
-                    width: '80px',
-                    height: '60px',
-                    objectFit: 'cover',
-                    borderRadius: '8px',
-                    backgroundColor: '#f0f0f0'
-                }}
-                onError={() => setImageError(true)}
-            />
-        );
-    };
-
     if (loading) {
         return (
             <AdminLayout>
@@ -525,10 +485,64 @@ const ProjectsList = () => {
                                             alignItems: 'center'
                                         }}>
                                             <div>
-                                                <CoverImageCell 
-                                                    coverImageUrl={item.coverImage} 
-                                                    title={safeFormatContent(item.title, 'Project')} 
-                                                />
+                                                {/* Display first gallery image if available */}
+                                                {item.gallery && item.gallery.length > 0 && (
+                                                    <img
+                                                        src={item.gallery[0].url}
+                                                        alt={safeFormatContent(item.title, 'Project')}
+                                                        style={{
+                                                            width: '80px',
+                                                            height: '60px',
+                                                            objectFit: 'cover',
+                                                            borderRadius: '8px',
+                                                            backgroundColor: '#f0f0f0'
+                                                        }}
+                                                        onError={(e) => {
+                                                            e.target.style.display = 'none';
+                                                            // Show fallback on error
+                                                            const fallback = e.target.nextElementSibling;
+                                                            if (fallback) fallback.style.display = 'flex';
+                                                        }}
+                                                    />
+                                                )}
+                                                
+                                                {/* Fallback for no image */}
+                                                {(!item.gallery || item.gallery.length === 0) && (
+                                                    <div style={{ 
+                                                        width: '80px', 
+                                                        height: '60px', 
+                                                        backgroundColor: '#f0f0f0', 
+                                                        borderRadius: '8px', 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        justifyContent: 'center', 
+                                                        color: '#999', 
+                                                        fontSize: '10px', 
+                                                        textAlign: 'center', 
+                                                        padding: '5px' 
+                                                    }}>
+                                                        No Cover
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Hidden fallback for image errors */}
+                                                {item.gallery && item.gallery.length > 0 && (
+                                                    <div style={{ 
+                                                        display: 'none',
+                                                        width: '80px', 
+                                                        height: '60px', 
+                                                        backgroundColor: '#f0f0f0', 
+                                                        borderRadius: '8px', 
+                                                        alignItems: 'center', 
+                                                        justifyContent: 'center', 
+                                                        color: '#999', 
+                                                        fontSize: '10px', 
+                                                        textAlign: 'center', 
+                                                        padding: '5px' 
+                                                    }}>
+                                                        Error
+                                                    </div>
+                                                )}
                                             </div>
                                             <div>
                                                 <div style={{ fontWeight: '500', color: '#212529', marginBottom: '2px' }}>

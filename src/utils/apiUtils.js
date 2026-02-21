@@ -138,12 +138,6 @@ export const getImageUrlFromObject = (imageObject) => {
         return correctedUrl;
       }
       
-      // Fix backend.mmo.org.af URLs to use khwanzay.school/bak
-      if (imageObject.url.includes('backend.mmo.org.af/includes/images/')) {
-        const correctedUrl = imageObject.url.replace('backend.mmo.org.af/includes/images/', 'khwanzay.school/bak/includes/images/');
-        return correctedUrl;
-      }
-      
       const result = getImageUrl(imageObject.url);
       return result;
     }

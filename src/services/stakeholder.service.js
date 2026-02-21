@@ -28,79 +28,49 @@ export const getStakeholderById = async (id) => {
 
 export const createStakeholder = async (data, logoFile = null, token = null) => {
     try {
-        // Create FormData with proper image handling
-        const formData = new FormData();
-        
-        // Add the stakeholder data as JSON
-        formData.append('data', JSON.stringify(data));
-        
-        // Add logo file if provided
-        if (logoFile && logoFile instanceof File) {
-            console.log('[createStakeholder] Adding logo file:', logoFile.name, 'Size:', logoFile.size, 'Type:', logoFile.type);
-            formData.append('logo', logoFile);
-        } else if (logoFile) {
-            console.warn('[createStakeholder] Logo file is not a valid File object:', logoFile);
-        }
-        
-        // Debug FormData contents
-        if (import.meta.env.DEV) {
-            console.log('[createStakeholder] FormData contents:');
-            for (let [key, value] of formData.entries()) {
-                console.log(`  ${key}:`, value instanceof File ? `File: ${value.name} (${value.size} bytes, ${value.type})` : value);
-            }
-        }
-        
-        const response = await uploadFile(API_ENDPOINTS.STAKEHOLDERS, formData, {
+        const form = createFormData(data, logoFile, 'logo');
+        const response = await uploadFile(API_ENDPOINTS.STAKEHOLDERS, form, {
             headers: { Authorization: token ? `Bearer ${token}` : undefined }
         });
         
         if (response.success) {
-            console.log('[createStakeholder] Success:', response.message);
             return response.data;
         }
         throw new Error(response.message || 'Failed to create stakeholder');
     } catch (error) {
-        console.error('[createStakeholder] Error:', error);
         throw error;
     }
 };
 
 export const updateStakeholder = async (id, data, logoFile = null, token = null) => {
     try {
-        // Create FormData with proper image handling
-        const formData = new FormData();
+        console.log('🔍 updateStakeholder debug:', {
+            id,
+            hasData: !!data,
+            hasLogoFile: !!logoFile,
+            logoFileName: logoFile?.name,
+            logoFileSize: logoFile?.size,
+            logoFileType: logoFile?.type
+        });
         
-        // Add the stakeholder data as JSON
-        formData.append('data', JSON.stringify(data));
-        
-        // Add logo file if provided
-        if (logoFile && logoFile instanceof File) {
-            console.log('[updateStakeholder] Adding logo file:', logoFile.name, 'Size:', logoFile.size, 'Type:', logoFile.type);
-            formData.append('logo', logoFile);
-        } else if (logoFile) {
-            console.warn('[updateStakeholder] Logo file is not a valid File object:', logoFile);
-        }
+        const form = createFormData(data, logoFile, 'logo');
         
         // Debug FormData contents
-        if (import.meta.env.DEV) {
-            console.log('[updateStakeholder] FormData contents:');
-            for (let [key, value] of formData.entries()) {
-                console.log(`  ${key}:`, value instanceof File ? `File: ${value.name} (${value.size} bytes, ${value.type})` : value);
-            }
+        console.log('📦 FormData contents:');
+        for (let [key, value] of form.entries()) {
+            console.log(`  ${key}:`, value instanceof File ? `File: ${value.name} (${value.size} bytes, ${value.type})` : value);
         }
         
-        const response = await uploadFile(API_ENDPOINTS.STAKEHOLDERS_BY_ID(id), formData, {
+        const response = await uploadFile(API_ENDPOINTS.STAKEHOLDERS_BY_ID(id), form, {
             method: 'PUT',
             headers: { Authorization: token ? `Bearer ${token}` : undefined }
         });
         
         if (response.success) {
-            console.log('[updateStakeholder] Success:', response.message);
             return response.data;
         }
         throw new Error(response.message || 'Failed to update stakeholder');
     } catch (error) {
-        console.error('[updateStakeholder] Error:', error);
         throw error;
     }
 };

@@ -115,6 +115,13 @@ const StakeholderFormContent = ({ formData, isEdit, onSave, onCancel, loading, o
     if (saving) return;
     setSaving(true);
     try {
+      console.log('🔍 StakeholderFormContent handleSubmit:', {
+        dataKeys: Object.keys(data),
+        hasLogoFile: !!logoFile,
+        logoFileName: logoFile?.name,
+        logoFileSize: logoFile?.size,
+        fullData: JSON.stringify(data, null, 2)
+      });
       await onSave(data, logoFile);
     } finally {
       setSaving(false);

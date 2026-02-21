@@ -16,6 +16,7 @@ export const programService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         }
       });
@@ -40,6 +41,7 @@ export const programService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         }
       });
@@ -71,6 +73,7 @@ export const programService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         }
       });
@@ -97,6 +100,7 @@ export const programService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         }
       });
@@ -240,6 +244,7 @@ export const programService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         }
       });
@@ -264,6 +269,7 @@ export const programService = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         }
       });
@@ -283,6 +289,11 @@ export const programService = {
   // Create new program
   createProgram: async (programData, files = {}) => {
     try {
+      console.log('=== CREATE PROGRAM DEBUG ===');
+      console.log('programData:', programData);
+      console.log('files:', files);
+      console.log('files.heroImage:', files.heroImage);
+      
       const formData = new FormData();
       
       // Add all program data fields
@@ -296,7 +307,10 @@ export const programService = {
 
       // Add files if provided
       if (files.heroImage) {
+        console.log('Adding heroImage to FormData:', files.heroImage);
         formData.append('heroImage', files.heroImage);
+      } else {
+        console.log('No heroImage provided');
       }
       if (files.logo) {
         formData.append('logo', files.logo);
@@ -305,10 +319,23 @@ export const programService = {
       const response = await fetch(`${API_BASE_URL}/programs`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         },
         body: formData
+      });
+      
+      // Debug log to check if token is being sent
+      const token = localStorage.getItem('authToken');
+      console.log('=== PROGRAMS SERVICE DEBUG ===');
+      console.log('Token from localStorage:', token);
+      console.log('Token exists:', !!token);
+      console.log('Token length:', token ? token.length : 0);
+      console.log('Token starts with Bearer:', token ? token.startsWith('Bearer ') : false);
+      
+      console.log('Request headers being sent:', {
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
       });
       
       if (!response.ok) {
@@ -348,7 +375,7 @@ export const programService = {
       const response = await fetch(`${API_BASE_URL}/programs/${slug}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         },
         body: formData
@@ -373,7 +400,7 @@ export const programService = {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Accept-Language': localStorage.getItem('i18nextLng') || 'en'
         }
       });

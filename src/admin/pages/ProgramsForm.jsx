@@ -128,10 +128,10 @@ const ProgramsForm = () => {
             };
 
             if (isEdit) {
-                await updateProgram(id, data, formData.heroImage, token);
+                await updateProgram(id, data, { heroImage: formData.heroImage }, token);
                 showSuccessToast('Program updated successfully');
             } else {
-                await createProgram(data, formData.heroImage, token);
+                await createProgram(data, { heroImage: formData.heroImage }, token);
                 showSuccessToast('Program created successfully');
             }
             navigate('/admin/programs');

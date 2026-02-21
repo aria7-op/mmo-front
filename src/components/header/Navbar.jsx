@@ -179,6 +179,24 @@ const responsiveStyles = `
       display: none !important;
     }
   }
+
+  .navbar-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70px;
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-container {
+      min-height: 60px;
+      padding: 0 12px;
+    }
+  }
 `;
 
 const styles = {
@@ -201,10 +219,6 @@ const styles = {
     justifyContent: "center",
     minHeight: "70px",
     position: "relative",
-    "@media (max-width: 768px)": {
-      minHeight: "60px",
-      padding: "0 12px",
-    },
   },
   navbarLogo: {
     margin: 0,
@@ -794,7 +808,7 @@ export function Navbar() {
     <>
       <style>{responsiveStyles}</style>
       <nav style={styles.navbar} dir={isRTL ? "rtl" : "ltr"}>
-        <div style={styles.navbarContainer}>
+        <div className="navbar-container">
           {/* Single centered container with all elements */}
           <div
             style={{

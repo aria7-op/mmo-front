@@ -16,6 +16,7 @@ const StakeholderFormModal = ({
 }) => {
   const [draftData, setDraftData] = useState({});
   const [logoFile, setLogoFile] = useState(null);
+  const [formData, setFormData] = useState({});
   const ns = 'stakeholders';
   const dm = {
     saveDraft: (id, data, isEdit) => baseDraftManager.saveDraft(id, data, isEdit, ns),
@@ -35,15 +36,29 @@ const StakeholderFormModal = ({
 
   const handleSaveDraft = (data) => dm.saveDraft(modalId, data, isEdit);
 
-  const handleSend = async (data, file) => {
+  const handleSend = async (data) => {
     try {
-      await onSave(data, file);
+      console.log('🔍 StakeholderFormModal handleSend:', {
+        dataKeys: Object.keys(data),
+        hasFile: !!logoFile,
+        fileName: logoFile?.name,
+        fileSize: logoFile?.size
+      });
+      // Use the actual form data and logo file, not draft data
+      await onSave(formData, logoFile);
       dm.deleteDraft(modalId);
       onClose();
     } catch (error) { console.error('Error saving stakeholder:', error); }
   };
 
-  const handleDraftChange = (data) => setDraftData(data);
+  const handleDraftChange = (data) => {
+    setDraftData(data);
+    setFormData(data);
+  };
+
+  const handleLogoFileChange = (file) => {
+    setLogoFile(file);
+  };
 
   const initialData = stakeholderData || currentData || draftData;
 
@@ -69,7 +84,7 @@ const StakeholderFormModal = ({
         onCancel={onClose}
         onDraftChange={handleDraftChange}
         draftData={draftData}
-        onLogoFileChange={setLogoFile}
+        onLogoFileChange={handleLogoFileChange}
       />
     </GmailStyleModal>
   );

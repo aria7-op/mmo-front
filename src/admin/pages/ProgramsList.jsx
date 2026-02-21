@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { usePrograms } from '../../hooks/usePrograms';
 import { deleteProgram, getProgramById, createProgram, updateProgram } from '../../services/programs.service';
 import { formatMultilingualContent, getImageUrlFromObject, formatDate } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -465,20 +465,20 @@ const ProgramsList = () => {
                                                         <i className="fas fa-edit"></i>
                                                     </button>
                                                     <button
-                                                        onClick={() => handleDelete(item._id)}
-                                                        disabled={deleting === item._id}
+                                                        onClick={() => handleDelete(item.slug)}
+                                                        disabled={deleting === item.slug}
                                                         style={{
                                                             padding: '4px 6px',
-                                                            backgroundColor: deleting === item._id ? '#9ca3af' : '#dc3545',
+                                                            backgroundColor: deleting === item.slug ? '#9ca3af' : '#dc3545',
                                                             color: '#fff',
-                                                            border: '1px solid ' + (deleting === item._id ? '#9ca3af' : '#dc3545'),
+                                                            border: '1px solid ' + (deleting === item.slug ? '#9ca3af' : '#dc3545'),
                                                             borderRadius: '3px',
-                                                            cursor: deleting === item._id ? 'not-allowed' : 'pointer',
+                                                            cursor: deleting === item.slug ? 'not-allowed' : 'pointer',
                                                             fontSize: '10px'
                                                         }}
                                                         title="Delete program"
                                                     >
-                                                        {deleting === item._id ? (
+                                                        {deleting === item.slug ? (
                                                             <i className="fas fa-spinner fa-spin"></i>
                                                         ) : (
                                                             <i className="fas fa-trash"></i>

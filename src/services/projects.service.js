@@ -1,6 +1,6 @@
 import { get, del, uploadFile } from './apiClient';
 import { API_ENDPOINTS } from '../config/api.config';
-import { createFormDataWithMultipleFiles } from '../utils/apiUtils';
+import { createFormData } from '../utils/apiUtils';
 
 export const getAllProjects = async (params = {}) => {
   const res = await get(API_ENDPOINTS.PROJECTS, params);
@@ -14,15 +14,15 @@ export const getProjectById = async (id) => {
   throw new Error(res.message || 'Project not found');
 };
 
-export const createProject = async (data, files = {}, token = null) => {
-  const form = createFormDataWithMultipleFiles(data, files);
+export const createProject = async (data, files = null, token = null) => {
+  const form = createFormData(data, files, 'gallery');
   const res = await uploadFile(API_ENDPOINTS.PROJECTS, form, { headers: { Authorization: token ? `Bearer ${token}` : undefined } });
   if (res.success) return res.data;
   throw new Error(res.message || 'Failed to create project');
 };
 
-export const updateProject = async (id, data, files = {}, token = null) => {
-  const form = createFormDataWithMultipleFiles(data, files);
+export const updateProject = async (id, data, files = null, token = null) => {
+  const form = createFormData(data, files, 'gallery');
   const res = await uploadFile(API_ENDPOINTS.PROJECTS_BY_ID(id), form, { method: 'PUT', headers: { Authorization: token ? `Bearer ${token}` : undefined } });
   if (res.success) return res.data;
   throw new Error(res.message || 'Failed to update project');

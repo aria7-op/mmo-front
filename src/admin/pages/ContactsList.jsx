@@ -25,9 +25,11 @@ const ContactsList = () => {
         try {
             const result = await getAllContacts();
             setContacts(Array.isArray(result) ? result : []);
+            showSuccessToast('Contacts loaded successfully');
         } catch (err) {
             setError(err);
             setContacts([]);
+            showErrorToast('Failed to load contacts: ' + (err.message || 'Unknown error'));
         } finally {
             setLoading(false);
         }

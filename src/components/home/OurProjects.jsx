@@ -197,14 +197,29 @@ const OurProjects = () => {
                                 <div className="h-100" style={{ width: '100%' }}>
                                     <div className="project-card h-100">
                                         <div className="project-card__media">
-                                            {project.coverImage?.url ? (
+                                            {project.gallery && project.gallery.length > 0 ? (
                                                 <img
                                                     className="project-card__img"
-                                                    src={getImageUrlFromObject(project.coverImage)}
+                                                    src={project.gallery[0].url}
                                                     alt={formatMultilingualContent(project.title)}
+                                                    onError={(e) => {
+                                                        e.target.style.display = 'none';
+                                                        // Show fallback on error
+                                                        const fallback = e.target.nextElementSibling;
+                                                        if (fallback) fallback.style.display = 'flex';
+                                                    }}
                                                 />
                                             ) : (
-                                                <div style={{ color: '#999' }}>No image</div>
+                                                <div style={{ 
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    height: '100%',
+                                                    color: '#999',
+                                                    fontSize: '14px'
+                                                }}>
+                                                    No image
+                                                </div>
                                             )}
                                         </div>
                                         <div className="project-card__body">

@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { usePartners } from '../../hooks/usePartners';
 import { createPartner, updatePartner, deletePartner, getPartnerById } from '../../services/partners.service';
 import { formatMultilingualContent, getImageUrlFromObject } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';

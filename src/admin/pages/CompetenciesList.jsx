@@ -13,7 +13,7 @@ import CompetencyFormContent from '../components/forms/CompetencyFormContent';
 import { useCompetencies } from '../../hooks/useCompetencies';
 import { createCompetency, updateCompetency, deleteCompetency, getCompetencyById } from '../../services/competency.service';
 import { formatMultilingualContent } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 
 const CompetenciesList = () => {
   const { t } = useTranslation();

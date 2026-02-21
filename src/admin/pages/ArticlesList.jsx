@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useArticles } from '../../hooks/useArticles';
 import { deleteArticle, getArticleById, createArticle, updateArticle } from '../../services/articles.service';
 import { formatMultilingualContent, getImageUrlFromObject, formatDate, stripHtmlTags } from '../../utils/apiUtils';
-import { showSuccessToast, showErrorToast } from '../../utils/errorHandler';
+import { showSuccessToast, showErrorToast, showCrudToasts, showLoadingToast, dismissToast } from '../../utils/errorHandler';
 import { useTranslation } from 'react-i18next';
 import AdminLayout from '../layouts/AdminLayout';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -39,7 +39,7 @@ const ArticlesList = () => {
     };
 
     const handleSaveSuccess = () => {
-        showSuccessToast(editingId ? t('admin.articleUpdated', 'Article updated successfully') : t('admin.articleCreated', 'Article created successfully'));
+        showCrudToasts[editingId ? 'update' : 'create']('Article');
         refetch();
     };
 
@@ -52,10 +52,10 @@ const ArticlesList = () => {
         try {
             const token = localStorage.getItem('authToken');
             await deleteArticle(id, token);
-            showSuccessToast(t('admin.articleDeleted', 'Article deleted successfully'));
+            showCrudToasts.delete('Article');
             refetch();
         } catch (error) {
-            showErrorToast(error.message || t('admin.failedToDeleteArticle', 'Failed to delete article'));
+            showCrudToasts.deleteError('Article', error.message || 'Unknown error');
             console.error('Delete error:', error);
         } finally {
             setDeleting(null);
